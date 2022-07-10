@@ -1,0 +1,11 @@
+@import '../../assets/scss/variables.scss';
+
+.main-page {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
