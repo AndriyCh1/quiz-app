@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "sourceMap": true,
+    "moduleResolution": "node",
     "target": "ES6",
     "module": "commonjs",
     "outDir": "./dist",

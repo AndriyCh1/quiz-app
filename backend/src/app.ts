@@ -10,7 +10,7 @@ class App {
   }
 
   public listen() {
-    this.app.listen(5000, () => {
+    this.app.listen(process.env.PORT, () => {
       console.log("Server is running...");
     })
   }
@@ -19,7 +19,6 @@ class App {
     controllers.forEach(controller => {
       this.app.use('/', controller.router)
     })
-
   }
 }
 

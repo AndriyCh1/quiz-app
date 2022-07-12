@@ -1,8 +1,24 @@
-import Auth from "./auth/auth.controller";
+import "dotenv/config"; // ! Should go first !
+import { createConnection } from "typeorm";
 import App from "./app";
+import Auth from "./auth/auth.controller";
+import validateEnv from "./utils/validateEnv";
+import config from "./ormconfig";
 
-const app = new App([
-  new Auth,
-]);
+validateEnv();
 
-app.listen();
+(async() =>  {
+
+  try {
+    await createConnection(config);
+  } catch (error) {
+    console.log("Error while connecting to the database", error);
+    return error;
+  }
+
+  const app = new App([
+    new Auth()
+  ]);
+
+  app.listen();
+})();
