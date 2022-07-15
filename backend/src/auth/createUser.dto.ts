@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
 class LogInDto {
   @IsString()
@@ -8,7 +8,6 @@ class LogInDto {
   public password: string;
 
   @IsString()
-  @IsOptional()
   public fullName?: string;
 }
 
