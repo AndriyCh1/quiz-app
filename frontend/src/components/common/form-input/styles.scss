@@ -1,0 +1,32 @@
+@import '../../../assets/scss/variables.scss';
+
+.form-input {
+  position: relative;
+
+  i {
+    position: absolute;
+    top: 50%;
+    left: .6rem;
+    transform: translateY(-50%);
+    color: $color-grey-3;
+    font-size: 1rem;
+  }
+
+  &__input {
+    padding: 8px 8px;
+    padding-left: 2rem;
+    border: 2px solid $color-grey-3;
+    border-radius: 8px;
+    min-height: 24px;
+    font-size: 1rem;
+    outline: none;
+    width: 100%;
+    background-color: $color-grey0;
+    z-index: 111;
+
+    &:focus {
+      transition: border-color .3s ease-in-out;
+      border-color: $color-primary;
+    }
+  }
+}
