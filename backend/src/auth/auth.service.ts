@@ -1,9 +1,7 @@
 import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
 import UserDto from "../user/user.dto";
 import User from "../user/user.entity";
 import {IDataInToken} from "../interfaces/dataInToken.inteface";
-import {ITokenData} from "../interfaces/tokenData.interface";
 import UserWithThatEmailExistException from "../exceptions/UserWithThatEmailExistException";
 import WrongCredationalsException from "../exceptions/WrongCredationalsException.exception";
 import TokenService from "../token/token-service";
@@ -37,8 +35,6 @@ class AuthService {
     const tokens = this.tokenService.generateTokens({id: newUser.id, email: newUser.email });
     await this.tokenService.saveToken(newUser.id, tokens.refreshToken);
 
-    // const cookie = this.createCookie({token: tokens.refreshToken, expiresIn: 30 * 24 * 60 * 60 * 1000});
-
     return { ...tokens, user: newUser};
   }
 
@@ -51,8 +47,6 @@ class AuthService {
       const doesPasswordMatching = await bcrypt.compare(userData.password, user.password)
 
       if (doesPasswordMatching) {
-        const token = this.createToken(user);
-        // const cookie = this.createCookie(token)
         user.password = undefined;
 
         const tokens = this.tokenService.generateTokens({id: user.id, email: user.email });
@@ -68,19 +62,6 @@ class AuthService {
   public async logout (refreshToken: string) {
     const token = await this.tokenService.removeToken(refreshToken);
     return token;
-  }
-
-  private createToken(user: User ): ITokenData {
-    const expiresIn = 60 * 60; // an hour
-    const secret = process.env.JWT_SECRET;
-
-    const payload: IDataInToken = {
-      id: user.id,
-    }
-
-    const jwtToken: ITokenData = { expiresIn, token: jwt.sign(payload, secret, { expiresIn }) }
-
-    return jwtToken;
   }
 
   public async refresh (refreshToken: string) {
@@ -100,10 +81,6 @@ class AuthService {
 
     await this.tokenService.saveToken(user.id, tokens.refreshToken);
     return {...tokens, user}
-  }
-
-  private createCookie(token: ITokenData): string {
-    return `Authorization=${token.token}; HttpOnly; Max-Age=${token.expiresIn}`
   }
 }
 
