@@ -4,6 +4,7 @@ import App from "./app";
 import AuthController from "./auth/auth.controller";
 import validateEnv from "./utils/validateEnv";
 import config from "./ormconfig";
+import UserController from "./user/user.controller";
 
 validateEnv();
 
@@ -17,7 +18,8 @@ validateEnv();
   }
 
   const app = new App([
-    new AuthController()
+    new AuthController(),
+    new UserController()
   ]);
 
   app.listen();

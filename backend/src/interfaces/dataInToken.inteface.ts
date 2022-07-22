@@ -1,5 +1,3 @@
-interface DataInToken {
+export interface IDataInToken {
   id: string;
 }
-
-export default DataInToken;

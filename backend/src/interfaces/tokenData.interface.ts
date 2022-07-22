@@ -1,6 +1,4 @@
-interface TokenData {
+export interface ITokenData {
   token: string;
   expiresIn: number;
 }
-
-export default TokenData;

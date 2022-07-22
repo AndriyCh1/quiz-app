@@ -1,6 +1,7 @@
 import * as express from 'express';
 import errorHandlerMiddleware from './middlewares/errorHandler.middleware';
 import Controller from './interfaces/controller.interface';
+import * as cookieParser from 'cookie-parser';
 
 class App {
   public app: express.Application;
@@ -21,12 +22,13 @@ class App {
 
   private initializeControllers(controllers: Controller[]) {
     controllers.forEach(controller => {
-      this.app.use('/', controller.router)
+      this.app.use('/', controller.router);
     })
   }
 
   private initializeMiddlewares() {
     this.app.use(express.json());
+    this.app.use(cookieParser());
   }
 
   private initializeErrorHandling() {
@@ -34,4 +36,4 @@ class App {
   }
 }
 
-export default App 
+export default App;
