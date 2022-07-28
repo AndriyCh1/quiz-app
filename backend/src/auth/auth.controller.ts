@@ -18,11 +18,11 @@ class AuthController implements Controller {
     this.router.post(`${this.path}/register`, validationMiddleware(LoginDto), this.registration);
     this.router.post(`${this.path}/login`, validationMiddleware(LoginDto), this.login);
     this.router.post(`${this.path}/logout`, this.logout);
-    this.router.post(`${this.path}/refresh`, this.refresh);
+    this.router.get(`${this.path}/refresh`, this.refresh);
   }
 
   // Need to use arrow function to use context of this class
-  private  registration = async (req: Request, res: Response, next: NextFunction) => { 
+  private registration = async (req: Request, res: Response, next: NextFunction) => {
     const userData: UserDto = req.body;
     
     try {
