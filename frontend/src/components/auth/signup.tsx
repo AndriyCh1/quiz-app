@@ -1,11 +1,19 @@
 import "./styles.scss";
 import { Placholders } from "./common/enums";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import FormInput from "../common/form-input/form-input";
 import useInput from "../../hooks/useInput";
+import {authActions} from "../../store/auth";
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
+import {useState} from "react";
 
 const SignUp = () => {
-  const usernameInput = useInput("", { isEmpty: true, minLength: 8});
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { isAuth, isLoading } = useAppSelector(state => state.auth);
+  const [signupError, setSignupError] = useState("");
+
+  const usernameInput = useInput("", { isEmpty: true, minLength: 2});
   const emailInput = useInput("", { isEmpty: true, isEmail: true});
   const passwordInput = useInput("", {
     isEmpty: true,
@@ -13,10 +21,39 @@ const SignUp = () => {
     maxLength: 15,
   });
 
+  const handleSubmit = (evnt: React.FormEvent) => {
+    evnt.preventDefault()
+
+    dispatch(authActions.signup({
+      email: emailInput.value,
+      password: passwordInput.value,
+      fullName: usernameInput.value
+    }))
+    .unwrap()
+    .catch(e => {
+      setSignupError(e.response.data.message);
+    })
+  }
+
+  if (isLoading) {
+    return (
+        <div>Loading...</div>
+    )
+  }
+
+  if (isAuth) {
+    navigate("/home")
+  }
+
   return (
     <div className="auth-form-wrapper">
-      <form className="auth-form">
+      <form className="auth-form" onSubmit={handleSubmit}>
         <h2 className="auth-form__title">Register</h2>
+        { signupError &&
+            <div className="auth-form__submit-error">
+              {signupError}
+            </div>
+        }
         <div className="auth-form__fieldset">
           
           {/* USERNAME */}
@@ -47,6 +84,7 @@ const SignUp = () => {
           <label className="auth-form__label">Email</label>
           <FormInput
             name="email"
+            type="email"
             value={emailInput.value}
             icon={<i className="fa fa-at"></i>}
             placeholder={Placholders.email}

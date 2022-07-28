@@ -22,6 +22,16 @@ a {
   box-shadow: 1px 1px 14px 2px $color-grey-2;
   max-width: 25rem;
   width: 90%;
+  font-size: .9rem;
+
+  &__submit-error {
+    color: $color-dangerous;
+    background-color: $color-dangerous-light;
+    padding: .3rem;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    text-align: center;
+  }
 
   &__title {
     text-align: center;
@@ -31,7 +41,6 @@ a {
   
   &__label {
     display: block;
-    font-size: .9rem;
     margin-bottom: .4rem;
   }
 
