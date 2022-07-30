@@ -6,9 +6,12 @@ import UserDto from "../user/dto/user.dto";
 import AuthService from "./auth.service";
 import SignupDto from "./dto/signup.dto";
 
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
 class AuthController implements IController {
   public path = '/auth';
   public router = Router();
+  readonly cookieOptions = {maxAge: 30 * ONE_DAY, httpOnly: true};
 
   constructor(private readonly authService: AuthService) {
     this.initializeRoutes();
@@ -21,13 +24,12 @@ class AuthController implements IController {
     this.router.get(`${this.path}/refresh`, this.refresh);
   }
 
-  // Need to use arrow function to use context of this class
   private registration = async (req: Request, res: Response, next: NextFunction) => {
     const userData: UserDto = req.body;
     
     try {
       const user = await this.authService.register(userData);
-      res.cookie('refreshToken', user.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+      res.cookie('refreshToken', user.refreshToken, );
       return res.json(user);
     } catch (error) {
       next(error)
@@ -39,7 +41,7 @@ class AuthController implements IController {
 
     try {
       const user = await this.authService.login(userData);
-      res.cookie('refreshToken', user.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+      res.cookie('refreshToken', user.refreshToken, this.cookieOptions)
       return res.json(user);
     } catch (error) {
       next(error);
@@ -61,7 +63,7 @@ class AuthController implements IController {
     try {
       const {refreshToken} = req.cookies;
       const user = await this.authService.refresh(refreshToken);
-      res.cookie('refreshToken', user.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+      res.cookie('refreshToken', user.refreshToken, this.cookieOptions)
       return res.json(user);
     } catch (e) {
       next(e);
