@@ -1,16 +1,11 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
-class LogInDto {
+class LoginDto {
   @IsString()
   public email: string;
 
   @IsString()
   public password: string;
-
-  // TODO: login form doesn`t have fullName
-  @IsString()
-  @IsOptional()
-  public fullName?: string;
 }
 
-export default LogInDto;
+export default LoginDto;

@@ -4,6 +4,7 @@ import {IController} from "../common/interfaces";
 import LoginDto from "./dto/login.dto";
 import UserDto from "../user/dto/user.dto";
 import AuthService from "./auth.service";
+import SignupDto from "./dto/signup.dto";
 
 class AuthController implements IController {
   public path = '/auth';
@@ -14,8 +15,7 @@ class AuthController implements IController {
   }
 
   private initializeRoutes() {
-    // TODO: register shouldn`t have LoginDto
-    this.router.post(`${this.path}/register`, validationMiddleware(LoginDto), this.registration);
+    this.router.post(`${this.path}/register`, validationMiddleware(SignupDto), this.registration);
     this.router.post(`${this.path}/login`, validationMiddleware(LoginDto), this.login);
     this.router.post(`${this.path}/logout`, this.logout);
     this.router.get(`${this.path}/refresh`, this.refresh);
