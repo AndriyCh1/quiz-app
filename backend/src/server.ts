@@ -20,7 +20,7 @@ validateEnv();
   }
 
   const app = new App([
-    new AuthController(new AuthService),
+    new AuthController(new AuthService()),
     new UserController(new UserService())
   ]);
 

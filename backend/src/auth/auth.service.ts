@@ -56,12 +56,12 @@ class AuthService {
     throw new WrongCredentialsException();
   }
 
-  public async logout (refreshToken: string) {
+  public async logout(refreshToken: string) {
     const token = await this.tokenService.removeToken(refreshToken);
     return token;
   }
 
-  public async refresh (refreshToken: string) {
+  public async refresh(refreshToken: string) {
     if(!refreshToken) {
       throw new WrongCredentialsException();
     }

@@ -14,10 +14,10 @@ class UserController implements IController {
     private initializeRoutes() {
         // TODO: fix auth middleware using (problem with custom req)
         // @ts-ignore
-        this.router.get(`${this.path}/users`, authMiddleware, this.getAllUsers)
+        this.router.get(`${this.path}/users`, authMiddleware, this.getAllUsers.bind(this))
     }
 
-    private getAllUsers = async(req: Request, res: Response, next: NextFunction) => {
+    private async getAllUsers(req: Request, res: Response, next: NextFunction){
         try {
             const users =  await this.userService.getAll();
             return res.send(users);

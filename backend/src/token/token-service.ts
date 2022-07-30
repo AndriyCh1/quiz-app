@@ -5,7 +5,7 @@ import Token from "./token.entity";
 class TokenService {
     private tokenRepository = getRepository(Token);
 
-    public generateTokens(payload) {
+    public generateTokens = (payload) => {
         const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {expiresIn: '10s'}) // 15m
         const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {expiresIn: '30d'})
         return {
@@ -14,7 +14,7 @@ class TokenService {
         }
     }
 
-    public validateAccessToken(token: string) {
+    public validateAccessToken = (token: string) => {
         try {
             const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
             return userData;
@@ -23,7 +23,7 @@ class TokenService {
         }
     }
 
-    public validateRefreshToken(token) {
+    public validateRefreshToken = (token) => {
         try {
             const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
             return userData;

@@ -18,13 +18,13 @@ class AuthController implements IController {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}/register`, validationMiddleware(SignupDto), this.registration);
-    this.router.post(`${this.path}/login`, validationMiddleware(LoginDto), this.login);
-    this.router.post(`${this.path}/logout`, this.logout);
-    this.router.get(`${this.path}/refresh`, this.refresh);
+    this.router.post(`${this.path}/register`, validationMiddleware(SignupDto), this.registration.bind(this));
+    this.router.post(`${this.path}/login`, validationMiddleware(LoginDto), this.login.bind(this));
+    this.router.post(`${this.path}/logout`, this.logout.bind(this));
+    this.router.get(`${this.path}/refresh`, this.refresh.bind(this));
   }
 
-  private registration = async (req: Request, res: Response, next: NextFunction) => {
+  private async registration(req: Request, res: Response, next: NextFunction) {
     const userData: UserDto = req.body;
     
     try {
@@ -36,7 +36,7 @@ class AuthController implements IController {
     }
   }
 
-  private login = async(req: Request, res: Response, next: NextFunction) => {
+  private async login(req: Request, res: Response, next: NextFunction) {
     const userData: UserDto = req.body;
 
     try {
@@ -48,7 +48,7 @@ class AuthController implements IController {
     }
   }
 
-  private logout = async (req: Request, res: Response, next: NextFunction) => {
+  private async logout(req: Request, res: Response, next: NextFunction) {
     try {
       const {refreshToken} = req.cookies;
       const token = await this.authService.logout(refreshToken);
@@ -59,7 +59,7 @@ class AuthController implements IController {
     }
   }
 
-  private refresh = async (req: Request, res: Response, next: NextFunction) => {
+  private async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const {refreshToken} = req.cookies;
       const user = await this.authService.refresh(refreshToken);
@@ -70,7 +70,5 @@ class AuthController implements IController {
     }
   }
 }
-
-// TODO: USE WHETHER FUNCTION EXPRESSION OR DECLARATION (NOT BOTH)
 
 export default AuthController;
