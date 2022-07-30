@@ -1,5 +1,9 @@
 @import '../../../assets/scss/variables.scss';
 
+.error-input {
+  border: 2px solid $color-dangerous !important;
+}
+
 .form-input {
   position: relative;
 

@@ -1,7 +1,7 @@
-const Placholders = {
+const AuthFormPlaceholder = {
   email: "example@gmail.com",
-  username: "Enter username",
+  username: "Enter full name",
   password: "Enter password"
 }
 
-export { Placholders }
+export { AuthFormPlaceholder }

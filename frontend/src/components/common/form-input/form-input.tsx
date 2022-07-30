@@ -2,6 +2,7 @@ import { ChangeEvent } from "react";
 import "./styles.scss";
 
 interface Props {
+  className?: string;
   name: string;
   value?: string;
   type?: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const FormInput: React.FC<Props> = ({
+  className,
   placeholder,
   icon,
   name,
@@ -26,7 +28,7 @@ const FormInput: React.FC<Props> = ({
       <input
         type={type}
         name={name}
-        className="form-input__input"
+        className={className}
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}

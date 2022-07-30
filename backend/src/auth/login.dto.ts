@@ -7,6 +7,7 @@ class LogInDto {
   @IsString()
   public password: string;
 
+  // TODO: login form doesn`t have fullName
   @IsString()
   @IsOptional()
   public fullName?: string;

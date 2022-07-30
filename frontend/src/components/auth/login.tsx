@@ -1,5 +1,5 @@
 import "./styles.scss";
-import { Placholders } from "./common/enums";
+import { AuthFormPlaceholder } from "./common/enums";
 import {Link, useNavigate} from "react-router-dom";
 import FormInput from "../common/form-input/form-input";
 import useInput from "../../hooks/useInput";
@@ -53,10 +53,11 @@ const LogIn = () => {
         <div className="auth-form__fieldset">
         <label className="auth-form__label">Email</label>
           <FormInput
+            className={`form-input__input ${emailInput.isDirty && !emailInput.isValid && "error-input"}`}
             name="email"
             value={emailInput.value}
             icon={<i className="fa fa-at"></i>}
-            placeholder={Placholders.email}
+            placeholder={AuthFormPlaceholder.email}
             onChange={emailInput.onChange}
             onBlur={emailInput.onBlur}
           />
@@ -76,10 +77,11 @@ const LogIn = () => {
 
           <label className="auth-form__label">Password</label>
           <FormInput
+            className={`form-input__input ${passwordInput.isDirty && !passwordInput.isValid && "error-input"}`}
             name="password"
             type="password"
             value={passwordInput.value}
-            placeholder={Placholders.password}
+            placeholder={AuthFormPlaceholder.password}
             icon={<i className="fa fa-lock"></i>}
             onChange={passwordInput.onChange}
             onBlur={passwordInput.onBlur}
@@ -110,7 +112,7 @@ const LogIn = () => {
             !emailInput.isValid ||
             !passwordInput.isValid
           }>
-          Log In
+          Log in
         </button>
         <p className="auth-form__text">
           Don`t have an account? <Link to={"/signup"}>Sign up</Link>

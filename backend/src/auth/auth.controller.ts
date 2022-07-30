@@ -8,6 +8,7 @@ import AuthService from "./auth.service";
 class AuthController implements Controller {
   public path = '/auth';
   public router = Router();
+  // TODO: fix DI
   private authService = new AuthService();
 
   constructor() {
@@ -15,6 +16,7 @@ class AuthController implements Controller {
   }
 
   private initializeRoutes() {
+    // TODO: register shouldn`t have LoginDto
     this.router.post(`${this.path}/register`, validationMiddleware(LoginDto), this.registration);
     this.router.post(`${this.path}/login`, validationMiddleware(LoginDto), this.login);
     this.router.post(`${this.path}/logout`, this.logout);

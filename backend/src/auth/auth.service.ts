@@ -3,7 +3,7 @@ import UserDto from "../user/user.dto";
 import User from "../user/user.entity";
 import {IDataInToken} from "../interfaces/dataInToken.inteface";
 import UserWithThatEmailExistException from "../exceptions/UserWithThatEmailExistException";
-import WrongCredationalsException from "../exceptions/WrongCredationalsException.exception";
+import WrongCredentialsException from "../exceptions/WrongCredationalsException.exception";
 import TokenService from "../token/token-service";
 import { getRepository } from "typeorm";
 
@@ -54,9 +54,9 @@ class AuthService {
         await this.tokenService.saveToken(user.id, tokens.refreshToken);
         return {...tokens, user: userData}
       }
-      throw new WrongCredationalsException();
+      throw new WrongCredentialsException();
     }
-    throw new WrongCredationalsException();
+    throw new WrongCredentialsException();
   }
 
   public async logout (refreshToken: string) {
@@ -66,18 +66,18 @@ class AuthService {
 
   public async refresh (refreshToken: string) {
     if(!refreshToken) {
-      throw new WrongCredationalsException();
+      throw new WrongCredentialsException();
     }
 
     const userData = this.tokenService.validateRefreshToken(refreshToken) as IDataInToken;
     const tokenFromDB = this.tokenService.findToken(refreshToken);
 
     if (!userData || !tokenFromDB) {
-      throw new WrongCredationalsException();
+      throw new WrongCredentialsException();
     }
 
     const user = await this.userRepository.findOne({id: userData.id});
-    const tokens = await this.tokenService.generateTokens({...user});
+    const tokens = this.tokenService.generateTokens({...user});
 
     await this.tokenService.saveToken(user.id, tokens.refreshToken);
     return {...tokens, user}

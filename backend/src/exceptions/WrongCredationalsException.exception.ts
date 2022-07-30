@@ -1,10 +1,10 @@
 import { HttpCode } from "../common/http/http-code.enum";
 import HttpException from "./HttpException";
 
-class WrongCredationalsException extends HttpException {
+class WrongCredentialsException extends HttpException {
   constructor() {
-    super(HttpCode.UNAUTHORIZED, "Wrong credationals provided");
+    super(HttpCode.UNAUTHORIZED, "Wrong credentials provided");
   }
 }
 
-export default WrongCredationalsException;
+export default WrongCredentialsException;
