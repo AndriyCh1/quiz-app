@@ -1,8 +1,7 @@
 import {NextFunction,  Response} from "express";
 import WrongCredentialsException from "../exceptions/WrongCredationalsException.exception";
 import TokenService from "../token/token-service";
-import {IAuthRequest} from "../interfaces/requestWithUserData.interface";
-import {IDataInToken} from "../interfaces/dataInToken.inteface";
+import {IAuthRequest, IDataInToken} from "../common/interfaces";
 
 function AuthMiddleware ( req: IAuthRequest, res: Response, next: NextFunction ) {
     const tokenService =  new TokenService();

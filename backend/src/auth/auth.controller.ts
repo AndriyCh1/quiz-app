@@ -1,17 +1,15 @@
 import { NextFunction, Request, Response, Router } from "express";
 import validationMiddleware from "../middlewares/validation.middleware";
-import Controller from "../interfaces/controller.interface";
-import LoginDto from "./login.dto";
-import UserDto from "../user/user.dto";
+import {IController} from "../common/interfaces";
+import LoginDto from "./dto/login.dto";
+import UserDto from "../user/dto/user.dto";
 import AuthService from "./auth.service";
 
-class AuthController implements Controller {
+class AuthController implements IController {
   public path = '/auth';
   public router = Router();
-  // TODO: fix DI
-  private authService = new AuthService();
 
-  constructor() {
+  constructor(private readonly authService: AuthService) {
     this.initializeRoutes();
   }
 

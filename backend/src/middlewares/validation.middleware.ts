@@ -2,7 +2,7 @@ import { plainToInstance } from "class-transformer";
 import { validate, ValidationError } from "class-validator";
 import HttpException from "../exceptions/HttpException";
 import { NextFunction, Request, Response } from "express";
-import { HttpCode } from "../common/http/http-code.enum";
+import { HttpCode } from "../common/enums";
 
 function validationMiddleware(type: any) { // !!! any
   return (req: Request, res: Response, next: NextFunction) => {

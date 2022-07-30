@@ -1,14 +1,13 @@
-import Controller from "../interfaces/controller.interface";
+import {IController} from "../common/interfaces/";
 import {NextFunction, Request, Response, Router} from "express";
 import UserService from "./user.service";
 import authMiddleware from "../middlewares/auth.middleware";
 
-class UserController implements Controller {
+class UserController implements IController {
     public path = '/user';
     public router = Router();
-    private userService = new UserService();
 
-    constructor() {
+    constructor(private readonly userService: UserService) {
         this.initializeRoutes();
     }
 

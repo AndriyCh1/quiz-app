@@ -1,10 +1,12 @@
 import "dotenv/config"; // ! Should go first !
 import { createConnection } from "typeorm";
-import App from "./app";
-import AuthController from "./auth/auth.controller";
 import validateEnv from "./utils/validateEnv";
 import config from "./ormconfig";
+import App from "./app";
+import AuthController from "./auth/auth.controller";
 import UserController from "./user/user.controller";
+import UserService from "./user/user.service";
+import AuthService from "./auth/auth.service";
 
 validateEnv();
 
@@ -18,8 +20,8 @@ validateEnv();
   }
 
   const app = new App([
-    new AuthController(),
-    new UserController()
+    new AuthController(new AuthService),
+    new UserController(new UserService())
   ]);
 
   app.listen();

@@ -1,4 +1,4 @@
-import { HttpCode } from "../common/http/http-code.enum";
+import { HttpCode } from "../common/enums";
 import HttpException from "./HttpException";
 
 class UserWithThatEmailExistException extends HttpException {

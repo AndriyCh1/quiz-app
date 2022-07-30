@@ -1,13 +1,13 @@
 import * as express from 'express';
 import errorHandlerMiddleware from './middlewares/errorHandler.middleware';
-import Controller from './interfaces/controller.interface';
+import {IController} from './common/interfaces';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 
 class App {
   public app: express.Application;
   
-  constructor (controllers: Controller[]) {
+  constructor (controllers: IController[]) {
     this.app = express();
 
     this.initializeMiddlewares();
@@ -21,7 +21,7 @@ class App {
     })
   }
 
-  private initializeControllers(controllers: Controller[]) {
+  private initializeControllers(controllers: IController[]) {
     controllers.forEach(controller => {
       this.app.use('/', controller.router);
     })

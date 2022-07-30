@@ -1,4 +1,4 @@
-import { HttpCode } from "../common/http/http-code.enum";
+import { HttpCode } from "../common/enums";
 import { NextFunction, Request, Response } from "express";
 import HttpException from "../exceptions/HttpException";
 

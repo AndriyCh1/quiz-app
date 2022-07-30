@@ -1,16 +1,13 @@
 import * as bcrypt from 'bcrypt';
-import UserDto from "../user/user.dto";
+import UserDto from "../user/dto/user.dto";
 import User from "../user/user.entity";
-import {IDataInToken} from "../interfaces/dataInToken.inteface";
+import {IDataInToken} from "../common/interfaces";
 import UserWithThatEmailExistException from "../exceptions/UserWithThatEmailExistException";
 import WrongCredentialsException from "../exceptions/WrongCredationalsException.exception";
 import TokenService from "../token/token-service";
 import { getRepository } from "typeorm";
 
 class AuthService {
-
-  constructor(){}
-  
   private userRepository = getRepository(User);
   private tokenService = new TokenService();
 
