@@ -19,9 +19,6 @@ export interface IAuthResponse {
     user: Omit<IUser, "password">
 }
 
-// TODO: get rid of this
-export interface ILoginResponse extends IAuthResponse {}
-
 export interface ILogoutResponse {
     refreshToken: string;
 }

@@ -5,7 +5,7 @@ import FormInput from "../common/form-input/form-input";
 import useInput from "../../hooks/useInput";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 import {authActions} from "../../store/auth";
-import {useState} from "react";
+import React, {useState} from "react";
 
 const LogIn = () => {
   const dispatch = useAppDispatch();

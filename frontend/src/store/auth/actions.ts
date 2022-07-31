@@ -1,10 +1,10 @@
-import {ILoginUser, ILoginResponse, IAuthResponse} from "../../common/interfaces";
+import {ILoginUser, IAuthResponse} from "../../common/interfaces";
 import { AuthAction } from "./common";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {authService, storageService} from "../../services";
-import {ILogoutResponse, ISignupUser} from "../../common/interfaces/user";
+import {ILogoutResponse, ISignupUser} from "../../common/interfaces";
 
-export const login = createAsyncThunk<ILoginResponse, ILoginUser>(
+export const login = createAsyncThunk<IAuthResponse, ILoginUser>(
     AuthAction.LOGIN,
     async (userData: ILoginUser, {rejectWithValue}) => {
         try {

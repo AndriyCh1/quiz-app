@@ -1,7 +1,7 @@
-import {ILoginResponse} from "../../common/interfaces";
+import {IAuthResponse} from "../../common/interfaces";
 
 export interface IAuthState {
-    user: ILoginResponse["user"] | null;
+    user: IAuthResponse["user"] | null;
     isAuth: boolean;
     isLoading: boolean;
 }

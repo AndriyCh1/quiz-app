@@ -1,7 +1,6 @@
 import HttpService from "../http/http.service";
-import {ILoginUser, ILoginResponse, ILogoutResponse, IAuthResponse} from "../../common/interfaces";
+import {ILoginUser, ILogoutResponse, IAuthResponse, ISignupUser} from "../../common/interfaces";
 import {HttpMethod} from "../../common/enums";
-import {ISignupUser} from "../../common/interfaces/user";
 
 class AuthService  {
     private readonly path: string;
@@ -12,16 +11,16 @@ class AuthService  {
         this.http = http;
     }
 
-    public login = async(payload: ILoginUser): Promise<ILoginResponse> => {
+    public login = async(payload: ILoginUser): Promise<IAuthResponse> => {
         // TODO: find out should I do here json.stringify(payload)
-        return this.http.load<ILoginResponse>(`${this.path}/auth/login`, {
+        return this.http.load<IAuthResponse>(`${this.path}/auth/login`, {
             method: HttpMethod.POST,
             payload,
         })
     }
 
     public signup = async(payload: ISignupUser): Promise<IAuthResponse> => {
-        return this.http.load<ILoginResponse>(`${this.path}/auth/register`, {
+        return this.http.load<IAuthResponse>(`${this.path}/auth/register`, {
             method: HttpMethod.POST,
             payload,
         })
