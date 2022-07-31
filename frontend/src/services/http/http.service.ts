@@ -1,11 +1,18 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {IAuthResponse, IHttpOptions} from "../../common/interfaces";
-import {ContentType, ENV, HttpCode, HttpMethod} from "../../common/enums";
-import HttpException from "../../exceptions/HttpException";
+import {ContentType, ENV, HttpMethod} from "../../common/enums";
+
+const BASE_URL = ENV.API_PATH;
 
 class HttpService {
-    private baseURL = ENV.API_PATH;
-    private _unauthorizedInterceptorExecuted = false;
+    private $api = axios.create({
+        baseURL: BASE_URL
+    })
+
+    constructor() {
+        this.initializeRequestInterceptor();
+        this.initializeResponseInterceptor();
+    }
 
     public async load<T>(url: string, options: IHttpOptions): Promise<T> {
 
@@ -22,9 +29,6 @@ class HttpService {
             ...options
         }
 
-        const authorizationHeader = this.getAuthorizationHeader();
-        requestOptions.headers = {...requestOptions.headers, "Authorization": authorizationHeader};
-
         const request = {
             url,
             method: requestOptions.method,
@@ -35,32 +39,48 @@ class HttpService {
         } as AxiosRequestConfig;
 
         try {
-            const response = await axios.request(request);
+            const response = await this.$api.request(request);
             return response.data as T;
         } catch (e: any) {
-            if (e.response.status === HttpCode.UNAUTHORIZED) {
-                await this.updateAccessToken();
-                const newAuthorizationHeader = this.getAuthorizationHeader();
-                request.headers = {...request.headers, "Authorization": newAuthorizationHeader};
-                const response = await axios.request(request);
-                return response.data as T;
-            }
             throw e;
         }
+    }
+
+    private initializeRequestInterceptor() {
+        this.$api.interceptors.request.use((config: AxiosRequestConfig) => {
+            if(config.headers) {
+                config.headers.Authorization = this.getAuthorizationHeader();
+            }
+
+            return config;
+        })
+    }
+
+    private initializeResponseInterceptor() {
+        this.$api.interceptors.response.use((config: AxiosResponse) => {
+            return config;
+        },async (error) => {
+            const originalRequest = error.config;
+            if (error.response.status == 401 && error.config && !error.config._isRetry) {
+                originalRequest._isRetry = true;
+                try {
+                    const response = await axios.get<IAuthResponse>(`${BASE_URL}/auth/refresh`, {withCredentials: true})
+                    this.setAccessToken(response.data.accessToken);
+                    return this.$api.request(originalRequest);
+                } catch (e) {
+                    console.log('Не авторизований')
+                }
+            }
+            throw error;
+        })
     }
 
     private getAuthorizationHeader(): string {
         return `Bearer ${localStorage.getItem('token')}`
     }
 
-    private async updateAccessToken(): Promise<void> {
-        try {
-            const response = await axios.get(`${this.baseURL}/auth/refresh`, {withCredentials: true})
-            const responseData = response.data as IAuthResponse;
-            localStorage.setItem('token', responseData.accessToken);
-        } catch (e) {
-            throw e;
-        }
+    private setAccessToken(token: string): void {
+        localStorage.setItem('token', token);
     }
 }
 
