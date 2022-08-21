@@ -1,18 +1,15 @@
-import { ChangeEvent, useState } from "react";
-import {IValidations, IUseValidation} from "./common/interfaces/use-validation";
-import useValidation from "./useValidation";
+import { ChangeEvent, useState } from 'react';
+import { IValidations, IUseValidation } from './common/interfaces/use-validation';
+import useValidation from './useValidation';
 
-type IUseInput =  {
+type IUseInput = {
   value: string;
   isDirty: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement> ) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: ChangeEvent<HTMLInputElement>) => void;
-} & IUseValidation
+} & IUseValidation;
 
-const useInput = (
-  initialValue: string,
-  validations: IValidations
-): IUseInput  => {
+const useInput = (initialValue: string, validations: IValidations): IUseInput => {
   const [value, setValue] = useState(initialValue);
   const [isDirty, setIsDirty] = useState(false);
   const valid = useValidation(value, validations);

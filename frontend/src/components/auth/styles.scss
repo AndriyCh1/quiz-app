@@ -22,12 +22,12 @@ a {
   box-shadow: 1px 1px 14px 2px $color-grey-2;
   max-width: 25rem;
   width: 90%;
-  font-size: .9rem;
+  font-size: 0.9rem;
 
   &__submit-error {
     color: $color-dangerous;
     background-color: $color-dangerous-light;
-    padding: .3rem;
+    padding: 0.3rem;
     margin-bottom: 10px;
     border-radius: 2px;
     text-align: center;
@@ -38,10 +38,10 @@ a {
     padding-bottom: 2rem;
     text-transform: uppercase;
   }
-  
+
   &__label {
     display: block;
-    margin-bottom: .4rem;
+    margin-bottom: 0.4rem;
   }
 
   &__label:not(:first-child) {
@@ -52,7 +52,7 @@ a {
     width: 100%;
     border-radius: 10px;
     border: none;
-    padding: .7rem .4rem;
+    padding: 0.7rem 0.4rem;
     margin-top: 2rem;
     font-size: 1rem;
     background-color: $color-grey-4;
@@ -61,7 +61,7 @@ a {
 
     &:hover {
       cursor: pointer;
-      transition: background-color .3s ease-in-out;
+      transition: background-color 0.3s ease-in-out;
       background-color: $color-grey-3;
     }
 
@@ -74,7 +74,7 @@ a {
   &__error {
     display: block;
     color: $color-dangerous;
-    font-size: .8rem;
+    font-size: 0.8rem;
     font-weight: 600;
     padding-top: 1.5px;
     letter-spacing: 0.04rem;

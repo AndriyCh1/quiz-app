@@ -1,5 +1,5 @@
-import { ChangeEvent } from "react";
-import "./styles.scss";
+import { ChangeEvent } from 'react';
+import './styles.scss';
 
 interface Props {
   className?: string;
@@ -19,8 +19,8 @@ const FormInput: React.FC<Props> = ({
   name,
   onChange,
   onBlur,
-  value = "",
-  type = "text",
+  value = '',
+  type = 'text',
 }) => {
   return (
     <div className="form-input">

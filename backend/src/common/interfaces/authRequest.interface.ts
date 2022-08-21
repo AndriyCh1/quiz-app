@@ -1,9 +1,9 @@
-import {IDataInToken} from "./dataInToken.inteface";
+import { IDataInToken } from './dataInToken.inteface';
 
 interface IRequestWithUserData extends Request {
-    user: IDataInToken;
+  user: IDataInToken;
 }
 
 export type IAuthRequest = IRequestWithUserData & {
-    headers: { authorization: string };
+  headers: { authorization: string };
 };

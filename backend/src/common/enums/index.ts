@@ -1,1 +1,1 @@
-export {HttpCode} from "./http-code.enum";
+export { HttpCode } from './http-code.enum';

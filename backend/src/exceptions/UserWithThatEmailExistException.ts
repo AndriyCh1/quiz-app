@@ -1,5 +1,5 @@
-import { HttpCode } from "../common/enums";
-import HttpException from "./HttpException";
+import { HttpCode } from '../common/enums';
+import HttpException from './HttpException';
 
 class UserWithThatEmailExistException extends HttpException {
   constructor(email: string) {

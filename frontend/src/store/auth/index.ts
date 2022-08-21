@@ -1,3 +1,3 @@
-import { reducer as authReducer } from "./slice";
+import { reducer as authReducer } from './slice';
 import * as authActions from './actions';
-export {authReducer, authActions};
+export { authReducer, authActions };

@@ -10,7 +10,7 @@
   i {
     position: absolute;
     top: 50%;
-    left: .6rem;
+    left: 0.6rem;
     transform: translateY(-50%);
     color: $color-grey-3;
     font-size: 1rem;
@@ -29,7 +29,7 @@
     z-index: 111;
 
     &:focus {
-      transition: border-color .3s ease-in-out;
+      transition: border-color 0.3s ease-in-out;
       border-color: $color-primary;
     }
   }

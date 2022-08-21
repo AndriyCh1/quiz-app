@@ -1,7 +1,7 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-class User extends BaseEntity{
+class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id: string;
 
@@ -11,7 +11,7 @@ class User extends BaseEntity{
   @Column()
   password: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   public fullName: string;
 }
 

@@ -1,12 +1,12 @@
-import {getRepository} from "typeorm";
-import User from "./user.entity";
+import { getRepository } from 'typeorm';
+import User from './user.entity';
 
 class UserService {
-    private userRepository = getRepository(User);
+  private userRepository = getRepository(User);
 
-    public async getAll () {
-        return await this.userRepository.find();
-    }
+  public async getAll() {
+    return await this.userRepository.find();
+  }
 }
 
 export default UserService;

@@ -1,9 +1,9 @@
-import { HttpCode } from "../common/enums";
-import HttpException from "./HttpException";
+import { HttpCode } from '../common/enums';
+import HttpException from './HttpException';
 
 class WrongCredentialsException extends HttpException {
   constructor() {
-    super(HttpCode.UNAUTHORIZED, "Wrong credentials provided");
+    super(HttpCode.UNAUTHORIZED, 'Wrong credentials provided');
   }
 }
 

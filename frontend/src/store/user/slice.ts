@@ -1,16 +1,16 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {IUserState} from "./common";
-import {userReducer} from "./reducer";
+import { createSlice } from '@reduxjs/toolkit';
+import { IUserState } from './common';
+import { userReducer } from './reducer';
 
 const initialState: IUserState = {
-    users: [],
-}
+  users: [],
+};
 
 const { reducer, actions } = createSlice({
-    name: "user",
-    initialState,
-    reducers: {},
-    extraReducers: userReducer,
+  name: 'user',
+  initialState,
+  reducers: {},
+  extraReducers: userReducer,
 });
 
 export { reducer, actions };
