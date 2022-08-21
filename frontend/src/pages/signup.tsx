@@ -1,11 +1,12 @@
-import './styles.scss';
-import { AuthFormPlaceholder } from './common/enums';
-import { Link, useNavigate } from 'react-router-dom';
-import FormInput from '../common/form-input/form-input';
-import useInput from '../../hooks/useInput';
-import { authActions } from '../../store/auth';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
+import useInput from '../hooks/useInput';
+
+import { AuthFormPlaceholder } from './common/auth/enums';
+import { authActions } from '../store/auth';
+
+import FormInput from '../components/form-input';
 
 const SignUp = () => {
   const dispatch = useAppDispatch();

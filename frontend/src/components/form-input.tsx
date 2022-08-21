@@ -1,5 +1,4 @@
 import { ChangeEvent } from 'react';
-import './styles.scss';
 
 interface Props {
   className?: string;

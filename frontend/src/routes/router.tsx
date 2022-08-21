@@ -1,14 +1,14 @@
-import LogIn from '../auth/login';
-import './styles.scss';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import SignUp from '../auth/signup';
-import NotFound from '../not-found/not-found';
-import Main from '../main/main';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { useEffect } from 'react';
-import { authActions } from '../../store/auth';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-const App = () => {
+import Home from '../pages/home';
+
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
+import { authActions } from '../store/auth';
+import LogIn from '../pages/login';
+import SignUp from '../pages/signup';
+
+const Router = () => {
   const dispatch = useAppDispatch();
   const { isAuth } = useAppSelector((state) => state.auth);
 
@@ -20,9 +20,9 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      {isAuth ? (
+      {!isAuth ? (
         <Routes>
-          <Route path="/home" element={<Main />} />
+          <Route path="/home" element={<Home />} />
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       ) : (
@@ -36,4 +36,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Router;

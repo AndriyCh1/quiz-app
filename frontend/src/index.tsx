@@ -1,14 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
-import './assets/scss/styles.scss';
-import App from './components/app/app';
+
+import Router from './routes/router';
+
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+
+import './scss/index.scss';
 
 render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
