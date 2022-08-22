@@ -1,3 +1,63 @@
-.home-page {
+.home {
   font-size: 2rem;
+  padding-top: 20px;
+}
+
+.home-search {
+  padding: 10px;
+  @include flex(center, center);
+  width: 90%;
+  margin: 0 auto;
+  &__input {
+    @include flex(center, center);
+    height: 35px;
+    //position: relative;
+    background-color: #ffffff;
+    border-radius: 4px;
+    width: 100%;
+
+    &__icon {
+      font-size: 0.9rem;
+      color: $color-secondary;
+      margin: 0 10px;
+    }
+
+    input {
+      width: 100%;
+      border: none;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__button {
+      margin: 10px;
+      margin-right: 4px;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 3px;
+      font-size: 0.9rem;
+    }
+  }
+
+}
+
+.home-result {
+  margin-top: 30px;
+  min-height: 600px;
+}
+
+.home-quizzes {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 300px));
+  padding: 20px;
+
+  &__item {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

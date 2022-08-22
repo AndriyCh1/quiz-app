@@ -1,0 +1,20 @@
+.button {
+  border-radius: 3px;
+  border: none;
+  padding: 5px;
+  font-size: 1rem;
+  background-color: $color-grey-4;
+  color: $color-grey0;
+  font-weight: 500;
+
+  &:hover {
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    background-color: $color-grey-3;
+  }
+
+  &:disabled {
+    background-color: $color-grey-3;
+    cursor: default;
+  }
+}

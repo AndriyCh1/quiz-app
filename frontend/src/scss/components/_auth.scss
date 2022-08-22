@@ -41,25 +41,8 @@
 
   &__submit {
     width: 100%;
-    border-radius: 10px;
-    border: none;
-    padding: 0.7rem 0.4rem;
+    padding: 0.7rem 0.4rem !important;
     margin-top: 2rem;
-    font-size: 1rem;
-    background-color: $color-grey-4;
-    color: $color-grey0;
-    font-weight: 500;
-
-    &:hover {
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-      background-color: $color-grey-3;
-    }
-
-    &:disabled {
-      background-color: $color-grey-3;
-      cursor: default;
-    }
   }
 
   &__error {

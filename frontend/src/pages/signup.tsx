@@ -7,6 +7,7 @@ import { AuthFormPlaceholder } from './common/auth/enums';
 import { authActions } from '../store/auth';
 
 import FormInput from '../components/form-input';
+import Button from '../components/button';
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
@@ -131,13 +132,13 @@ const SignUp = () => {
             )}
         </div>
 
-        <button
+        <Button
           className="auth-form__submit"
           type="submit"
           disabled={!usernameInput.isValid || !emailInput.isValid || !passwordInput.isValid}
         >
           Register
-        </button>
+        </Button>
         <p className="auth-form__text">
           Already registered? <Link to={'/login'}>Log in</Link>
         </p>

@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { authActions } from '../store/auth';
 import React, { useState } from 'react';
 import FormInput from '../components/form-input';
+import Button from '../components/button';
 
 const LogIn = () => {
   const dispatch = useAppDispatch();
@@ -92,13 +93,13 @@ const LogIn = () => {
           )}
         </div>
 
-        <button
+        <Button
           className="auth-form__submit"
           type="submit"
           disabled={!emailInput.isValid || !passwordInput.isValid}
         >
           Log in
-        </button>
+        </Button>
         <p className="auth-form__text">
           Don`t have an account? <Link to={'/signup'}>Sign up</Link>
         </p>
