@@ -144,11 +144,11 @@
         margin-right: 5px;
 
         &.correct-answer {
-          color: #00fc22;
+          color: $color-green;
         }
 
         &.wrong-answer {
-          color: #fc0000;
+          color: $color-red;
         }
       }
     }
