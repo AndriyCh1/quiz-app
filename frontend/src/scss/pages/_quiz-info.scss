@@ -1,0 +1,156 @@
+.quiz-info{
+  padding-top: 20px;
+}
+
+.quiz-details-up {
+  @include flex(center, flex-start);
+  gap: 30px;
+}
+
+.quiz-details-down {
+  margin-top: 20px;
+  @include flex(center, space-between);
+}
+
+.quiz-details {
+  padding: 15px 40px;
+
+  &__image {
+    width: 20%;
+    object-fit: cover;
+    min-width: 110px;
+    max-width: 170px;
+
+    img {
+      border-radius: 5px;
+    }
+  }
+
+  &__text {
+    width: 80%;
+  }
+
+  &__type {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: $color-grey-3;
+  }
+
+  &__title {
+    padding: 10px 0;
+  }
+
+  &__content {
+    font-size: 1rem;
+  }
+  
+  &__other {
+    margin-top: 10px;
+    color: $color-grey-3;
+    font-weight: 500;
+
+    &__item {
+      @include flex(center, flex-start);
+      gap: 5px;
+      font-size: 0.9rem;
+
+      &__icon {
+        font-size: 1.2rem;
+      }
+
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+
+  &__user {
+    font-size: 1rem;
+    @include flex(center, flex-start);
+    gap: 10px;
+
+    &__image {
+      height: 40px;
+      width: 40px;
+    }
+    &__info {
+      &__name {
+        color: $color-black;
+      }
+
+      &__created {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  &__actions {
+    @include flex(cener, flex-end);
+    gap: 10px;
+
+    &__btn {
+      padding: 8px 20px;
+    }
+  }
+}
+
+.quiz-question {
+  margin-top: 20px;
+  padding: 15px 20px;
+
+  &__top {
+    @include flex(center, space-between);
+    font-size: 1rem;
+
+    &__right {
+      @include flex(center, flex-end);
+      gap: 10px;
+    }
+  }
+
+  &__meta {
+    border: 1px solid $color-grey-2;
+    border-radius: 5px;
+    padding: 5px;
+    color: $color-black;
+    font-weight: 500;
+    @include flex(center, space-between);
+    gap: 4px;
+
+    &__icon {
+      font-size: 1.1rem;
+    }
+  }
+
+  &__main {
+    margin-top: 20px;
+  }
+
+  &__question {
+    font-size: 1.1rem;
+  }
+
+  &__answers {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 24%));
+    gap: 5px;
+
+    &__item {
+      align-items: center;
+
+      &__icon {
+        font-size: 1rem;
+        margin-right: 5px;
+
+        &.correct-answer {
+          color: #00fc22;
+        }
+
+        &.wrong-answer {
+          color: #fc0000;
+        }
+      }
+    }
+  }
+}

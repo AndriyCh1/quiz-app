@@ -8,7 +8,7 @@ import QuizItem from '../components/quiz-item';
 
 import { BsSearch as SearchIcon } from 'react-icons/bs';
 
-import quizList from '../assets/data/QuizList';
+import quizList from '../assets/data/quiz-list';
 
 const Home = () => {
   const quizzes = [

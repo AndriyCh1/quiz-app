@@ -1,5 +1,3 @@
-import exp from 'constants';
-
 export interface IQuizAnswer {
   id: number;
   active: boolean;
@@ -13,6 +11,7 @@ export interface IQuizQuestion {
   type: 'single choice' | 'multiple-choice' | 'select' | 'input';
   score: number;
   content: string;
+  time: number; // seconds
   quizAnswers: IQuizAnswer[];
 }
 
@@ -44,6 +43,7 @@ const quizList: IQuiz[] = [
         type: 'single choice',
         content: 'What multiplication sentence matches 4+4+4+4+4 ?',
         score: 2,
+        time: 30,
         quizAnswers: [
           {
             id: 1,
@@ -78,6 +78,7 @@ const quizList: IQuiz[] = [
         content:
           'If Jake has 12 fish and then gets 5 times as many fish, how many fish does Jake have now?',
         score: 4,
+        time: 30,
         quizAnswers: [
           {
             id: 1,
@@ -111,4 +112,6 @@ const quizList: IQuiz[] = [
 
 const getAll = () => quizList;
 
-export default { getAll };
+const findBySlug = (slug: string) => quizList.find((item) => item.slug === slug);
+
+export default { getAll, findBySlug };
