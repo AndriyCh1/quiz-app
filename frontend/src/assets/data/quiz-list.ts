@@ -48,7 +48,7 @@ const quizList: IQuiz[] = [
           {
             id: 1,
             active: true,
-            content: '4 x 5',
+            content: '4 x 5 ',
             correct: true,
           },
           {

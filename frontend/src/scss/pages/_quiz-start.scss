@@ -5,8 +5,18 @@
     padding: 20px;
 
     &__score {
-      @include flex(center, center);
+      @include flex(center, flex-start);
       gap: 5px;
+      flex-basis: 20%;
+
+      &__icon {
+        font-size: 1.5rem;
+      }
+    }
+
+    &__close-wrapper {
+      flex-basis: 20%;
+      justify-self: end;
     }
 
     &__close {
@@ -15,20 +25,32 @@
       width: 40px;
       height: 40px;
       @include flex(center, center);
+      margin-left: auto;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $color-grey-1;
+      }
 
       &__icon {
         font-size: 1.3rem;
       }
     }
 
+    &__title {
+      flex-basis: 60%;
+    }
+
     &__title > h1 {
       font-size: 1rem;
       color: $color-grey-4;
+      text-align: center;
     }
   }
 
   &__content {
     height: 90%;
+    width: 100%;
 
     &__question {
       margin-bottom: 30px;
@@ -41,14 +63,25 @@
       gap: 20px;
       padding: 35px 20px;
       margin: 0 auto;
+      max-width: 50%;
 
       &__item {
         background-color: $color-grey-1;
         border-radius: 5px;
         padding: 15px;
-        flex: 1 1 100%;
         @include flex(center, flex-start);
+        flex: 1 1 100%;
         gap: 10px;
+        border: 2px solid transparent;
+
+        &:hover, &.active {
+          cursor: pointer;
+          background-color: $color-grey-2;
+        }
+
+        &:hover  &__sequence, &.active &__sequence {
+          background-color: $color-grey-1;
+        }
 
         &__sequence {
           background-color: $color-grey-2;
@@ -56,7 +89,10 @@
           width: 40px;
           height: 40px;
           @include flex(center, center);
+          flex: 0 0 40px;
         }
+
+
       }
     }
   }
