@@ -1,0 +1,3 @@
+const getImageByScore = () => {};
+
+export { getImageByScore };

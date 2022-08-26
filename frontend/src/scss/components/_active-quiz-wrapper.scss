@@ -1,0 +1,98 @@
+.active-quiz-wrapper  {
+  margin: 40px 0;
+  min-height: calc(100vh - 80px);
+  @include flex(center, space-between);
+  flex-direction: column;
+
+  &__top {
+    position: relative;
+    @include flex(center, space-between);
+    width: 100%;
+    padding-top: 20px;
+
+    &__back-wrapper, &__close-wrapper {
+      position: absolute;
+      top: 20px;
+    }
+
+    &__back-wrapper {
+      left: 20px;
+    }
+
+    &__close-wrapper {
+      right: 20px;
+    }
+
+    &__score {
+      @include flex(center, center);
+      gap: 3px;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    &__back, &__close {
+      background-color: $color-grey-2;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      @include flex(center, center);
+      margin-left: auto;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $color-grey-1;
+      }
+
+      &__icon {
+        font-size: 1.3rem;
+      }
+    }
+
+    &__info {
+      margin: 0 auto;
+      max-width: 60%;
+      text-align: center;
+
+      & > h1 {
+        font-size: 1.1rem;
+        color: $color-grey-4;
+      }
+    }
+  }
+
+  &__bottom {
+    width: 100%;
+    height: 80px;
+    background-color: $color-grey-1;
+    @include flex(center, center);
+    flex-wrap: wrap;
+    gap: 20%;
+
+    &__chart {
+      @include flex(center, center);
+      gap: 15px;
+      font-size: 0.9rem;
+      color: $color-grey-4;
+
+      &__line-wrapper {
+        position: relative;
+        width: 200px;
+        height: 10px;
+        border-radius: 10px;
+        background-color: $color-primary;
+      }
+
+      &__line {
+        position: absolute;
+        height: 100%;
+        background-color: $color-green;
+        z-index: 1000;
+        border-radius: inherit;
+      }
+    }
+
+    &__btn {
+      padding: 10px 40px;
+    }
+  }
+}

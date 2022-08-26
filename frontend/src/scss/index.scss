@@ -7,8 +7,10 @@
 @import "components/container";
 @import "components/wrapper";
 @import "components/quiz-item";
+@import "components/result";
+@import "components/active-quiz-wrapper";
 
 @import "pages/auth";
 @import "pages/home";
 @import "pages/quiz-info";
-@import "pages/quiz-start";
+@import "pages/active-quiz";

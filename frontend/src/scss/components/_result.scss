@@ -1,0 +1,63 @@
+.quiz-finish-wrapper {
+  margin: 40px 0;
+  min-height: calc(100vh - 80px);
+  @include flex(center, center);
+  gap: 20px;
+  position: relative;
+
+  &__top {
+    @include flex(center, space-between);
+    width: 100%;
+    padding-top: 20px;
+
+    &__close-wrapper {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    &__close {
+      background-color: $color-grey-2;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      @include flex(center, center);
+      margin-left: auto;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $color-grey-1;
+      }
+
+      &__icon {
+        font-size: 1.3rem;
+      }
+    }
+  }
+  &__chart {
+    width: 200px;
+  }
+
+  &__details {
+    &__item {
+      @include flex(center, flex-start);
+      gap: 10px;
+    }
+
+    &__incorrect {
+      &__icon {
+        color: $color-red;
+        font-size: 1.3rem;
+        width: 10%;
+      }
+    }
+
+    &__score,
+    &__time {
+      &__icon {
+        color: $color-grey-4;
+        width: 10%;
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ import { authActions } from '../store/auth';
 import LogIn from '../pages/login';
 import SignUp from '../pages/signup';
 import QuizInfo from '../pages/quiz-info';
-import QuizStart from '../pages/quiz-start';
+import ActiveQuiz from '../pages/active-quiz';
 
 const Router = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ const Router = () => {
       {!isAuth ? (
         <Routes>
           <Route path="/quiz/:slug" element={<QuizInfo />} />
-          <Route path="/quiz/:slug/start" element={<QuizStart />} />
+          <Route path="/quiz/:slug/start" element={<ActiveQuiz />} />
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
