@@ -5,7 +5,7 @@ import Header from './header';
 import Button from './button';
 import { ILink } from '../common/interfaces/header';
 
-import { UserRoutes as Routes } from '../common/enums/router';
+import { UserRoutes as Routes } from '../common/enums';
 
 const links: ILink[] = [
   { display: 'Public quizzes', to: Routes.PublicQuizzes },

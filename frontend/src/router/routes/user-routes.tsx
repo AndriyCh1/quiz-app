@@ -8,7 +8,7 @@ import Created from '../../pages/created';
 import CreateQuiz from '../../pages/create-quiz';
 import History from '../../pages/history';
 
-import { UserRoutes as Routes } from '../../common/enums/router';
+import { UserRoutes as Routes } from '../../common/enums';
 
 const userRoutes: IRoute[] = [
   { path: Routes.QuizInfo, element: <QuizInfo /> },

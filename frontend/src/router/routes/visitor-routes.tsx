@@ -7,7 +7,7 @@ import Home from '../../pages/home';
 import QuizInfo from '../../pages/quiz-info';
 import ActiveQuiz from '../../pages/active-quiz';
 
-import { VisitorRoutes as Routes } from '../../common/enums/router';
+import { VisitorRoutes as Routes } from '../../common/enums';
 
 const visitorRoutes: IRoute[] = [
   { path: Routes.Login, element: <LogIn /> },
