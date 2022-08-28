@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import useInput from '../hooks/useInput';
 
-import { AuthFormPlaceholder } from './common/auth/enums';
+import { AuthFormPlaceholder } from './common/enums/auth';
 import { authActions } from '../store/auth';
 
 import FormInput from '../components/form-input';

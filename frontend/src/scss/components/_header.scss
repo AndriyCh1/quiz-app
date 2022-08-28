@@ -1,0 +1,58 @@
+.header-wrapper {
+  padding: 0 75px;
+  width: 100%;
+  max-width: 1620px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: $color-primary;
+  height: 60px;
+  @include flex(center, flex-end);
+
+  &__logo {
+    width: auto;
+    height: 40px;
+
+    img {
+      object-fit: contain;
+    }
+  }
+
+  &__nav {
+    @include flex(center, flex-end);
+    gap: 20px;
+    font-size: 1rem;
+
+    &__links,
+    &__btns {
+      @include flex(center, flex-end);
+      gap: 10px;
+    }
+
+    &__links {
+      &__item:hover {
+        font-weight: 500;
+      }
+    }
+
+    &__btns {
+      position: relative;
+
+      &:before {
+        content: '';
+        width: 2px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: -10px;
+        background-color: $color-grey-4;
+        transform: translateX(-50%);
+      }
+
+      &__item {
+        padding: 5px 10px;
+      }
+    }
+  }
+}

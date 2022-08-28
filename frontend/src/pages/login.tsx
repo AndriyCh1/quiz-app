@@ -1,4 +1,4 @@
-import { AuthFormPlaceholder } from './common/auth/enums';
+import { AuthFormPlaceholder } from './common/enums/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';

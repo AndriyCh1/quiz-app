@@ -11,13 +11,7 @@ import { BsSearch as SearchIcon } from 'react-icons/bs';
 import quizList from '../assets/data/quiz-list';
 
 const Home = () => {
-  const quizzes = [
-    ...quizList.getAll(),
-    ...quizList.getAll(),
-    ...quizList.getAll(),
-    ...quizList.getAll(),
-    ...quizList.getAll(),
-  ];
+  const quizzes = [...quizList.getAll(), ...quizList.getAll(), ...quizList.getAll()];
 
   const navigate = useNavigate();
 

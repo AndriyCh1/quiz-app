@@ -1,6 +1,5 @@
 .active-quiz-wrapper  {
-  margin: 40px 0;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 60px - 20px - 20px); // minus header height and paddings
   @include flex(center, space-between);
   flex-direction: column;
 
