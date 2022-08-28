@@ -27,10 +27,11 @@
     &__links,
     &__btns {
       @include flex(center, flex-end);
-      gap: 10px;
     }
 
     &__links {
+      gap: 20px;
+
       &__item:hover {
         font-weight: 500;
       }
@@ -38,6 +39,7 @@
 
     &__btns {
       position: relative;
+      gap: 10px;
 
       &:before {
         content: '';

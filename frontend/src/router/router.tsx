@@ -6,6 +6,8 @@ import { authActions } from '../store/auth';
 import Header from '../components/header';
 import VisitorRouting from './visitor-routing';
 import UserRouting from './user-routing';
+import VisitorHeader from '../components/visitor-header';
+import UserHeader from '../components/user-header';
 
 const Router = () => {
   const dispatch = useAppDispatch();
@@ -19,14 +21,14 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      {isAuth ? (
+      {!isAuth ? (
         <>
-          <Header />
+          <UserHeader />
           <UserRouting />
         </>
       ) : (
         <>
-          <Header />
+          <VisitorHeader />
           <VisitorRouting />
         </>
       )}

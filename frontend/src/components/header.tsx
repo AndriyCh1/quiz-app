@@ -1,34 +1,36 @@
 import React from 'react';
-import Button from './button';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Header = () => {
-  const navigate = useNavigate();
+interface IBaseProps {
+  children: React.ReactNode;
+}
 
+type LinksComponent<T> = React.FunctionComponent<T>;
+type ButtonsComponent<T> = React.FunctionComponent<T>;
+type HeaderComponent<T, Y, K> = React.FunctionComponent<T> & {
+  Links: LinksComponent<Y>;
+  Buttons: ButtonsComponent<K>;
+};
+
+const Header: HeaderComponent<IBaseProps, IBaseProps, IBaseProps> = ({ children }) => {
   return (
     <div className="header-wrapper">
       <header className="header">
-        {/*<div className="header__logo">*/}
-        {/*  <img src={logo} alt="" />*/}
-        {/*</div>*/}
-        <div className="header__nav">
-          <ul className="header__nav__links">
-            <Link className="header__nav__links__item" to="">
-              <li>Quizzes</li>
-            </Link>
-          </ul>
-          <div className="header__nav__btns">
-            <Button className="header__nav__btns__item" onClick={() => navigate('/login')}>
-              Login
-            </Button>
-            <Button className="header__nav__btns__item" onClick={() => navigate('/signup')}>
-              Sign up
-            </Button>
-          </div>
-        </div>
+        <div className="header__nav">{children}</div>
       </header>
     </div>
   );
 };
+
+export const Links: React.FC<IBaseProps> = ({ children }) => (
+  <ul className="header__nav__links">{children}</ul>
+);
+
+export const Buttons: React.FC<IBaseProps> = ({ children }) => {
+  return <div className="header__nav__btns">{children}</div>;
+};
+
+Header.Links = Links;
+Header.Buttons = Buttons;
 
 export default Header;
