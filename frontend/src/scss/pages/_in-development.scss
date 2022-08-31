@@ -1,0 +1,8 @@
+.in-development-wrapper {
+  height: 200px;
+  @include flex(center, center);
+
+  strong {
+    font-weight: 500;
+  }
+}
