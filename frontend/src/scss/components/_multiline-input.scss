@@ -1,0 +1,19 @@
+.multiline-input {
+  display: table-cell;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  border: 2px solid $color-grey-2;
+  border-radius: 3px;
+  outline: none;
+  background-color: $color-grey0;
+  padding: 8px;
+
+  &:focus {
+    transition: border-color 0.3s ease-in-out;
+    border-color: $color-grey-3;
+  }
+}
