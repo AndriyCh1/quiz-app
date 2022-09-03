@@ -6,12 +6,16 @@ interface IProps {
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   children?: React.ReactNode;
+  tooltip?: string;
 }
 
 const Button: React.FC<IProps> = (props) => {
+  const { className = '', type = 'button', disabled = false, onClick, children, tooltip } = props;
+
   return (
-    <button {...props} className={`button ${props.className}`}>
-      {props.children}
+    <button type={type} disabled={disabled} onClick={onClick} className={`button ${className}`}>
+      {children}
+      {tooltip ? <span className="button__tooltip">{tooltip}</span> : null}
     </button>
   );
 };
