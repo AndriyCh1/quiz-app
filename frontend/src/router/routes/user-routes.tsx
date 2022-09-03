@@ -9,6 +9,8 @@ import CreateQuiz from '../../pages/create-quiz';
 import History from '../../pages/history';
 
 import { UserRoutes as Routes } from '../../common/enums';
+import SingleChoiceCreator from '../../pages/single-choice-creator';
+import InDevelopment from '../../pages/in-development';
 
 const userRoutes: IRoute[] = [
   { path: Routes.QuizInfo, element: <QuizInfo /> },
@@ -17,6 +19,8 @@ const userRoutes: IRoute[] = [
   { path: Routes.CreatedQuizzes, element: <Created /> },
   { path: Routes.CreateQuiz, element: <CreateQuiz /> },
   { path: Routes.History, element: <History /> },
+  { path: Routes.SingleChoiceCreator, element: <SingleChoiceCreator /> },
+  { path: Routes.InDevelopment, element: <InDevelopment /> },
   { path: '*', element: <Navigate to={Routes.PublicQuizzes} /> },
 ];
 
