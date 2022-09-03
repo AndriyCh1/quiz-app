@@ -1,10 +1,10 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
 
 interface Props {
   className?: string;
   name: string;
   value?: string;
-  type?: string;
+  type?: HTMLInputTypeAttribute;
   placeholder?: string;
   icon?: JSX.Element;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const FormInput: React.FC<Props> = ({
-  className,
+  className = '',
   placeholder,
   icon,
   name,
@@ -22,12 +22,12 @@ const FormInput: React.FC<Props> = ({
   type = 'text',
 }) => {
   return (
-    <div className="form-input">
+    <div className={`form-input ${className}`}>
       {icon && icon}
       <input
         type={type}
         name={name}
-        className={className}
+        className={`form-input__input`}
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
