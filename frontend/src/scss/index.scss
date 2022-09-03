@@ -11,9 +11,14 @@
 @import "components/active-quiz-wrapper";
 @import "components/sidebar";
 @import "components/header";
+@import "components/set-tittle";
+@import "components/toggle";
+@import "components/multiline-input";
 
 @import "pages/auth";
 @import "pages/home";
 @import "pages/quiz-info";
 @import "pages/active-quiz";
+@import "pages/create-quiz";
 @import "pages/in-development";
+@import "pages/single-choice-creator";
