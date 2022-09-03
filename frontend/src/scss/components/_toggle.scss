@@ -1,0 +1,70 @@
+.toggle {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  height: 18px;
+  width: 32px;
+  border-radius: 50px;
+  background-color: $color-red;
+  @include flex(center, center);
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  &__button {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: $color-white;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+  }
+
+  &.active {
+    background-color: $color-green;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  &__input ~ &__button {
+    animation: toggle-move-left 0.3s linear;
+  }
+
+  &__input:checked ~ &__button {
+    left: unset;
+    right: 0;
+    animation: toggle-move-right 0.3s linear;
+  }
+}
+
+@keyframes toggle-move-right {
+  0% {
+    right: unset;
+    left: 0;
+  }
+  100% {
+    right: unset;
+    left: 100%;
+    transform: translate(-100%, -50%);
+  }
+}
+
+
+@keyframes toggle-move-left {
+  0% {
+    left: unset;
+    right: 0;
+  }
+  100% {
+    left: unset;
+    right: 100%;
+    transform: translate(100%, -50%);
+  }
+}
