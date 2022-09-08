@@ -1,0 +1,16 @@
+.select {
+  width: 100px;
+  padding: 11px;
+  outline: none;
+  border: 2px solid $color-grey-2;
+  border-radius: 4px;
+  font-size: 0.9rem;
+
+  &__option {
+    margin: 12px 0;
+    height: 20px;
+    &:checked {
+      background-color: $color-grey-1;
+    }
+  }
+}

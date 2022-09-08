@@ -7,6 +7,7 @@
 @import "components/container";
 @import "components/wrapper";
 @import "components/quiz-item";
+@import "components/quiz-list";
 @import "components/result";
 @import "components/active-quiz-wrapper";
 @import "components/sidebar";
@@ -14,6 +15,7 @@
 @import "components/set-quiz-meta";
 @import "components/toggle";
 @import "components/multiline-input";
+@import "components/select";
 
 @import "pages/auth";
 @import "pages/home";
@@ -22,3 +24,4 @@
 @import "pages/create-quiz";
 @import "pages/in-development";
 @import "pages/single-choice-creator";
+@import "pages/visitor-home";

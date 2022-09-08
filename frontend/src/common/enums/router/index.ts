@@ -1,8 +1,13 @@
+export enum QuizzesPageType {
+  All = 'all',
+  Public = 'public',
+  Created = 'created',
+}
+
 export enum UserRoutes {
   QuizInfo = '/quiz/:slug',
   ActiveQuiz = '/quiz/:slug/start',
-  PublicQuizzes = '/quizzes/public',
-  CreatedQuizzes = '/quizzes/created',
+  Quizzes = '/quizzes/:type',
   CreateQuiz = '/quizzes/create',
   History = '/quiz/history',
   SingleChoiceCreator = '/quizzes/create/single-choice',

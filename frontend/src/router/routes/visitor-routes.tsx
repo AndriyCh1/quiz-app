@@ -3,7 +3,7 @@ import { IRoute } from '../common/interfaces/IRoute';
 
 import LogIn from '../../pages/login';
 import SignUp from '../../pages/signup';
-import Home from '../../pages/home';
+import VisitorHome from '../../pages/visitor-home';
 import QuizInfo from '../../pages/quiz-info';
 import ActiveQuiz from '../../pages/active-quiz';
 
@@ -14,7 +14,7 @@ const visitorRoutes: IRoute[] = [
   { path: Routes.Signup, element: <SignUp /> },
   { path: Routes.QuizInfo, element: <QuizInfo /> },
   { path: Routes.ActiveQuiz, element: <ActiveQuiz /> },
-  { path: Routes.PublicQuizzes, element: <Home /> },
+  { path: Routes.PublicQuizzes, element: <VisitorHome /> },
   { path: '*', element: <Navigate to={Routes.PublicQuizzes} /> },
 ];
 

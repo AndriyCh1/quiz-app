@@ -110,8 +110,46 @@ const quizList: IQuiz[] = [
   },
 ];
 
+const createdQuizList: IQuiz[] = [
+  {
+    id: 1,
+    title: 'Biology: created by myself',
+    score: 10,
+    quizType: 'single choice',
+    time: 600, // seconds
+    content: 'Biology test lorem ipsum lorem ipsum, lorem ipsum',
+    slug: 'biology-created-by-myself-8df98e',
+    questions: [
+      {
+        id: 1,
+        active: true,
+        type: 'single choice',
+        content: 'What ghgh werertr dfdfd dfd ?',
+        score: 2,
+        time: 30,
+        quizAnswers: [
+          {
+            id: 1,
+            active: true,
+            content: 'qwerty',
+            correct: true,
+          },
+          {
+            id: 2,
+            active: true,
+            content: 'tail',
+            correct: false,
+          },
+        ],
+      },
+    ],
+  },
+];
+
 const getAll = () => quizList;
+const getAllCreated = () => createdQuizList;
 
-const findBySlug = (slug: string) => quizList.find((item) => item.slug === slug);
+const quizzes = [...quizList, ...createdQuizList];
+const findBySlug = (slug: string) => quizzes.find((item) => item.slug === slug);
 
-export default { getAll, findBySlug };
+export default { getAll, getAllCreated, findBySlug };
