@@ -1,3 +1,5 @@
+import { ChangeEvent, useState } from 'react';
+
 import Helmet from '../components/helmet';
 import Container from '../components/container';
 import Wrapper from '../components/wrapper';
@@ -7,7 +9,6 @@ import QuizList from '../components/quiz-list';
 import { BsSearch as SearchIcon } from 'react-icons/bs';
 
 import quizList from '../assets/data/quiz-list';
-import { ChangeEvent, useState } from 'react';
 
 const VisitorHome = () => {
   const publicQuizzes = [...quizList.getAll()];
@@ -25,9 +26,8 @@ const VisitorHome = () => {
         inputValue.trim() ? item.title.toLowerCase().includes(inputValue.toLowerCase()) : true,
       ),
     );
-    console.log(quizzes, 'quizzes');
   };
-  console.log(inputValue, 'inputValue');
+
   return (
     <Helmet title="Home">
       <Container className="home">
