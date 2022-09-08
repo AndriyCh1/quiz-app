@@ -6,7 +6,8 @@ import Button from './button';
 import { ILink } from '../common/interfaces/header';
 
 import { UserRoutes as Routes } from '../common/enums';
-import { QuizzesPageType } from '../common/enums/router';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { authActions } from '../store/auth';
 
 const links: ILink[] = [
   { display: 'Quizzes', to: Routes.Quizzes },
@@ -15,21 +16,25 @@ const links: ILink[] = [
 ];
 
 const UserHeader = () => {
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(authActions.logout());
+  };
+
   return (
     <Header>
       <Header.Links>
         {links.map((item, index) => (
-          <Link
-            key={index}
-            className="header__nav__links__item"
-            to={item.to.replace(':type', QuizzesPageType.All)}
-          >
+          <Link key={index} className="header__nav__links__item" to={item.to}>
             <li>{item.display}</li>
           </Link>
         ))}
       </Header.Links>
       <Header.Buttons>
-        <Button className="header__nav__btns__item"> Log out</Button>
+        <Button className="header__nav__btns__item" onClick={handleLogout}>
+          Log out
+        </Button>
       </Header.Buttons>
     </Header>
   );
