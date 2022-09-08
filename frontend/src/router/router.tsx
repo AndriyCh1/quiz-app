@@ -21,7 +21,7 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      {!isAuth ? (
+      {isAuth ? (
         <>
           <UserHeader />
           <UserRouting />
