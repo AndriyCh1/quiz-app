@@ -1,11 +1,11 @@
-.error-input {
-  border: 2px solid $color-dangerous !important;
-}
-
 .form-input {
   position: relative;
 
-  i {
+  &.error-input > &__input {
+    border: 2px solid $color-dangerous !important;
+  }
+
+  &__icon {
     position: absolute;
     top: 50%;
     left: 0.6rem;

@@ -1,4 +1,4 @@
-import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import React, { ChangeEvent, FC, HTMLInputTypeAttribute } from 'react';
 
 interface Props {
   className?: string;
@@ -11,7 +11,7 @@ interface Props {
   onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FormInput: React.FC<Props> = ({
+const FormInput: FC<Props> = ({
   className = '',
   placeholder,
   icon,
@@ -22,8 +22,8 @@ const FormInput: React.FC<Props> = ({
   type = 'text',
 }) => {
   return (
-    <div className={`form-input ${className}`}>
-      {icon && icon}
+    <div className={`form-input ${className || ''}`}>
+      <div className="form-input__icon">{icon && icon}</div>
       <input
         type={type}
         name={name}
@@ -32,6 +32,7 @@ const FormInput: React.FC<Props> = ({
         onChange={onChange}
         onBlur={onBlur}
         value={value}
+        style={icon ? { paddingLeft: '30px' } : {}}
       />
     </div>
   );

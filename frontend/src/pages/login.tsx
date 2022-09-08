@@ -1,11 +1,14 @@
-import { AuthFormPlaceholder } from './common/enums/auth';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { AuthFormPlaceholder } from './common/enums/auth';
 import useInput from '../hooks/useInput';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { authActions } from '../store/auth';
-import React, { useState } from 'react';
 import FormInput from '../components/form-input';
 import Button from '../components/button';
+import { MdAlternateEmail as EmailIcon } from 'react-icons/md';
+import { AiFillLock as LockIcon } from 'react-icons/ai';
 
 const LogIn = () => {
   const dispatch = useAppDispatch();
@@ -47,12 +50,10 @@ const LogIn = () => {
         <div className="auth-form__fieldset">
           <label className="auth-form__label">Email</label>
           <FormInput
-            className={`form-input__input ${
-              emailInput.isDirty && !emailInput.isValid && 'error-input'
-            }`}
+            className={emailInput.isDirty && !emailInput.isValid ? 'error-input' : ''}
             name="email"
             value={emailInput.value}
-            icon={<i className="fa fa-at"></i>}
+            icon={<EmailIcon />}
             placeholder={AuthFormPlaceholder.email}
             onChange={emailInput.onChange}
             onBlur={emailInput.onBlur}
@@ -61,7 +62,7 @@ const LogIn = () => {
             <span className="auth-form__error">{emailInput.isEmpty.errorMessage}</span>
           )}
 
-          {emailInput.isDirty && emailInput.emailError.value && (
+          {emailInput.isDirty && !emailInput.isEmpty.value && emailInput.emailError.value && (
             <span className="auth-form__error">{emailInput.emailError.errorMessage}</span>
           )}
 
@@ -69,28 +70,31 @@ const LogIn = () => {
 
           <label className="auth-form__label">Password</label>
           <FormInput
-            className={`form-input__input ${
-              passwordInput.isDirty && !passwordInput.isValid && 'error-input'
-            }`}
+            className={passwordInput.isDirty && !passwordInput.isValid ? 'error-input' : ''}
             name="password"
             type="password"
             value={passwordInput.value}
             placeholder={AuthFormPlaceholder.password}
-            icon={<i className="fa fa-lock"></i>}
+            icon={<LockIcon />}
             onChange={passwordInput.onChange}
             onBlur={passwordInput.onBlur}
           />
+
           {passwordInput.isDirty && passwordInput.isEmpty.value && (
             <span className="auth-form__error">{passwordInput.isEmpty.errorMessage}</span>
           )}
 
-          {passwordInput.isDirty && passwordInput.minLengthError.value && (
-            <span className="auth-form__error">{passwordInput.minLengthError.errorMessage}</span>
-          )}
+          {passwordInput.isDirty &&
+            !passwordInput.isEmpty.value &&
+            passwordInput.minLengthError.value && (
+              <span className="auth-form__error">{passwordInput.minLengthError.errorMessage}</span>
+            )}
 
-          {passwordInput.isDirty && passwordInput.maxLengthError.value && (
-            <span className="auth-form__error">{passwordInput.maxLengthError.errorMessage}</span>
-          )}
+          {passwordInput.isDirty &&
+            !passwordInput.isEmpty.value &&
+            passwordInput.maxLengthError.value && (
+              <span className="auth-form__error">{passwordInput.maxLengthError.errorMessage}</span>
+            )}
         </div>
 
         <Button

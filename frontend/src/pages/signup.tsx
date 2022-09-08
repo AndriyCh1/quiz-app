@@ -9,6 +9,10 @@ import { authActions } from '../store/auth';
 import FormInput from '../components/form-input';
 import Button from '../components/button';
 
+import { MdAlternateEmail as EmailIcon } from 'react-icons/md';
+import { AiFillLock as LockIcon } from 'react-icons/ai';
+import { FaUser as UserIcon } from 'react-icons/fa';
+
 const SignUp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -57,12 +61,10 @@ const SignUp = () => {
 
           <label className="auth-form__label">Full name</label>
           <FormInput
-            className={`form-input__input ${
-              usernameInput.isDirty && !usernameInput.isValid && 'error-input'
-            }`}
+            className={usernameInput.isDirty && !usernameInput.isValid ? 'error-input' : ''}
             name="username"
             value={usernameInput.value}
-            icon={<i className="fa fa-user"></i>}
+            icon={<UserIcon />}
             placeholder={AuthFormPlaceholder.username}
             onChange={usernameInput.onChange}
             onBlur={usernameInput.onBlur}
@@ -81,13 +83,11 @@ const SignUp = () => {
 
           <label className="auth-form__label">Email</label>
           <FormInput
-            className={`form-input__input ${
-              emailInput.isDirty && !emailInput.isValid && 'error-input'
-            }`}
+            className={emailInput.isDirty && !emailInput.isValid ? 'error-input' : ''}
             name="email"
             type="email"
             value={emailInput.value}
-            icon={<i className="fa fa-at"></i>}
+            icon={<EmailIcon />}
             placeholder={AuthFormPlaceholder.email}
             onChange={emailInput.onChange}
             onBlur={emailInput.onBlur}
@@ -104,14 +104,12 @@ const SignUp = () => {
 
           <label className="auth-form__label">Password</label>
           <FormInput
-            className={`form-input__input ${
-              passwordInput.isDirty && !passwordInput.isValid && 'error-input'
-            }`}
+            className={passwordInput.isDirty && !passwordInput.isValid ? 'error-input' : ''}
             name="password"
             type="password"
             value={passwordInput.value}
             placeholder={AuthFormPlaceholder.password}
-            icon={<i className="fa fa-lock"></i>}
+            icon={<LockIcon />}
             onChange={passwordInput.onChange}
             onBlur={passwordInput.onBlur}
           />
