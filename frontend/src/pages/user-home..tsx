@@ -7,7 +7,7 @@ import Button from '../components/button';
 
 import { BsSearch as SearchIcon } from 'react-icons/bs';
 
-import quizList from '../assets/data/quiz-list';
+import quizList, { IQuiz } from '../assets/data/quiz-list';
 import QuizList from '../components/quiz-list';
 import Select, { Option } from '../components/select';
 
@@ -17,40 +17,72 @@ enum SelectOptions {
   PUBLIC = 'public',
 }
 
+interface IFilter {
+  select: string;
+  searchValue: string;
+}
+
 const VisitorHome = () => {
   const publicQuizzes = [...quizList.getAll()];
   const createdQuizzes = [...quizList.getAllCreated()];
 
   const [quizzes, setQuizzes] = useState(createdQuizzes.concat(publicQuizzes));
-  const [selectValue, setSelectValue] = useState<string>(SelectOptions.ALL);
+
+  const [filter, setFilter] = useState<IFilter>({ select: SelectOptions.ALL, searchValue: '' });
 
   const updateQuizzes = () => {
-    switch (selectValue) {
+    let newQuizzesList: IQuiz[] | null = null;
+
+    switch (filter.select) {
       case SelectOptions.ALL:
-        setQuizzes(createdQuizzes.concat(publicQuizzes));
+        newQuizzesList = createdQuizzes.concat(publicQuizzes);
         break;
       case SelectOptions.CREATED:
-        setQuizzes(createdQuizzes);
+        newQuizzesList = createdQuizzes;
         break;
       case SelectOptions.PUBLIC:
-        setQuizzes(publicQuizzes);
+        newQuizzesList = publicQuizzes;
         break;
+    }
+
+    if (newQuizzesList) {
+      setQuizzes(
+        newQuizzesList.filter((item) =>
+          filter.searchValue.trim()
+            ? item.title.toLowerCase().includes(filter.searchValue.toLowerCase())
+            : true,
+        ),
+      );
     }
   };
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectValue(e.target.value);
+    setFilter((state) => ({ ...state, select: e.target.value }));
+  };
+
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilter((state) => ({ ...state, searchValue: e.target.value }));
+  };
+
+  const handleSearchClick = () => {
+    setQuizzes((state) =>
+      state.filter((item) =>
+        filter.searchValue.trim()
+          ? item.title.toLowerCase().includes(filter.searchValue.toLowerCase())
+          : true,
+      ),
+    );
   };
 
   useEffect(() => {
     updateQuizzes();
-  }, [selectValue]);
+  }, [filter.select]);
 
   return (
     <Helmet title="Home">
       <Container className="home">
         <div className="home-search-user">
-          <Select value={selectValue} onChange={handleSelectChange}>
+          <Select value={filter.select} onChange={handleSelectChange}>
             <Option value="all">All</Option>
             <Option value="public">Public</Option>
             <Option value="created">Created</Option>
@@ -58,8 +90,10 @@ const VisitorHome = () => {
           <div className="home-search">
             <div className="home-search__input">
               <SearchIcon className="home-search__input__icon" />
-              <input type="text" />
-              <Button className="home-search__input__button">Search</Button>
+              <input type="text" value={filter.searchValue} onChange={handleChangeInput} />
+              <Button className="home-search__input__button" onClick={handleSearchClick}>
+                Search
+              </Button>
             </div>
           </div>
         </div>
