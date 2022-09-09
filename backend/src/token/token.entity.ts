@@ -1,11 +1,9 @@
-import { Column, Entity, OneToOne, JoinColumn, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
-import User from '../user/user.entity';
+import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+import { User } from '../user/user.entity';
+import { AbstractEntity } from '../abstract/abstract-entity';
 
 @Entity()
-class Token extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: string;
-
+export class Token extends AbstractEntity {
   @Column()
   refreshToken: string;
 
@@ -13,5 +11,3 @@ class Token extends BaseEntity {
   @JoinColumn()
   user: User;
 }
-
-export default Token;

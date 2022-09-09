@@ -1,10 +1,9 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { Quiz } from '../quiz/quiz.entity';
+import { AbstractEntity } from '../abstract/abstract-entity';
 
 @Entity()
-class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id: string;
-
+export class User extends AbstractEntity {
   @Column()
   email: string;
 
@@ -13,6 +12,7 @@ class User extends BaseEntity {
 
   @Column({ nullable: true })
   public fullName: string;
-}
 
-export default User;
+  @OneToMany((type) => Quiz, (quiz) => quiz.user)
+  quiz: Quiz;
+}
