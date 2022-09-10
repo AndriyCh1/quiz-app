@@ -37,7 +37,10 @@ class QuizService {
   }
 
   public async getAll(): Promise<Quiz[]> {
-    return await this.quizRepository.find();
+    return await this.quizRepository
+      .createQueryBuilder('quiz')
+      .leftJoinAndSelect('quiz.questions', 'questions')
+      .getMany();
   }
 
   public async create(userId: User['id'], quizData: QuizDto): Promise<Quiz> {
