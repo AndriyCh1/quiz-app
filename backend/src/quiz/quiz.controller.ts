@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import QuizService from './quiz.service';
-import { getTreeRepository } from 'typeorm';
 import QuizDto from './dto/quiz.dto';
 import validationMiddleware from '../middlewares/validation.middleware';
 import { IAuthRequest } from '../common/interfaces';
-import authMiddleware from '../middlewares/auth.middleware';
 
 class QuizController {
   public path = '/quizzes';
@@ -15,8 +13,8 @@ class QuizController {
   }
 
   private initializeRoutes() {
-    // @ts-ignore
-    this.router.use(authMiddleware);
+    // TODO: separate users` access for this route
+    // this.router.use(authMiddleware);
     this.router.get(`${this.path}/`, this.getAllQuizzes.bind(this));
     this.router.get(`${this.path}/:id`, this.getQuizById.bind(this));
     this.router.post(`${this.path}/`, validationMiddleware(QuizDto), this.createQuiz.bind(this));
@@ -27,7 +25,7 @@ class QuizController {
   private async getQuizById(req: Request, res: Response, next: NextFunction) {
     try {
       const quizId: string = req.params.id as unknown as string;
-      const quiz = await this.quizService.getById(quizId);
+      const quiz = await this.quizService.getDeepById(quizId);
       res.send(quiz);
     } catch (e) {
       next(e);

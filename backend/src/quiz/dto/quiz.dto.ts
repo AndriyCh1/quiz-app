@@ -2,6 +2,9 @@ import { IsBoolean, IsEnum, IsNumber, IsString } from 'class-validator';
 import { QuizTypes } from '../../common/enums';
 
 class QuizDto {
+  @IsString()
+  title: string;
+
   @IsBoolean()
   active: boolean;
 

@@ -7,6 +7,9 @@ import { QuizTypes } from '../common/enums';
 @Entity()
 export class Quiz extends AbstractEntity {
   @Column()
+  title: string;
+
+  @Column()
   active: boolean;
 
   @Column({ type: 'enum', enum: QuizTypes })
@@ -25,5 +28,5 @@ export class Quiz extends AbstractEntity {
   user: User;
 
   @OneToMany(() => QuizQuestion, (quizQuestion) => quizQuestion.quiz, { onDelete: 'CASCADE' })
-  question: QuizQuestion[];
+  questions: QuizQuestion[];
 }
