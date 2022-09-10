@@ -9,7 +9,7 @@ import History from '../../pages/history';
 import { UserRoutes as Routes } from '../../common/enums';
 import SingleChoiceCreator from '../../pages/single-choice-creator';
 import InDevelopment from '../../pages/in-development';
-import UserHome from '../../pages/user-home.';
+import UserHome from '../../pages/user-home';
 
 const userRoutes: IRoute[] = [
   { path: Routes.QuizInfo, element: <QuizInfo /> },

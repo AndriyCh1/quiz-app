@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { IRoute } from '../common/interfaces/IRoute';
 
 import LogIn from '../../pages/login';
@@ -15,7 +15,7 @@ const visitorRoutes: IRoute[] = [
   { path: Routes.QuizInfo, element: <QuizInfo /> },
   { path: Routes.ActiveQuiz, element: <ActiveQuiz /> },
   { path: Routes.PublicQuizzes, element: <VisitorHome /> },
-  { path: '*', element: <Navigate to={Routes.PublicQuizzes} /> },
+  { path: '*', element: <Link to={Routes.PublicQuizzes} /> },
 ];
 
 export { visitorRoutes };

@@ -7,9 +7,10 @@ import Button from '../components/button';
 
 import { BsSearch as SearchIcon } from 'react-icons/bs';
 
-import quizList, { IQuiz } from '../assets/data/quiz-list';
+import quizList from '../assets/data/quiz-list';
 import QuizList from '../components/quiz-list';
 import Select, { Option } from '../components/select';
+import { IQuiz } from '../common/interfaces';
 
 enum SelectOptions {
   ALL = 'all',
@@ -22,7 +23,7 @@ interface IFilter {
   searchValue: string;
 }
 
-const VisitorHome = () => {
+const UserHome = () => {
   const publicQuizzes = [...quizList.getAll()];
   const createdQuizzes = [...quizList.getAllCreated()];
 
@@ -105,4 +106,4 @@ const VisitorHome = () => {
   );
 };
 
-export default VisitorHome;
+export default UserHome;

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import Helmet from '../components/helmet';
 import Container from '../components/container';
@@ -8,13 +8,16 @@ import QuizList from '../components/quiz-list';
 
 import { BsSearch as SearchIcon } from 'react-icons/bs';
 
-import quizList from '../assets/data/quiz-list';
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
+import { quizzesActions } from '../store/quizzes';
 
 const VisitorHome = () => {
-  const publicQuizzes = [...quizList.getAll()];
+  const dispatch = useAppDispatch();
+
+  const allQuizzes = useAppSelector((state) => state.quizzes.quizzes);
 
   const [inputValue, setInputValue] = useState('');
-  const [quizzes, setQuizzes] = useState(publicQuizzes);
+  const [quizzes, setQuizzes] = useState(allQuizzes);
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -22,11 +25,19 @@ const VisitorHome = () => {
 
   const handleSearchClick = () => {
     setQuizzes(
-      publicQuizzes.filter((item) =>
+      allQuizzes.filter((item) =>
         inputValue.trim() ? item.title.toLowerCase().includes(inputValue.toLowerCase()) : true,
       ),
     );
   };
+
+  useEffect(() => {
+    dispatch(quizzesActions.getAll());
+  }, []);
+
+  useEffect(() => {
+    setQuizzes(allQuizzes);
+  }, [allQuizzes]);
 
   return (
     <Helmet title="Home">

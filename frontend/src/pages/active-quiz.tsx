@@ -6,12 +6,15 @@ import NotFound from './not-found';
 import Container from '../components/container';
 import Helmet from '../components/helmet';
 
-import quizList, { IQuizAnswer } from '../assets/data/quiz-list';
+import quizList from '../assets/data/quiz-list';
+
 import { alphabetGenerator } from '../utils/alphabet-generator';
 
 import ActiveQuizWrapper from '../components/active-quiz-wrapper';
 import Result from '../components/result';
 import useStopwatch from '../hooks/useStopwatch';
+
+import { IQuizAnswer } from '../common/interfaces';
 
 interface IAnsweredQuestion {
   index: number;
@@ -23,7 +26,7 @@ const ActiveQuiz = () => {
 
   const params = useParams() as { slug: string };
   const stopwatch = useStopwatch();
-  const quiz = quizList.findBySlug(params.slug);
+  const quiz = quizList.getAll()[0];
   const generateAlphabet = alphabetGenerator();
 
   const [totalTimeValue, setTotalTimeValue] = useState(0);
@@ -154,7 +157,7 @@ const ActiveQuiz = () => {
                 {questions[currentQuestionIndex].content}
               </h3>
               <div className="active-quiz__content__answers">
-                {questions[currentQuestionIndex].quizAnswers.map((item, index) => (
+                {questions[currentQuestionIndex].answers.map((item, index) => (
                   <QuizStartAnswer
                     key={index}
                     content={item.content}

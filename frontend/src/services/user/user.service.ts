@@ -1,5 +1,5 @@
 import HttpService from '../http/http.service';
-import { ILogoutResponse, IUser } from '../../common/interfaces';
+import { IUser } from '../../common/interfaces';
 import { HttpMethod } from '../../common/enums';
 
 class UserService {
@@ -12,7 +12,7 @@ class UserService {
   }
 
   public getAllUsers = async () => {
-    return this.http.load<IUser[]>(`${this.path}/user/users`, {
+    return await this.http.load<IUser[]>(`${this.path}/user/users`, {
       method: HttpMethod.GET,
     });
   };

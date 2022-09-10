@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Helmet from '../components/helmet';
@@ -7,7 +7,6 @@ import Wrapper from '../components/wrapper';
 import NotFound from './not-found';
 
 import { secondsToMinutes } from '../utils/seconds-to-minutes';
-import quizList from '../assets/data/quiz-list';
 
 import { BiTimer as DurationIcon } from 'react-icons/bi';
 import {
@@ -22,13 +21,24 @@ import userImage from '../assets/images/default-user-image.png';
 import quizImage from '../assets/images/default-quiz-image.png';
 import Button from '../components/button';
 
+import { IQuizAnswer, IQuizQuestion } from '../common/interfaces';
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
+import { quizzesActions } from '../store/quizzes';
+
 const QuizInfo = () => {
-  const params = useParams() as { slug: string };
-  const quiz = quizList.findBySlug(params.slug);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const quiz = useAppSelector((state) => state.quizzes.quiz);
+
+  const params = useParams() as { id: string };
+
+  useEffect(() => {
+    dispatch(quizzesActions.getOneById(params.id));
+  }, []);
+
   if (quiz) {
-    const { title, quizType, questions, time, score, content } = quiz;
+    const { id, title, type, questions, time, score, content } = quiz;
     const questionsCount = questions.length;
     const { min, sec } = secondsToMinutes(time);
 
@@ -41,7 +51,7 @@ const QuizInfo = () => {
                 <img src={quizImage} alt="" />
               </div>
               <div className="quiz-details__text">
-                <div className="quiz-details__type">{quizType}</div>
+                <div className="quiz-details__type">{type}</div>
                 <h2 className="quiz-details__title">{title}</h2>
                 <p className="quiz-details__content">{content}</p>
                 <div className="quiz-details__other">
@@ -80,7 +90,7 @@ const QuizInfo = () => {
               <div className="quiz-details__actions">
                 <Button
                   className="quiz-details__actions__btn"
-                  onClick={() => navigate(`/quiz/${quiz.slug}/start`)}
+                  onClick={() => navigate(`/quiz/${id}/start`)}
                 >
                   Start
                 </Button>
@@ -97,7 +107,7 @@ const QuizInfo = () => {
               type={item.type}
               score={item.score}
               time={item.time}
-              quizAnswers={item.quizAnswers}
+              quizAnswers={item.answers}
             />
           ))}
           {/*<QuizQuestion />*/}
@@ -109,21 +119,13 @@ const QuizInfo = () => {
   return <NotFound />;
 };
 
-interface IQuizAnswer {
-  active: boolean; // TODO: implement logic
-  correct: boolean;
-  content: string;
-}
+// TODO: implement logic for "active" property
+type IQuizQuestionAnswer = Pick<IQuizAnswer, 'active' | 'correct' | 'content'>;
 
-interface IQuizQuestionProps {
+type IQuizQuestionProps = {
   index: number;
-  active: boolean; // TODO: implement logic
-  type: 'single choice' | 'multiple-choice' | 'select' | 'input';
-  score: number;
-  content: string;
-  time: number; // seconds
-  quizAnswers: IQuizAnswer[];
-}
+  quizAnswers: IQuizQuestionAnswer[];
+} & Pick<IQuizQuestion, 'active' | 'type' | 'score' | 'content' | 'time'>;
 
 const QuizQuestion: React.FC<IQuizQuestionProps> = (props) => {
   const { index, type, score, time, content, quizAnswers } = props;
@@ -167,7 +169,7 @@ const QuizQuestion: React.FC<IQuizQuestionProps> = (props) => {
   );
 };
 
-interface IQuizAnswerProps extends IQuizAnswer {
+interface IQuizAnswerProps extends IQuizQuestionAnswer {
   index: number;
 }
 
