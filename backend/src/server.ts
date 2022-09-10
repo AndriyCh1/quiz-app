@@ -12,6 +12,9 @@ import UserService from './user/user.service';
 import QuizController from './quiz/quiz.controller';
 import QuizService from './quiz/quiz.service';
 
+import QuizQuestionController from './quiz-question/quiz-question.controller';
+import QuizQuestionService from './quiz-question/quiz-question.service';
+
 validateEnv();
 
 (async () => {
@@ -26,6 +29,7 @@ validateEnv();
     new AuthController(new AuthService()),
     new UserController(new UserService()),
     new QuizController(new QuizService()),
+    new QuizQuestionController(new QuizQuestionService()),
   ]);
 
   app.listen();

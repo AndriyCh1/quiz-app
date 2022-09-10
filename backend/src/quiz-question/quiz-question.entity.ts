@@ -2,13 +2,7 @@ import { AbstractEntity } from '../abstract/abstract-entity';
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Quiz } from '../quiz/quiz.entity';
 import { QuizAnswer } from '../quiz-answer/quiz-answer.entity';
-
-enum QuestionTypes {
-  SINGLE_CHOICE = 'single-choice',
-  MULTIPLE_CHOICE = 'multiple-choice',
-  SELECT = 'select',
-  INPUT = 'input',
-}
+import { QuestionTypes } from '../common/enums';
 
 @Entity()
 export class QuizQuestion extends AbstractEntity {
@@ -22,7 +16,7 @@ export class QuizQuestion extends AbstractEntity {
   content: string;
 
   @Column({ type: 'enum', enum: QuestionTypes })
-  type: QuestionTypes;
+  type: string;
 
   @ManyToOne(() => Quiz, (quiz) => quiz.question)
   quiz: Quiz;
