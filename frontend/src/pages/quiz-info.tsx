@@ -24,6 +24,7 @@ import Button from '../components/button';
 import { IQuizAnswer, IQuizQuestion } from '../common/interfaces';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { quizzesActions } from '../store/quizzes';
+import { formatDate } from '../utils/format-date';
 
 const QuizInfo = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ const QuizInfo = () => {
   }, []);
 
   if (quiz) {
-    const { id, title, type, questions, time, score, content } = quiz;
+    const { id, title, type, questions, time, score, content, user, updatedAt } = quiz;
     const questionsCount = questions.length;
     const { min, sec } = secondsToMinutes(time);
 
@@ -83,8 +84,12 @@ const QuizInfo = () => {
                   <img src={userImage} alt="" />
                 </div>
                 <div className="quiz-details__user__info">
-                  <p className="quiz-details__user__info__name">Quizzer2000</p>
-                  <p className="quiz-details__user__info__created">a year ago</p>
+                  <p className="quiz-details__user__info__name">
+                    {user?.fullName || 'UnknownUser'}
+                  </p>
+                  <p className="quiz-details__user__info__created">
+                    Updated: {updatedAt ? formatDate(new Date(updatedAt)) : 'unknown'}
+                  </p>
                 </div>
               </div>
               <div className="quiz-details__actions">

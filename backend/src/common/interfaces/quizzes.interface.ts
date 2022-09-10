@@ -20,4 +20,7 @@ export interface IDeepQuiz {
   content: string;
   time: number;
   questions: IDeepQuestion[];
+  user: {
+    fullName: string;
+  };
 }
