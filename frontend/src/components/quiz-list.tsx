@@ -19,7 +19,7 @@ const QuizList: React.FC<IProps> = ({ quizzes }) => {
             title={item.title}
             type={item.type}
             content={item.content}
-            questionCount={item.questions?.length || 0} // TODO: find out why occurs here if to remove ? and || 0
+            questionCount={item.questions.length}
             onClick={() => navigate(`/quiz/${item.id}`)}
             onButtonClick={() => navigate(`/quiz/${item.id}/start`)}
           />
