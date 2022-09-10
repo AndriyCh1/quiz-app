@@ -106,11 +106,10 @@ const QuizInfo = () => {
               active={item.active}
               type={item.type}
               score={item.score}
-              time={item.time}
+              // time={item.time}
               quizAnswers={item.answers}
             />
           ))}
-          {/*<QuizQuestion />*/}
         </Container>
       </Helmet>
     );
@@ -125,10 +124,10 @@ type IQuizQuestionAnswer = Pick<IQuizAnswer, 'active' | 'correct' | 'content'>;
 type IQuizQuestionProps = {
   index: number;
   quizAnswers: IQuizQuestionAnswer[];
-} & Pick<IQuizQuestion, 'active' | 'type' | 'score' | 'content' | 'time'>;
+} & Pick<IQuizQuestion, 'active' | 'type' | 'score' | 'content'>;
 
 const QuizQuestion: React.FC<IQuizQuestionProps> = (props) => {
-  const { index, type, score, time, content, quizAnswers } = props;
+  const { index, type, score, content, quizAnswers } = props;
 
   return (
     <Wrapper className="quiz-question">
@@ -140,10 +139,10 @@ const QuizQuestion: React.FC<IQuizQuestionProps> = (props) => {
           </span>
         </div>
         <div className="quiz-question__top__right">
-          <div className="quiz-question__meta">
-            <DurationIcon className="quiz-question__meta__icon" />
-            <span>{time} seconds</span>
-          </div>
+          {/*<div className="quiz-question__meta">*/}
+          {/*  <DurationIcon className="quiz-question__meta__icon" />*/}
+          {/*  <span>{time} seconds</span>*/}
+          {/*</div>*/}
           <div className="quiz-question__meta">
             <CheckIcon className="quiz-question__meta__icon" />
             <span>{score} points</span>

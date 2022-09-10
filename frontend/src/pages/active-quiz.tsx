@@ -6,8 +6,6 @@ import NotFound from './not-found';
 import Container from '../components/container';
 import Helmet from '../components/helmet';
 
-import quizList from '../assets/data/quiz-list';
-
 import { alphabetGenerator } from '../utils/alphabet-generator';
 
 import ActiveQuizWrapper from '../components/active-quiz-wrapper';
@@ -15,6 +13,8 @@ import Result from '../components/result';
 import useStopwatch from '../hooks/useStopwatch';
 
 import { IQuizAnswer } from '../common/interfaces';
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
+import { quizzesActions } from '../store/quizzes';
 
 interface IAnsweredQuestion {
   index: number;
@@ -23,10 +23,13 @@ interface IAnsweredQuestion {
 
 const ActiveQuiz = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const params = useParams() as { slug: string };
+  const quiz = useAppSelector((state) => state.quizzes.quiz);
+
+  const params = useParams() as { id: string };
   const stopwatch = useStopwatch();
-  const quiz = quizList.getAll()[0];
+
   const generateAlphabet = alphabetGenerator();
 
   const [totalTimeValue, setTotalTimeValue] = useState(0);
@@ -67,12 +70,12 @@ const ActiveQuiz = () => {
     if (currentQuestionIndex) {
       returnPreviousData();
     } else {
-      navigate(`/quiz/${params.slug}`);
+      navigate(`/quiz/${params.id}`);
     }
   };
 
   const handleClose = () => {
-    navigate(`/quiz/${params.slug}`);
+    navigate(`/quiz/${params.id}`);
   };
 
   const updateData = () => {
@@ -110,6 +113,7 @@ const ActiveQuiz = () => {
 
   useEffect(() => {
     stopwatch.start();
+    dispatch(quizzesActions.getOneById(params.id));
   }, []);
 
   if (quiz && isFinished) {
