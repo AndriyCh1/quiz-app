@@ -1,3 +1,5 @@
+import { IBase } from '../base';
+
 export interface IQuizAnswer {
   id: number | string;
   active: boolean;
@@ -15,7 +17,7 @@ export interface IQuizQuestion {
   answers: IQuizAnswer[];
 }
 
-export interface IQuiz {
+export interface IQuiz extends IBase {
   id: number | string;
   title: string; // max 30 symbols
   score: number; // total score
@@ -23,4 +25,7 @@ export interface IQuiz {
   time: number; // seconds
   content: string;
   questions: IQuizQuestion[];
+  user?: {
+    fullName: string;
+  };
 }
