@@ -24,6 +24,8 @@ class QuizService {
   public async getDeepById(id: Quiz['id']): Promise<IDeepQuiz> {
     const quiz = await this.quizRepository
       .createQueryBuilder('quiz')
+      .leftJoin('quiz.user', 'user')
+      .addSelect('user.fullName')
       .leftJoinAndSelect('quiz.questions', 'questions')
       .leftJoinAndSelect('questions.answers', 'answers')
       .where('quiz.id = :id', { id })
