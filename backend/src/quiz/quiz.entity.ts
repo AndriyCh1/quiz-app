@@ -2,14 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { AbstractEntity } from '../abstract/abstract-entity';
 import { User } from '../user/user.entity';
 import { QuizQuestion } from '../quiz-question/quiz-question.entity';
-
-enum QuizTypes {
-  DIFFERENT = 'different',
-  SINGLE_CHOICE = 'single-choice',
-  MULTIPLE_CHOICE = 'multiple-choice',
-  SELECT = 'select',
-  INPUT = 'input',
-}
+import { QuizTypes } from '../common/enums';
 
 @Entity()
 export class Quiz extends AbstractEntity {
@@ -17,7 +10,7 @@ export class Quiz extends AbstractEntity {
   active: boolean;
 
   @Column({ type: 'enum', enum: QuizTypes })
-  type: QuizTypes;
+  type: string;
 
   @Column()
   score: number;
@@ -28,9 +21,9 @@ export class Quiz extends AbstractEntity {
   @Column()
   time: number;
 
-  @ManyToOne((type) => User, (user) => user.quiz)
-  user: User[];
+  @ManyToOne(() => User, (user) => user.quiz)
+  user: User;
 
-  @OneToMany((type) => QuizQuestion, (quizQuestion) => quizQuestion.quiz)
-  question: QuizQuestion;
+  @OneToMany(() => QuizQuestion, (quizQuestion) => quizQuestion.quiz, { onDelete: 'CASCADE' })
+  question: QuizQuestion[];
 }
