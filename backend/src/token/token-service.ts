@@ -1,12 +1,12 @@
 import * as jwt from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
-import Token from './token.entity';
+import { Token } from './token.entity';
 
 class TokenService {
   private tokenRepository = getRepository(Token);
 
   public generateTokens(payload) {
-    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: '10s' }); // 15m
+    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: '60m' }); // 15m
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, { expiresIn: '30d' });
     return {
       accessToken,

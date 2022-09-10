@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import UserDto from '../user/dto/user.dto';
-import User from '../user/user.entity';
+import { User } from '../user/user.entity';
 import { IDataInToken } from '../common/interfaces';
 import UserWithThatEmailExistException from '../exceptions/UserWithThatEmailExistException';
 import WrongCredentialsException from '../exceptions/WrongCredationalsException.exception';

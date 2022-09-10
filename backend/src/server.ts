@@ -4,9 +4,13 @@ import validateEnv from './utils/validateEnv';
 import config from './ormconfig';
 import App from './app';
 import AuthController from './auth/auth.controller';
+import AuthService from './auth/auth.service';
+
 import UserController from './user/user.controller';
 import UserService from './user/user.service';
-import AuthService from './auth/auth.service';
+
+import QuizController from './quiz/quiz.controller';
+import QuizService from './quiz/quiz.service';
 
 validateEnv();
 
@@ -21,6 +25,7 @@ validateEnv();
   const app = new App([
     new AuthController(new AuthService()),
     new UserController(new UserService()),
+    new QuizController(new QuizService()),
   ]);
 
   app.listen();

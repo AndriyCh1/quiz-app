@@ -1,4 +1,5 @@
 import { IDataInToken } from './dataInToken.inteface';
+import { Request } from 'express';
 
 interface IRequestWithUserData extends Request {
   user: IDataInToken;
