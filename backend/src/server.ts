@@ -3,6 +3,7 @@ import { createConnection } from 'typeorm';
 import validateEnv from './utils/validateEnv';
 import config from './ormconfig';
 import App from './app';
+
 import AuthController from './auth/auth.controller';
 import AuthService from './auth/auth.service';
 
@@ -14,6 +15,9 @@ import QuizService from './quiz/quiz.service';
 
 import QuizQuestionController from './quiz-question/quiz-question.controller';
 import QuizQuestionService from './quiz-question/quiz-question.service';
+
+import QuizAnswerController from './quiz-answer/quiz-answer.controller';
+import QuizAnswerService from './quiz-answer/quiz-answer.service';
 
 validateEnv();
 
@@ -30,6 +34,7 @@ validateEnv();
     new UserController(new UserService()),
     new QuizController(new QuizService()),
     new QuizQuestionController(new QuizQuestionService()),
+    new QuizAnswerController(new QuizAnswerService()),
   ]);
 
   app.listen();
