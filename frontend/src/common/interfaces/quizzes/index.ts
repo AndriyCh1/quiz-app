@@ -20,6 +20,7 @@ export interface IQuizQuestion {
 export interface IQuiz extends IBase {
   id: number | string;
   title: string; // max 30 symbols
+  published: boolean;
   score: number; // total score
   type: 'mixed' | 'single-choice' | 'multiple-choice' | 'select' | 'input'; // ref
   time: number; // seconds

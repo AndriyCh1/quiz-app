@@ -25,6 +25,7 @@ const ActiveQuiz = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const user = useAppSelector((state) => state.auth.user);
   const quiz = useAppSelector((state) => state.quizzes.quiz);
 
   const params = useParams() as { id: string };
@@ -113,7 +114,11 @@ const ActiveQuiz = () => {
 
   useEffect(() => {
     stopwatch.start();
-    dispatch(quizzesActions.getOneById(params.id));
+    if (user?.fullName) {
+      dispatch(quizzesActions.getOneByIdUser(params.id));
+    } else {
+      dispatch(quizzesActions.getOneByIdVisitor(params.id));
+    }
   }, []);
 
   if (quiz && isFinished) {

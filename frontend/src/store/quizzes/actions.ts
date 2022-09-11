@@ -1,28 +1,46 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { QuizzesAction } from './common';
 import { IQuiz } from '../../common/interfaces';
-import { visitorQuizzesService } from '../../services';
+import { userQuizzesService, visitorQuizzesService } from '../../services';
 
-export const getAll = createAsyncThunk<IQuiz[]>(
-  QuizzesAction.GET_All,
+export const getAllVisitor = createAsyncThunk<IQuiz[]>(
+  QuizzesAction.GET_All_VISITOR,
   async (_, { rejectWithValue }) => {
     try {
-      const quizzes = await visitorQuizzesService.getAll();
-      console.log(quizzes, 'quizzes');
-      return quizzes;
+      return await visitorQuizzesService.getAll();
     } catch (e) {
       return rejectWithValue(e);
     }
   },
 );
 
-export const getOneById = createAsyncThunk<IQuiz, IQuiz['id']>(
-  QuizzesAction.GET_ONE,
+export const getOneByIdVisitor = createAsyncThunk<IQuiz, IQuiz['id']>(
+  QuizzesAction.GET_ONE_VISITOR,
   async (id: IQuiz['id'], { rejectWithValue }) => {
     try {
-      const quiz = await visitorQuizzesService.getOneById(id);
-      console.log(quiz, 'quiz');
-      return quiz;
+      return await visitorQuizzesService.getOneById(id);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  },
+);
+
+export const getAllUser = createAsyncThunk<IQuiz[]>(
+  QuizzesAction.GET_All_USER,
+  async (_, { rejectWithValue }) => {
+    try {
+      return await userQuizzesService.getAll();
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  },
+);
+
+export const getOneByIdUser = createAsyncThunk<IQuiz, IQuiz['id']>(
+  QuizzesAction.GET_ONE_USER,
+  async (id: IQuiz['id'], { rejectWithValue }) => {
+    try {
+      return await userQuizzesService.getOneById(id);
     } catch (e) {
       return rejectWithValue(e);
     }

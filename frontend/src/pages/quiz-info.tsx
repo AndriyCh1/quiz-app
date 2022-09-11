@@ -30,13 +30,18 @@ const QuizInfo = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const user = useAppSelector((state) => state.auth.user);
   const quiz = useAppSelector((state) => state.quizzes.quiz);
 
   const params = useParams() as { id: string };
 
   useEffect(() => {
-    dispatch(quizzesActions.getOneById(params.id));
-  }, []);
+    if (user?.fullName) {
+      dispatch(quizzesActions.getOneByIdUser(params.id));
+    } else {
+      dispatch(quizzesActions.getOneByIdVisitor(params.id));
+    }
+  }, [user]);
 
   if (quiz) {
     const { id, title, type, questions, time, score, content, user, updatedAt } = quiz;

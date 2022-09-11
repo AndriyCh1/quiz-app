@@ -14,7 +14,7 @@ const QuizList: React.FC<IProps> = ({ quizzes }) => {
   return (
     <div className="quiz-list">
       {quizzes.map((item, index) => (
-        <div key={index} className="quiz-list__item">
+        <div key={item.id} className="quiz-list__item">
           <QuizItem
             title={item.title}
             type={item.type}

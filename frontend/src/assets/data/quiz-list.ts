@@ -4,6 +4,7 @@ const quizList: IQuiz[] = [
   {
     id: 1,
     title: 'Math 101: Counting, Shapes',
+    published: false,
     score: 10,
     type: 'single-choice',
     time: 600, // seconds
@@ -85,6 +86,7 @@ const quizList: IQuiz[] = [
 const createdQuizList: IQuiz[] = [
   {
     id: 1,
+    published: false,
     title: 'Biology: created by myself',
     score: 10,
     type: 'single-choice',

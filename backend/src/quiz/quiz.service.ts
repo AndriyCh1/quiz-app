@@ -24,13 +24,14 @@ class QuizService {
   public async getDeepById(id: Quiz['id'], userId: User['id']): Promise<IDeepQuiz> {
     const quiz = await this.quizRepository
       .createQueryBuilder('quiz')
-      .where('quiz.published = true')
       .leftJoin('quiz.user', 'user')
       .addSelect('user.fullName')
       .leftJoinAndSelect('quiz.questions', 'questions')
       .leftJoinAndSelect('questions.answers', 'answers')
-      .orWhere('user.id = :id', { id: userId })
-      .andWhere('quiz.id = :id', { id })
+      .where('(quiz.published = true OR user.id = :userId) AND quiz.id = :quizId', {
+        userId,
+        quizId: id,
+      })
       .getOne();
 
     if (!quiz) {
@@ -62,7 +63,7 @@ class QuizService {
     return await this.quizRepository
       .createQueryBuilder('quiz')
       .leftJoinAndSelect('quiz.questions', 'questions')
-      .leftJoin('quiz.user', 'user')
+      .leftJoinAndSelect('quiz.user', 'user')
       .where('quiz.published = true')
       .orWhere('user.id = :id', { id: userId })
       .getMany();

@@ -32,7 +32,7 @@ const VisitorHome = () => {
   };
 
   useEffect(() => {
-    dispatch(quizzesActions.getAll());
+    dispatch(quizzesActions.getAllVisitor());
   }, []);
 
   useEffect(() => {

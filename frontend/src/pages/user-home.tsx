@@ -7,10 +7,11 @@ import Button from '../components/button';
 
 import { BsSearch as SearchIcon } from 'react-icons/bs';
 
-import quizList from '../assets/data/quiz-list';
 import QuizList from '../components/quiz-list';
 import Select, { Option } from '../components/select';
 import { IQuiz } from '../common/interfaces';
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
+import { quizzesActions } from '../store/quizzes';
 
 enum SelectOptions {
   ALL = 'all',
@@ -24,8 +25,15 @@ interface IFilter {
 }
 
 const UserHome = () => {
-  const publicQuizzes = [...quizList.getAll()];
-  const createdQuizzes = [...quizList.getAllCreated()];
+  const dispatch = useAppDispatch();
+
+  const user = useAppSelector((state) => state.auth.user);
+  const allQuizzes = useAppSelector((state) => state.quizzes.quizzes);
+
+  const publicQuizzes = allQuizzes.filter(
+    (item) => item.published && item.user?.fullName !== user?.fullName,
+  );
+  const createdQuizzes = allQuizzes.filter((item) => item.user?.fullName === user?.fullName);
 
   const [quizzes, setQuizzes] = useState(createdQuizzes.concat(publicQuizzes));
 
@@ -78,6 +86,14 @@ const UserHome = () => {
   useEffect(() => {
     updateQuizzes();
   }, [filter.select]);
+
+  useEffect(() => {
+    dispatch(quizzesActions.getAllUser());
+  }, []);
+
+  useEffect(() => {
+    setQuizzes(allQuizzes);
+  }, [allQuizzes]);
 
   return (
     <Helmet title="Home">
