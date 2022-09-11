@@ -21,14 +21,16 @@ class QuizService {
     return quiz;
   }
 
-  public async getDeepById(id: Quiz['id']): Promise<IDeepQuiz> {
+  public async getDeepById(id: Quiz['id'], userId: User['id']): Promise<IDeepQuiz> {
     const quiz = await this.quizRepository
       .createQueryBuilder('quiz')
+      .where('quiz.published = true')
       .leftJoin('quiz.user', 'user')
       .addSelect('user.fullName')
       .leftJoinAndSelect('quiz.questions', 'questions')
       .leftJoinAndSelect('questions.answers', 'answers')
-      .where('quiz.id = :id', { id })
+      .orWhere('user.id = :id', { id: userId })
+      .andWhere('quiz.id = :id', { id })
       .getOne();
 
     if (!quiz) {
@@ -38,10 +40,39 @@ class QuizService {
     return quiz;
   }
 
-  public async getAll(): Promise<Quiz[]> {
+  public async getPublicDeepById(id: Quiz['id']): Promise<IDeepQuiz> {
+    const quiz = await this.quizRepository
+      .createQueryBuilder('quiz')
+      .where('quiz.published = true')
+      .leftJoin('quiz.user', 'user')
+      .addSelect('user.fullName')
+      .leftJoinAndSelect('quiz.questions', 'questions')
+      .leftJoinAndSelect('questions.answers', 'answers')
+      .andWhere('quiz.id = :id', { id })
+      .getOne();
+
+    if (!quiz) {
+      throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
+    }
+
+    return quiz;
+  }
+
+  public async getAll(userId: User['id']): Promise<Quiz[]> {
     return await this.quizRepository
       .createQueryBuilder('quiz')
       .leftJoinAndSelect('quiz.questions', 'questions')
+      .leftJoin('quiz.user', 'user')
+      .where('quiz.published = true')
+      .orWhere('user.id = :id', { id: userId })
+      .getMany();
+  }
+
+  public async getPublic(): Promise<Quiz[]> {
+    return await this.quizRepository
+      .createQueryBuilder('quiz')
+      .leftJoinAndSelect('quiz.questions', 'questions')
+      .where('quiz.published = true')
       .getMany();
   }
 

@@ -3,6 +3,7 @@ import errorHandlerMiddleware from './middlewares/errorHandler.middleware';
 import { IController } from './common/interfaces';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
+import authMiddleware from './middlewares/authMiddleware';
 
 class App {
   public app: express.Application;
@@ -36,6 +37,7 @@ class App {
         origin: process.env.CLIENT_URL,
       }),
     );
+    this.app.use(authMiddleware);
   }
 
   private initializeErrorHandling() {

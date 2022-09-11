@@ -14,7 +14,7 @@ export interface IDeepQuestion {
 
 export interface IDeepQuiz {
   title: string;
-  active: boolean;
+  published: boolean;
   type: string;
   score: number;
   content: string;

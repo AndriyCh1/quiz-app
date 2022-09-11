@@ -2,6 +2,7 @@ import { NextFunction, Response } from 'express';
 import WrongCredentialsException from '../exceptions/WrongCredationalsException.exception';
 import TokenService from '../token/token-service';
 import { IAuthRequest, IDataInToken } from '../common/interfaces';
+import { RoleType } from '../common/enums';
 
 function authMiddleware(req: IAuthRequest, res: Response, next: NextFunction) {
   const tokenService = new TokenService();
@@ -9,20 +10,27 @@ function authMiddleware(req: IAuthRequest, res: Response, next: NextFunction) {
   try {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
-      return next(new WrongCredentialsException());
+      req.user = null;
+      req.userRole = RoleType.VISITOR;
+      return next();
     }
 
     const accessToken = authorizationHeader.split(' ')[1];
     if (!accessToken) {
-      return next(new WrongCredentialsException());
+      req.user = null;
+      req.userRole = RoleType.VISITOR;
+      return next();
     }
 
     const userData = tokenService.validateAccessToken(accessToken) as IDataInToken;
     if (!userData) {
-      return next(new WrongCredentialsException());
+      req.user = null;
+      req.userRole = RoleType.VISITOR;
+      return next();
     }
 
     req.user = userData;
+    req.userRole = RoleType.USER;
     next();
   } catch (e) {
     return next(new WrongCredentialsException());

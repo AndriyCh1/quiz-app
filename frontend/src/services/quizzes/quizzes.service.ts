@@ -7,7 +7,7 @@ class QuizzesService {
   protected http: HttpService;
 
   constructor(path: string, http: HttpService) {
-    this.path = '/quizzes';
+    this.path = path;
     this.http = http;
   }
 

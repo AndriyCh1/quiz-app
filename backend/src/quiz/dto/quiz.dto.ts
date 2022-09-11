@@ -6,7 +6,7 @@ class QuizDto {
   title: string;
 
   @IsBoolean()
-  active: boolean;
+  published: boolean;
 
   @IsEnum(QuizTypes)
   type: string;

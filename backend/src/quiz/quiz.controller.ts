@@ -3,6 +3,8 @@ import QuizService from './quiz.service';
 import QuizDto from './dto/quiz.dto';
 import validationMiddleware from '../middlewares/validation.middleware';
 import { IAuthRequest } from '../common/interfaces';
+import validatePermission from '../middlewares/validatePermission.middleware';
+import { RoleType } from '../common/enums';
 
 class QuizController {
   public path = '/quizzes';
@@ -13,28 +15,78 @@ class QuizController {
   }
 
   private initializeRoutes() {
-    // TODO: separate users` access for this route
-    // this.router.use(authMiddleware);
-    this.router.get(`${this.path}/`, this.getAllQuizzes.bind(this));
-    this.router.get(`${this.path}/:id`, this.getQuizById.bind(this));
-    this.router.post(`${this.path}/`, validationMiddleware(QuizDto), this.createQuiz.bind(this));
-    this.router.put(`${this.path}/:id`, this.updateQuiz.bind(this));
-    this.router.delete(`${this.path}/:id`, this.deleteQuiz.bind(this));
+    this.router.get(
+      `${this.path}/visitor`,
+      validatePermission([RoleType.VISITOR, RoleType.USER]),
+      this.getPublicQuizzes.bind(this),
+    );
+    this.router.get(
+      `${this.path}/user`,
+      validatePermission([RoleType.USER]),
+      this.getQuizzes.bind(this),
+    );
+    this.router.get(
+      `${this.path}/visitor/:id`,
+      validatePermission([RoleType.VISITOR, RoleType.USER]),
+      this.getPublicQuizById.bind(this),
+    );
+    this.router.get(
+      `${this.path}/user/:id`,
+      validatePermission([RoleType.USER]),
+      this.getQuizById.bind(this),
+    );
+    this.router.post(
+      `${this.path}/`,
+      validatePermission([RoleType.USER]),
+      validationMiddleware(QuizDto),
+      this.createQuiz.bind(this),
+    );
+    this.router.put(
+      `${this.path}/:id`,
+      validatePermission([RoleType.USER]),
+      this.updateQuiz.bind(this),
+    );
+    this.router.delete(
+      `${this.path}/:id`,
+      validatePermission([RoleType.USER]),
+      this.deleteQuiz.bind(this),
+    );
   }
 
-  private async getQuizById(req: Request, res: Response, next: NextFunction) {
+  private async getQuizById(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
+      const userId = req.user.id as unknown as string;
       const quizId: string = req.params.id as unknown as string;
-      const quiz = await this.quizService.getDeepById(quizId);
+      const quiz = await this.quizService.getDeepById(quizId, userId);
       res.send(quiz);
     } catch (e) {
       next(e);
     }
   }
 
-  private async getAllQuizzes(req: Request, res: Response, next: NextFunction) {
+  private async getPublicQuizById(req: Request, res: Response, next: NextFunction) {
     try {
-      const quizzes = await this.quizService.getAll();
+      const quizId: string = req.params.id as unknown as string;
+      const quiz = await this.quizService.getPublicDeepById(quizId);
+      res.send(quiz);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  private async getQuizzes(req: IAuthRequest, res: Response, next: NextFunction) {
+    try {
+      const userId = req.user.id as unknown as string;
+      const quizzes = await this.quizService.getAll(userId);
+      res.send(quizzes);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  private async getPublicQuizzes(req: Request, res: Response, next: NextFunction) {
+    try {
+      const quizzes = await this.quizService.getPublic();
       res.send(quizzes);
     } catch (e) {
       next(e);
