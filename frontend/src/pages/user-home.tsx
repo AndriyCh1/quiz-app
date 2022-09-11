@@ -30,6 +30,7 @@ const UserHome = () => {
   const user = useAppSelector((state) => state.auth.user);
   const allQuizzes = useAppSelector((state) => state.quizzes.quizzes);
 
+  // TODO: user filtering works incorrect
   const publicQuizzes = allQuizzes.filter(
     (item) => item.published && item.user?.fullName !== user?.fullName,
   );
