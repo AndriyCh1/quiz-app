@@ -1,7 +1,7 @@
 export enum UserRoutes {
   QuizInfo = '/quiz/:id',
   ActiveQuiz = '/quiz/:id/start',
-  Quizzes = '/quizzes',
+  Quizzes = '/quizzes', // Entry page, must have the same route as a visitor
   CreateQuiz = '/quizzes/create',
   History = '/quiz/history',
   SingleChoiceCreator = '/quizzes/create/single-choice',
@@ -13,5 +13,5 @@ export enum VisitorRoutes {
   Signup = '/signup',
   QuizInfo = '/quiz/:id',
   ActiveQuiz = '/quiz/:id/start',
-  PublicQuizzes = '/',
+  PublicQuizzes = '/quizzes', // Entry page, must have the same route as a user
 }

@@ -9,6 +9,7 @@ import FormInput from '../components/form-input';
 import Button from '../components/button';
 import { MdAlternateEmail as EmailIcon } from 'react-icons/md';
 import { AiFillLock as LockIcon } from 'react-icons/ai';
+import { UserRoutes } from '../common/enums';
 
 const LogIn = () => {
   const dispatch = useAppDispatch();
@@ -23,8 +24,8 @@ const LogIn = () => {
     maxLength: 15,
   });
 
-  const handleSubmit = (evnt: React.FormEvent) => {
-    evnt.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
     dispatch(authActions.login({ email: emailInput.value, password: passwordInput.value }))
       .unwrap()
@@ -39,7 +40,7 @@ const LogIn = () => {
   }
 
   if (isAuth) {
-    navigate('/home');
+    navigate(UserRoutes.Quizzes);
   }
 
   return (
