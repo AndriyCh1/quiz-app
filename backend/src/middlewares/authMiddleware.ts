@@ -3,7 +3,7 @@ import WrongCredentialsException from '../exceptions/WrongCredationalsException.
 import TokenService from '../token/token-service';
 import { IAuthRequest, IDataInToken } from '../common/interfaces';
 
-function AuthMiddleware(req: IAuthRequest, res: Response, next: NextFunction) {
+function authMiddleware(req: IAuthRequest, res: Response, next: NextFunction) {
   const tokenService = new TokenService();
 
   try {
@@ -29,4 +29,4 @@ function AuthMiddleware(req: IAuthRequest, res: Response, next: NextFunction) {
   }
 }
 
-export default AuthMiddleware;
+export default authMiddleware;

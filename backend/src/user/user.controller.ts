@@ -1,7 +1,7 @@
 import { IController } from '../common/interfaces/';
 import { NextFunction, Request, Response, Router } from 'express';
 import UserService from './user.service';
-import authMiddleware from '../middlewares/auth.middleware';
+import authMiddleware from '../middlewares/authMiddleware';
 
 class UserController implements IController {
   public path = '/user';

@@ -1,7 +1,7 @@
 import { IController } from '../common/interfaces';
 import { NextFunction, Request, Response, Router } from 'express';
 import QuizQuestionService from './quiz-question.service';
-import authMiddleware from '../middlewares/auth.middleware';
+import authMiddleware from '../middlewares/authMiddleware';
 import QuestionDto from './dto/quiz-question.dto';
 import validationMiddleware from '../middlewares/validation.middleware';
 

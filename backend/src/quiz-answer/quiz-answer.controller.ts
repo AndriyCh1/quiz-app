@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 
 import { IController } from '../common/interfaces';
 
-import authMiddleware from '../middlewares/auth.middleware';
+import authMiddleware from '../middlewares/authMiddleware';
 import validationMiddleware from '../middlewares/validation.middleware';
 
 import AnswerDto from './dto/quiz-answer.dto';
