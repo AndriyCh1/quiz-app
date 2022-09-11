@@ -4,7 +4,7 @@ import { QuizQuestion } from '../quiz-question/quiz-question.entity';
 
 @Entity()
 export class QuizAnswer extends AbstractEntity {
-  @Column()
+  @Column({ default: false })
   active: boolean;
 
   @Column()

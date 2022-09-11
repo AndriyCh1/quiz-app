@@ -9,8 +9,8 @@ export class Quiz extends AbstractEntity {
   @Column()
   title: string;
 
-  @Column()
-  active: boolean;
+  @Column({ default: false })
+  published: boolean;
 
   @Column({ type: 'enum', enum: QuizTypes })
   type: string;

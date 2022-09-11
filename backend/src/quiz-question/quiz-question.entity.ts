@@ -6,7 +6,7 @@ import { QuestionTypes } from '../common/enums';
 
 @Entity()
 export class QuizQuestion extends AbstractEntity {
-  @Column()
+  @Column({ default: false })
   active: string;
 
   @Column()
