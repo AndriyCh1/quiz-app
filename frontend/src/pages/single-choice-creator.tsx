@@ -49,6 +49,7 @@ const SingleChoiceCreator = () => {
 
   const [notValidFieldError, setNotValidFieldError] = useState('');
   const [questions, setQuestions] = useState<IQuestion[]>([]);
+  const [questionErrorMessage, setQuestionErrorMessage] = useState('');
 
   const handleChangeMeta = (data: IMetaData) => setQuizInfo(data);
 
@@ -79,24 +80,20 @@ const SingleChoiceCreator = () => {
   const checkQuizValidation = (): string => {
     if (!quizInfo.title.trim()) return 'Add a title!';
     if (!quizInfo.description.trim()) return 'Add a description!';
-    // TODO: check questions and answers on empty fields as well
-    // if (!questionValue.trim()) return 'Add a question!';
-    // if (!answers.length) return 'Add an answer!';
+    if (questionErrorMessage) return questionErrorMessage;
     return '';
   };
 
   useEffect(() => {
     const validationMessage = checkQuizValidation();
     setNotValidFieldError(validationMessage || '');
-  }, [quizInfo.title, quizInfo.description]);
-  // }, [quizInfo.title, quizInfo.description, questionValue, answers]);
+  }, [quizInfo.title, quizInfo.description, questionErrorMessage]);
 
   useEffect(() => {
     setQuestions([defaultQuestion]);
   }, []);
 
   console.log('render');
-  console.log(questions, 'questions');
   return (
     <Helmet title="Single-choice quiz creator">
       <Container className="single-choice-creator">
@@ -113,6 +110,7 @@ const SingleChoiceCreator = () => {
               onChange={(content, answers) => handleChangeQuestion({ ...item, content, answers })}
               onRemove={() => handleRemoveQuestion(item.id)}
               onChangeActive={(active) => handleChangeQuestion({ ...item, active })}
+              onError={(message) => setQuestionErrorMessage(message)}
             />
           ))}
           <div className="single-choice-creator__add-question-wrapper">
@@ -148,6 +146,7 @@ interface IQuestionItemProps extends IQuestion {
   onChangeActive: (active: boolean) => void;
   onChange: (content: string, answers: IAnswer[]) => void;
   onRemove: () => void;
+  onError: (message: string) => void;
 }
 
 const QuestionItem: React.FC<IQuestionItemProps> = ({
@@ -155,6 +154,7 @@ const QuestionItem: React.FC<IQuestionItemProps> = ({
   onChangeActive,
   onChange,
   onRemove,
+  onError,
 }) => {
   const [questionValue, setQuestionValue] = useState('');
   const [answers, setAnswers] = useState<IAnswer[]>([]);
@@ -182,12 +182,21 @@ const QuestionItem: React.FC<IQuestionItemProps> = ({
     });
   };
 
+  const checkQuestionValidation = (): string => {
+    if (!questionValue.trim()) return 'Some question text is empty';
+    if (!answers.length) return 'Some question does not have answers!';
+    const hasEmptyAnswer = answers.find((item) => item.text !== '');
+    if (!hasEmptyAnswer) return 'Some answer is empty!';
+    return '';
+  };
+
   useEffect(() => {
     onChange(questionValue, answers);
+    onError(checkQuestionValidation());
   }, [questionValue, answers]);
 
   return (
-    <div className="single-choice-creator__question-wrapper">
+    <div className={`single-choice-creator__question-wrapper ${active ? '' : 'inactive'}`}>
       <div className="single-choice-creator__question">
         <MultilineInput
           name="quiz-question"
@@ -261,7 +270,7 @@ const AnswerItem: React.FC<IAnswerItemProps> = ({
   onRemove,
 }) => {
   return (
-    <div className="single-choice-creator__answers__item">
+    <div className={`single-choice-creator__answers__item ${active ? '' : 'inactive'}`}>
       <div className="single-choice-creator__answers__item__toggle">
         <Toggle onChange={onChangeCorrect} value={id} checked={correct} />
         <span>is correct</span>

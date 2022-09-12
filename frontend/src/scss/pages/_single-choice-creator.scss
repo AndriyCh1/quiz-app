@@ -47,6 +47,7 @@
       border-radius: 5px;
       @include flex(center, flex-start);
       gap: 8px;
+      border: 1px solid $color-grey-2;
 
       &__toggle {
         flex: 1 1 70px;
@@ -85,6 +86,10 @@
         font-size: 1.3rem;
       }
     }
+
+    &__item.inactive {
+      border: 1px solid $color-red;
+    }
   }
 
   &__save-quiz-wrapper {
@@ -116,8 +121,14 @@
 
   &__question-wrapper {
     background-color: $color-grey-1;
+    //border: 2px solid $color-green;
+    border: 1px solid $color-grey-1;
     margin-bottom: 5px;
     padding: 5px;
+  }
+
+  &__question-wrapper.inactive {
+    border: 1px solid $color-red;
   }
 
   &__question-wrapper + &__question-wrapper {
