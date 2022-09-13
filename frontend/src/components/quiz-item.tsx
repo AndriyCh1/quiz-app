@@ -25,21 +25,25 @@ const QuizItem: React.FC<IProps> = (props) => {
       className="quiz-item"
       onClick={onClick && withoutPropagationClick<HTMLDivElement>(onClick)}
     >
-      <h2 className="quiz-item__title">{title}</h2>
-      <p className="quiz-item__type">
-        <span>{type}</span>
-      </p>
-      <p className="quiz-item__content">{content}</p>
-      <div className="quiz-item__info">
-        <p className="quiz-item__info__questions">
-          <span>{questionCount}</span> questions
+      <div className="quiz-item__top">
+        <h2 className="quiz-item__title">{title}</h2>
+        <p className="quiz-item__type">
+          <span>{type}</span>
         </p>
-        <Button
-          className="quiz-item__info__button"
-          onClick={onButtonClick && withoutPropagationClick<HTMLButtonElement>(onButtonClick)}
-        >
-          Demo
-        </Button>
+        <p className="quiz-item__content">{content}</p>
+      </div>
+      <div className="quiz-item__bottom">
+        <div className="quiz-item__info">
+          <p className="quiz-item__info__questions">
+            <span>{questionCount}</span> questions
+          </p>
+          <Button
+            className="quiz-item__info__button"
+            onClick={onButtonClick && withoutPropagationClick<HTMLButtonElement>(onButtonClick)}
+          >
+            Demo
+          </Button>
+        </div>
       </div>
     </div>
   );
