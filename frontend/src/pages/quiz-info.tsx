@@ -25,13 +25,14 @@ import { IQuizAnswer, IQuizQuestion } from '../common/interfaces';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { quizzesActions } from '../store/quizzes';
 import { formatDate } from '../utils/format-date';
+import Loading from './loading';
 
 const QuizInfo = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const user = useAppSelector((state) => state.auth.user);
-  const quiz = useAppSelector((state) => state.quizzes.quiz);
+  const { quiz, isLoading } = useAppSelector((state) => state.quizzes);
 
   const params = useParams() as { id: string };
 
@@ -42,6 +43,10 @@ const QuizInfo = () => {
       dispatch(quizzesActions.getOneByIdVisitor(params.id));
     }
   }, [user]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (quiz) {
     const { id, title, type, questions, time, score, content, user, updatedAt } = quiz;
