@@ -15,6 +15,7 @@ import useStopwatch from '../hooks/useStopwatch';
 import { IQuizAnswer } from '../common/interfaces';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { quizzesActions } from '../store/quizzes';
+import Loading from './loading';
 
 interface IAnsweredQuestion {
   index: number;
@@ -26,7 +27,7 @@ const ActiveQuiz = () => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.auth.user);
-  const quiz = useAppSelector((state) => state.quizzes.quiz);
+  const { quiz, isLoadingQuiz } = useAppSelector((state) => state.quizzes);
 
   const params = useParams() as { id: string };
   const stopwatch = useStopwatch();
@@ -120,6 +121,10 @@ const ActiveQuiz = () => {
       dispatch(quizzesActions.getOneByIdVisitor(params.id));
     }
   }, []);
+
+  if (isLoadingQuiz) {
+    return <Loading />;
+  }
 
   if (quiz && isFinished) {
     return (
