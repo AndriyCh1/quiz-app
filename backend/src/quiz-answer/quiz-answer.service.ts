@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getCustomRepository, getRepository } from 'typeorm';
 
 import { HttpCode } from '../common/enums';
 import HttpException from '../exceptions/HttpException';
@@ -7,11 +7,10 @@ import AnswerDto from './dto/quiz-answer.dto';
 import { QuizAnswer } from './quiz-answer.entity';
 import { QuizQuestion } from '../quiz-question/quiz-question.entity';
 
-import QuizQuestionService from '../quiz-question/quiz-question.service';
+import QuizQuestionRepository from '../repositories/quiz-question.repository';
 
 class QuizAnswerService {
   private answerRepository = getRepository(QuizAnswer);
-  private questionService = new QuizQuestionService();
 
   public async getById(id: QuizAnswer['id']): Promise<QuizAnswer> {
     const answer = await this.answerRepository.findOne(id);
@@ -24,7 +23,9 @@ class QuizAnswerService {
   }
 
   public async getAllByQuestionId(questionId: QuizQuestion['id']): Promise<QuizAnswer[]> {
-    const question = await this.questionService.getById(questionId);
+    const questionRepository = getCustomRepository(QuizQuestionRepository);
+
+    const question = await questionRepository.findOne(questionId);
 
     if (!question) {
       throw new HttpException(HttpCode.NOT_FOUND, 'Question does not exist');
@@ -37,7 +38,8 @@ class QuizAnswerService {
     questionId: QuizQuestion['id'],
     questionData: AnswerDto,
   ): Promise<QuizAnswer> {
-    const question = await this.questionService.getById(questionId);
+    const questionRepository = getCustomRepository(QuizQuestionRepository);
+    const question = await questionRepository.findOne(questionId);
 
     if (!question) {
       throw new HttpException(

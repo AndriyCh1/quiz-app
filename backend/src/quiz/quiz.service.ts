@@ -1,15 +1,20 @@
-import { getRepository } from 'typeorm';
-import { Quiz } from './quiz.entity';
+import { getCustomRepository, getRepository } from 'typeorm';
+
 import QuizDto from './dto/quiz.dto';
-import UserService from '../user/user.service';
-import { User } from '../user/user.entity';
-import HttpException from '../exceptions/HttpException';
 import { HttpCode } from '../common/enums';
-import { IDeepQuiz } from '../common/interfaces/quizzes.interface';
+import { IDeepQuiz } from '../common/interfaces';
+
+import HttpException from '../exceptions/HttpException';
+
+import { Quiz } from './quiz.entity';
+import { User } from '../user/user.entity';
+
+import UserRepository from '../repositories/user.repository';
+import QuizQuestionRepository from '../repositories/quiz-question.repository';
+import QuizAnswerRepository from '../repositories/quiz-answer.repository';
 
 class QuizService {
   private quizRepository = getRepository(Quiz);
-  private userService = new UserService();
 
   public async getById(id: Quiz['id']): Promise<Quiz> {
     const quiz = await this.quizRepository.findOne(id);
@@ -78,10 +83,62 @@ class QuizService {
   }
 
   public async create(userId: User['id'], quizData: QuizDto): Promise<Quiz> {
-    const user = await this.userService.getById(userId);
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne(userId);
 
     const quiz = await this.quizRepository.create({ ...quizData, user }).save();
     return quiz;
+  }
+
+  public async createDeep(userId: User['id'], quizData: IDeepQuiz): Promise<Quiz> {
+    const userRepository = getCustomRepository(UserRepository);
+    const questionRepository = getCustomRepository(QuizQuestionRepository);
+    const answerRepository = getCustomRepository(QuizAnswerRepository);
+
+    const user = await userRepository.findOne(userId);
+
+    if (!user) {
+      throw new HttpException(HttpCode.NOT_FOUND, 'Such user not found');
+    }
+
+    const quiz = await this.quizRepository.create({ ...quizData, user }).save();
+
+    if (!quiz) {
+      throw new HttpException(HttpCode.INTERNAL_SERVER_ERROR, 'Quiz wasn`t created');
+    }
+
+    for await (const question of quizData.questions) {
+      const createdQuestion = await questionRepository.create({ ...question, quiz }).save();
+
+      if (!createdQuestion) {
+        throw new HttpException(HttpCode.INTERNAL_SERVER_ERROR, 'Some question wasn`t created');
+      }
+
+      for await (const answer of question.answers) {
+        const createdAnswer = await answerRepository
+          .create({ ...answer, question: createdQuestion })
+          .save();
+
+        if (!createdAnswer) {
+          throw new HttpException(HttpCode.INTERNAL_SERVER_ERROR, 'Some answer wasn`t created');
+        }
+      }
+    }
+
+    const createdQuiz = await this.quizRepository
+      .createQueryBuilder('quiz')
+      .leftJoin('quiz.user', 'user')
+      .addSelect('user.fullName')
+      .leftJoinAndSelect('quiz.questions', 'questions')
+      .leftJoinAndSelect('questions.answers', 'answers')
+      .where('quiz.id = :id', { id: quiz.id })
+      .getOne();
+
+    if (!createdQuiz) {
+      throw new HttpException(HttpCode.INTERNAL_SERVER_ERROR, 'Cannot create quiz');
+    }
+
+    return createdQuiz;
   }
 
   public async delete(id: Quiz['id']): Promise<Quiz> {

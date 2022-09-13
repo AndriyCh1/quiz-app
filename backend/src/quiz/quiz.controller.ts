@@ -1,10 +1,16 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import QuizService from './quiz.service';
-import QuizDto from './dto/quiz.dto';
-import validationMiddleware from '../middlewares/validation.middleware';
-import { IAuthRequest } from '../common/interfaces';
-import validatePermission from '../middlewares/validatePermission.middleware';
+
 import { RoleType } from '../common/enums';
+import { IAuthRequest } from '../common/interfaces';
+import { IDeepQuiz } from '../common/interfaces/quizzes.interface';
+
+import QuizDto from './dto/quiz.dto';
+import DeepQuizDto from './dto/deep-quiz.dto';
+
+import validationMiddleware from '../middlewares/validation.middleware';
+import validatePermission from '../middlewares/validatePermission.middleware';
+
+import QuizService from './quiz.service';
 
 class QuizController {
   public path = '/quizzes';
@@ -38,8 +44,8 @@ class QuizController {
     this.router.post(
       `${this.path}/`,
       validatePermission([RoleType.USER]),
-      validationMiddleware(QuizDto),
-      this.createQuiz.bind(this),
+      validationMiddleware(DeepQuizDto),
+      this.createDeepQuiz.bind(this),
     );
     this.router.put(
       `${this.path}/:id`,
@@ -95,8 +101,18 @@ class QuizController {
 
   private async createQuiz(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
-      const quizData: QuizDto = req.body as unknown as QuizDto;
+      const quizData: IDeepQuiz = req.body as unknown as IDeepQuiz;
       const newQuiz = await this.quizService.create(req.user.id, quizData);
+      res.send(newQuiz);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  private async createDeepQuiz(req: IAuthRequest, res: Response, next: NextFunction) {
+    try {
+      const quizData: IDeepQuiz = req.body as unknown as IDeepQuiz;
+      const newQuiz = await this.quizService.createDeep(req.user.id, quizData);
       res.send(newQuiz);
     } catch (e) {
       next(e);
