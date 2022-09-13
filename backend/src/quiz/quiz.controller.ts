@@ -2,12 +2,9 @@ import { NextFunction, Request, Response, Router } from 'express';
 
 import { RoleType } from '../common/enums';
 import { IAuthRequest } from '../common/interfaces';
-import { IDeepQuiz } from '../common/interfaces/quizzes.interface';
+import { IDeepQuiz } from '../common/interfaces';
 
 import QuizDto from './dto/quiz.dto';
-import DeepQuizDto from './dto/deep-quiz.dto';
-
-import validationMiddleware from '../middlewares/validation.middleware';
 import validatePermission from '../middlewares/validatePermission.middleware';
 
 import QuizService from './quiz.service';
