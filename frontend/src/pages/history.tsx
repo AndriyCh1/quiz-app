@@ -1,7 +1,8 @@
 import React from 'react';
+import InDevelopment from './in-development';
 
 const History = () => {
-  return <div>History</div>;
+  return <InDevelopment />;
 };
 
 export default History;

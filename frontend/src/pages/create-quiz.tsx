@@ -48,7 +48,7 @@ const CreateQuiz = () => {
                 <div className="create-quiz__actions__card__text">Multiple-choice</div>
               </div>
             </Link>
-            <Link to={UserRoutes.SingleChoiceCreator}>
+            <Link to={UserRoutes.InDevelopment}>
               <div className="create-quiz__actions__card">
                 <div className="create-quiz__actions__card__img">
                   <img src={fillInImg} alt="" />
