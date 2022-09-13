@@ -30,11 +30,10 @@ const UserHome = () => {
   const user = useAppSelector((state) => state.auth.user);
   const allQuizzes = useAppSelector((state) => state.quizzes.quizzes);
 
-  // TODO: user filtering works incorrect
   const publicQuizzes = allQuizzes.filter(
-    (item) => item.published && item.user?.fullName !== user?.fullName,
+    (item) => item.published && item.user?.email !== user?.email,
   );
-  const createdQuizzes = allQuizzes.filter((item) => item.user?.fullName === user?.fullName);
+  const createdQuizzes = allQuizzes.filter((item) => item.user?.email === user?.email);
 
   const [quizzes, setQuizzes] = useState(createdQuizzes.concat(publicQuizzes));
 
@@ -45,13 +44,13 @@ const UserHome = () => {
 
     switch (filter.select) {
       case SelectOptions.ALL:
-        newQuizzesList = createdQuizzes.concat(publicQuizzes);
+        newQuizzesList = [...createdQuizzes.concat(publicQuizzes)];
         break;
       case SelectOptions.CREATED:
-        newQuizzesList = createdQuizzes;
+        newQuizzesList = [...createdQuizzes];
         break;
       case SelectOptions.PUBLIC:
-        newQuizzesList = publicQuizzes;
+        newQuizzesList = [...publicQuizzes];
         break;
     }
 
@@ -67,7 +66,7 @@ const UserHome = () => {
   };
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setFilter((state) => ({ ...state, select: e.target.value }));
+    setFilter((state) => ({ select: e.target.value, searchValue: '' }));
   };
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -75,22 +74,16 @@ const UserHome = () => {
   };
 
   const handleSearchClick = () => {
-    setQuizzes((state) =>
-      state.filter((item) =>
-        filter.searchValue.trim()
-          ? item.title.toLowerCase().includes(filter.searchValue.toLowerCase())
-          : true,
-      ),
-    );
+    updateQuizzes();
   };
+
+  useEffect(() => {
+    dispatch(quizzesActions.getAllUser()).then(() => setQuizzes(allQuizzes));
+  }, []);
 
   useEffect(() => {
     updateQuizzes();
   }, [filter.select]);
-
-  useEffect(() => {
-    dispatch(quizzesActions.getAllUser());
-  }, []);
 
   useEffect(() => {
     setQuizzes(allQuizzes);
@@ -101,9 +94,9 @@ const UserHome = () => {
       <Container className="home">
         <div className="home-search-user">
           <Select value={filter.select} onChange={handleSelectChange}>
-            <Option value="all">All</Option>
-            <Option value="public">Public</Option>
-            <Option value="created">Created</Option>
+            <Option value={SelectOptions.ALL}>All</Option>
+            <Option value={SelectOptions.PUBLIC}>Public</Option>
+            <Option value={SelectOptions.CREATED}>Created</Option>
           </Select>
           <div className="home-search">
             <div className="home-search__input">

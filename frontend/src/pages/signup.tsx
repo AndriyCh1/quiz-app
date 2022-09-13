@@ -63,6 +63,7 @@ const SignUp = () => {
           <FormInput
             className={usernameInput.isDirty && !usernameInput.isValid ? 'error-input' : ''}
             name="username"
+            type="text"
             value={usernameInput.value}
             icon={<UserIcon />}
             placeholder={AuthFormPlaceholder.username}

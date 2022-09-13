@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BiLoader as LoadingIcon } from 'react-icons/bi';
 
-const NotFound = () => {
+const Loading = () => {
   return (
     <div className="loading">
       <h2 className="loading__text">Loading...</h2>
@@ -11,4 +11,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default Loading;

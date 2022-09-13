@@ -52,6 +52,7 @@ const LogIn = () => {
           <label className="auth-form__label">Email</label>
           <FormInput
             className={emailInput.isDirty && !emailInput.isValid ? 'error-input' : ''}
+            type="email"
             name="email"
             value={emailInput.value}
             icon={<EmailIcon />}

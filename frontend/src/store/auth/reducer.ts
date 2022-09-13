@@ -6,6 +6,7 @@ export const authReducer = (builder: ActionReducerMapBuilder<IAuthState>): void 
   builder.addCase(authActions.logout.fulfilled, (state: IAuthState) => {
     state.user = null;
     state.isAuth = false;
+    state.isLoading = false;
   });
   builder.addCase(authActions.checkAuth.rejected, (state: IAuthState, payload) => {
     state.isLoading = false;

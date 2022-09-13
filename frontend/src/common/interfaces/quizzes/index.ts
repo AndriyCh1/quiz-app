@@ -28,6 +28,7 @@ export interface IQuiz extends IBase {
   questions: IQuizQuestion[];
   user?: {
     fullName: string;
+    email: string;
   };
 }
 
