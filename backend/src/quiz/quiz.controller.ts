@@ -42,9 +42,10 @@ class QuizController {
       this.getQuizById.bind(this),
     );
     this.router.post(
-      `${this.path}/`,
+      `${this.path}/user`,
       validatePermission([RoleType.USER]),
-      validationMiddleware(DeepQuizDto),
+      // TODO: find out why validator throws an error on DeepQuizDto
+      // validationMiddleware(DeepQuizDto),
       this.createDeepQuiz.bind(this),
     );
     this.router.put(
@@ -101,7 +102,7 @@ class QuizController {
 
   private async createQuiz(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
-      const quizData: IDeepQuiz = req.body as unknown as IDeepQuiz;
+      const quizData: QuizDto = req.body as unknown as QuizDto;
       const newQuiz = await this.quizService.create(req.user.id, quizData);
       res.send(newQuiz);
     } catch (e) {

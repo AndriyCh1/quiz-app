@@ -30,7 +30,7 @@ class QuestionDto {
   content: string;
 
   @IsEnum(QuestionTypes)
-  type: string;
+  type: QuestionTypes;
 
   @IsArray()
   @ValidateNested({ each: true })

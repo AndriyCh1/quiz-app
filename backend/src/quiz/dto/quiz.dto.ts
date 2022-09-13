@@ -9,7 +9,7 @@ class QuizDto {
   published: boolean;
 
   @IsEnum(QuizTypes)
-  type: string;
+  type: QuizTypes;
 
   @IsNumber()
   score: number;
