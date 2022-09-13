@@ -107,7 +107,7 @@ const SingleChoiceCreator = () => {
     dispatch(quizzesActions.create(quiz))
       .unwrap()
       .then((res: IQuiz) => {
-        navigate(`${UserRoutes.QuizInfo}/${res.id}`);
+        navigate(`${UserRoutes.QuizInfo.replace(':id', res.id)}`);
       })
       .catch(() =>
         setQuizCreateErrorMessage('Oops, something went wrong, your quiz wasn`t created'),

@@ -4,6 +4,7 @@ export interface IQuizzesState {
   quiz: IQuiz | null;
   quizzes: IQuiz[];
   isLoading: boolean;
+  isLoadingQuiz: boolean;
 }
 
 export enum QuizzesAction {

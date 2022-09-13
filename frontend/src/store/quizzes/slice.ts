@@ -6,6 +6,7 @@ const initialState: IQuizzesState = {
   quiz: null,
   quizzes: [],
   isLoading: false,
+  isLoadingQuiz: false,
 };
 
 const { reducer, actions } = createSlice({

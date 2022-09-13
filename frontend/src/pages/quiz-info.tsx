@@ -32,7 +32,7 @@ const QuizInfo = () => {
   const navigate = useNavigate();
 
   const user = useAppSelector((state) => state.auth.user);
-  const { quiz, isLoading } = useAppSelector((state) => state.quizzes);
+  const { quiz, isLoadingQuiz } = useAppSelector((state) => state.quizzes);
 
   const params = useParams() as { id: string };
 
@@ -44,7 +44,7 @@ const QuizInfo = () => {
     }
   }, [user]);
 
-  if (isLoading) {
+  if (isLoadingQuiz) {
     return <Loading />;
   }
 

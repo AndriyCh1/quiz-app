@@ -18,9 +18,16 @@ export const quizzesReducer = (builder: ActionReducerMapBuilder<IQuizzesState>):
     },
   );
   builder.addMatcher(
+    isAnyOf(quizzesActions.getOneByIdVisitor.pending, quizzesActions.getOneByIdUser.pending),
+    (state: IQuizzesState, payload) => {
+      state.isLoadingQuiz = true;
+    },
+  );
+  builder.addMatcher(
     isAnyOf(quizzesActions.getOneByIdVisitor.fulfilled, quizzesActions.getOneByIdUser.fulfilled),
     (state: IQuizzesState, payload) => {
       state.quiz = payload.payload;
+      state.isLoadingQuiz = false;
     },
   );
 };

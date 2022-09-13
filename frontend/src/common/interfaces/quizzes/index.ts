@@ -1,14 +1,14 @@
 import { IBase } from '../base';
 
 export interface IQuizAnswer {
-  id: number | string;
+  id: string;
   active: boolean;
   correct: boolean;
   content: string;
 }
 
 export interface IQuizQuestion {
-  id: number | string;
+  id: string;
   active: boolean;
   type: 'single-choice' | 'multiple-choice' | 'select' | 'input';
   score: number;
@@ -18,7 +18,7 @@ export interface IQuizQuestion {
 }
 
 export interface IQuiz extends IBase {
-  id: number | string;
+  id: string;
   title: string; // max 30 symbols
   published: boolean;
   score: number; // total score
