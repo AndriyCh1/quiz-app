@@ -15,7 +15,7 @@ const visitorRoutes: IRoute[] = [
   { path: Routes.QuizInfo, element: <QuizInfo /> },
   { path: Routes.ActiveQuiz, element: <ActiveQuiz /> },
   { path: Routes.PublicQuizzes, element: <VisitorHome /> },
-  { path: '*', element: <Link to={Routes.PublicQuizzes} /> },
+  { path: '*', element: <Navigate to={Routes.PublicQuizzes} /> },
 ];
 
 export { visitorRoutes };
