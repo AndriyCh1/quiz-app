@@ -15,6 +15,11 @@ import { generateUniqueId } from '../utils/generate-unique-id';
 import { IoMdSave as SaveIcon } from 'react-icons/io';
 import { AiFillEye as OpenedEyeIcon } from 'react-icons/ai';
 import { AiFillEyeInvisible as ClosedEyeIcon } from 'react-icons/ai';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { quizzesActions } from '../store/quizzes';
+import { IDeepQuiz, IQuiz } from '../common/interfaces';
+import { useNavigate } from 'react-router-dom';
+import { UserRoutes } from '../common/enums';
 
 interface IMetaData {
   title: string;
@@ -36,8 +41,15 @@ interface IQuestion {
   answers: IAnswer[];
 }
 
+const QUIZ_TYPE = 'single-choice';
+const TEMP_QUIZ_TIME = 100;
+
 const SingleChoiceCreator = () => {
   // TODO: use SET for questions and answers arrays
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [quizCreateErrorMessage, setQuizCreateErrorMessage] = useState('');
+
   const [quizInfo, setQuizInfo] = useState<IMetaData>({ description: '', title: '' });
   const defaultQuestion = {
     active: true,
@@ -69,12 +81,37 @@ const SingleChoiceCreator = () => {
     });
   };
 
-  const handleSaveQuiz = () => {
-    // ToDo: add logic
-  };
+  const handleSaveQuiz = (options: { publish: boolean }) => {
+    const totalScore = questions.reduce((acc: number, cur: IQuestion) => acc + cur.score, 0);
 
-  const handleSaveAndPublishQuiz = () => {
-    // ToDo: add logic
+    const quiz: IDeepQuiz = {
+      title: quizInfo.title,
+      type: QUIZ_TYPE,
+      published: options.publish,
+      score: totalScore,
+      content: quizInfo.description,
+      time: TEMP_QUIZ_TIME,
+      questions: questions.map((question) => ({
+        active: question.active,
+        type: QUIZ_TYPE,
+        score: question.score,
+        content: question.content,
+        answers: question.answers.map((answer) => ({
+          active: answer.active,
+          correct: answer.correct,
+          content: answer.text,
+        })),
+      })),
+    };
+
+    dispatch(quizzesActions.create(quiz))
+      .unwrap()
+      .then((res: IQuiz) => {
+        navigate(`${UserRoutes.QuizInfo}/${res.id}`);
+      })
+      .catch(() =>
+        setQuizCreateErrorMessage('Oops, something went wrong, your quiz wasn`t created'),
+      );
   };
 
   const checkQuizValidation = (): string => {
@@ -93,7 +130,19 @@ const SingleChoiceCreator = () => {
     setQuestions([defaultQuestion]);
   }, []);
 
-  console.log('render');
+  if (quizCreateErrorMessage) {
+    return (
+      <Helmet title="Single-choice quiz creator">
+        <Container className="single-choice-creator">
+          <Wrapper>
+            <div style={{ textAlign: 'center', padding: '20px' }}>
+              <span>{quizCreateErrorMessage}. Try one more time.</span>
+            </div>
+          </Wrapper>
+        </Container>
+      </Helmet>
+    );
+  }
   return (
     <Helmet title="Single-choice quiz creator">
       <Container className="single-choice-creator">
@@ -107,9 +156,10 @@ const SingleChoiceCreator = () => {
               score={item.score}
               active={item.active}
               answers={item.answers}
-              onChange={(content, answers) => handleChangeQuestion({ ...item, content, answers })}
+              onChange={(content, answers, active, score) =>
+                handleChangeQuestion({ ...item, content, answers, active, score })
+              }
               onRemove={() => handleRemoveQuestion(item.id)}
-              onChangeActive={(active) => handleChangeQuestion({ ...item, active })}
               onError={(message) => setQuestionErrorMessage(message)}
             />
           ))}
@@ -121,7 +171,7 @@ const SingleChoiceCreator = () => {
           <div className="single-choice-creator__save-quiz-wrapper">
             <Button
               className="single-choice-creator__save-quiz-btn"
-              onClick={handleSaveQuiz}
+              onClick={() => handleSaveQuiz({ publish: false })}
               disabled={!!notValidFieldError}
               tooltip={notValidFieldError || ''}
             >
@@ -129,7 +179,7 @@ const SingleChoiceCreator = () => {
             </Button>
             <Button
               className="single-choice-creator__save-quiz-btn"
-              onClick={handleSaveAndPublishQuiz}
+              onClick={() => handleSaveQuiz({ publish: true })}
               disabled={!!notValidFieldError}
               tooltip={notValidFieldError || ''}
             >
@@ -143,25 +193,22 @@ const SingleChoiceCreator = () => {
 };
 
 interface IQuestionItemProps extends IQuestion {
-  onChangeActive: (active: boolean) => void;
-  onChange: (content: string, answers: IAnswer[]) => void;
+  // onChangeActive: (active: boolean) => void;
+  onChange: (content: string, answers: IAnswer[], active: boolean, score: number) => void;
   onRemove: () => void;
   onError: (message: string) => void;
 }
 
-const QuestionItem: React.FC<IQuestionItemProps> = ({
-  active,
-  onChangeActive,
-  onChange,
-  onRemove,
-  onError,
-}) => {
+const QuestionItem: React.FC<IQuestionItemProps> = ({ active, onChange, onRemove, onError }) => {
   const [questionValue, setQuestionValue] = useState('');
+  const [isActive, setIsActive] = useState(active);
+  const [score, setScore] = useState('');
   const [answers, setAnswers] = useState<IAnswer[]>([]);
 
   const handleChangeQuestion = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setQuestionValue(e.target.value);
   };
+  const handleChangeActive = (active: boolean) => setIsActive(active);
 
   const handleAddAnswer = () => {
     setAnswers((state) => [
@@ -182,18 +229,25 @@ const QuestionItem: React.FC<IQuestionItemProps> = ({
     });
   };
 
+  const handleChangeScore = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!(Number(e.target.value) <= 0)) {
+      setScore(e.target.value);
+    }
+  };
+
   const checkQuestionValidation = (): string => {
     if (!questionValue.trim()) return 'Some question text is empty';
     if (!answers.length) return 'Some question does not have answers!';
+    if (score === '') return 'Some question score isn`t set!';
     const hasEmptyAnswer = answers.find((item) => item.text !== '');
     if (!hasEmptyAnswer) return 'Some answer is empty!';
     return '';
   };
 
   useEffect(() => {
-    onChange(questionValue, answers);
+    onChange(questionValue, answers, isActive, score ? Number(score) : 0);
     onError(checkQuestionValidation());
-  }, [questionValue, answers]);
+  }, [questionValue, answers, score, isActive]);
 
   return (
     <div className={`single-choice-creator__question-wrapper ${active ? '' : 'inactive'}`}>
@@ -206,30 +260,41 @@ const QuestionItem: React.FC<IQuestionItemProps> = ({
           value={questionValue}
         />
       </div>
-      <div className="single-choice-creator__question-actions-wrapper">
-        <span
-          className="single-choice-creator__active-question__btn"
-          onClick={() => onChangeActive(!active)}
-        >
-          {active ? (
-            <>
-              <OpenedEyeIcon className="single-choice-creator__answers__item__active" />
-              <span>Hide</span>
-            </>
-          ) : (
-            <>
-              <ClosedEyeIcon className="single-choice-creator__answers__item__active" />
-              <span>Show</span>
-            </>
-          )}
-        </span>
-
-        <Button className="single-choice-creator__question-action-remove" onClick={onRemove}>
-          <RemoveIcon className="single-choice-creator__question-action-remove__icon " /> Remove
-        </Button>
-        <Button className="single-choice-creator__question-action-add" onClick={handleAddAnswer}>
-          <AddIcon className="single-choice-creator__question-action-add__icon" /> Add new answer
-        </Button>
+      <div className="single-choice-creator__question-actions">
+        <div className="single-choice-creator__question-actions__inputs">
+          <FormInput
+            name="quiz-answer"
+            className="single-choice-creator__question-actions__score"
+            placeholder="score"
+            onChange={handleChangeScore}
+            type="number"
+            value={score}
+          />
+          <div
+            className="single-choice-creator__question-actions__active"
+            onClick={() => handleChangeActive(!active)}
+          >
+            {active ? (
+              <>
+                <OpenedEyeIcon className="single-choice-creator__question__active" />
+                <span>hide</span>
+              </>
+            ) : (
+              <>
+                <ClosedEyeIcon className="single-choice-creator__question__active" />
+                <span>show</span>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="single-choice-creator__question-actions__btns">
+          <Button className="single-choice-creator__question-action-remove" onClick={onRemove}>
+            <RemoveIcon className="single-choice-creator__question-action-remove__icon " /> Remove
+          </Button>
+          <Button className="single-choice-creator__question-action-add" onClick={handleAddAnswer}>
+            <AddIcon className="single-choice-creator__question-action-add__icon" /> Add new answer
+          </Button>
+        </div>
       </div>
       <div className="single-choice-creator__answers">
         {answers.map((item) => (

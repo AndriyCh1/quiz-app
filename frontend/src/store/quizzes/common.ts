@@ -11,5 +11,5 @@ export enum QuizzesAction {
   GET_ONE_VISITOR = 'GET_ONE_VISITOR',
   GET_All_USER = 'GET_All_USER',
   GET_ONE_USER = 'GET_ONE_USER',
-  SEND = 'SEND',
+  CREATE = 'CREATE',
 }

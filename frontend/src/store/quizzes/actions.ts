@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { QuizzesAction } from './common';
-import { IQuiz } from '../../common/interfaces';
+import { IDeepQuiz, IQuiz } from '../../common/interfaces';
 import { userQuizzesService, visitorQuizzesService } from '../../services';
 
 export const getAllVisitor = createAsyncThunk<IQuiz[]>(
@@ -41,6 +41,17 @@ export const getOneByIdUser = createAsyncThunk<IQuiz, IQuiz['id']>(
   async (id: IQuiz['id'], { rejectWithValue }) => {
     try {
       return await userQuizzesService.getOneById(id);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  },
+);
+
+export const create = createAsyncThunk<IQuiz, IDeepQuiz>(
+  QuizzesAction.CREATE,
+  async (quiz: IDeepQuiz, { rejectWithValue }) => {
+    try {
+      return await userQuizzesService.create(quiz);
     } catch (e) {
       return rejectWithValue(e);
     }

@@ -30,3 +30,27 @@ export interface IQuiz extends IBase {
     fullName: string;
   };
 }
+
+interface IDeepQuizAnswer {
+  active: boolean;
+  correct: boolean;
+  content: string;
+}
+
+interface IDeepQuizQuestion {
+  active: boolean;
+  type: string;
+  score: number;
+  content: string;
+  answers: IDeepQuizAnswer[];
+}
+
+export type IDeepQuiz = {
+  type: string;
+  published: boolean;
+  title: string;
+  score: number;
+  content: string;
+  time: number;
+  questions: IDeepQuizQuestion[];
+};
