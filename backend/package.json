@@ -7,7 +7,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "ts-node dist/server.js",
+    "start": "ts-node public/server.js",
     "build": "tsc",
     "dev": "nodemon ./src/server.ts",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts",
