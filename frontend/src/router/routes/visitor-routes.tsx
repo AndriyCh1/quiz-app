@@ -1,4 +1,4 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { IRoute } from '../common/interfaces/IRoute';
 
 import LogIn from '../../pages/login';

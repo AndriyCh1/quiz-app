@@ -13,7 +13,7 @@ import Loading from '../pages/loading';
 const Router = () => {
   const dispatch = useAppDispatch();
   const [isAuthChecked, setIsAuthChecked] = useState(false);
-  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
+  const { isAuth } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {

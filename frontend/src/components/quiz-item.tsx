@@ -41,7 +41,7 @@ const QuizItem: React.FC<IProps> = (props) => {
             className="quiz-item__info__button"
             onClick={onButtonClick && withoutPropagationClick<HTMLButtonElement>(onButtonClick)}
           >
-            Demo
+            Start
           </Button>
         </div>
       </div>

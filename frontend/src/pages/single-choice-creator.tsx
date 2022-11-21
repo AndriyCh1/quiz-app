@@ -71,7 +71,7 @@ const SingleChoiceCreator = () => {
 
   const handleChangeQuestion = (question: IQuestion) => {
     setQuestions((state) => {
-      return state.map((item) => (item.id == question.id ? question : item));
+      return state.map((item) => (item.id === question.id ? question : item));
     });
   };
 
