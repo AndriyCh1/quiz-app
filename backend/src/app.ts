@@ -1,10 +1,9 @@
-import * as express from 'express';
+import express from 'express';
 import errorHandlerMiddleware from './middlewares/errorHandler.middleware';
 import { IController } from './common/interfaces';
-import * as cookieParser from 'cookie-parser';
-import * as cors from 'cors';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import authMiddleware from './middlewares/authMiddleware';
-import { Request, Response } from 'express';
 
 class App {
   public app: express.Application;
@@ -24,7 +23,6 @@ class App {
   }
 
   private initializeControllers(controllers: IController[]) {
-    this.app.use('/', (req: Request, res: Response) => res.send({ message: 'Everything is ok' }));
     controllers.forEach((controller) => {
       this.app.use('/', controller.router);
     });

@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
 import { Token } from './token.entity';
 

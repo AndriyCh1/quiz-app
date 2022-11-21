@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import UserDto from '../user/dto/user.dto';
 import { User } from '../user/user.entity';
 import { IDataInToken } from '../common/interfaces';
