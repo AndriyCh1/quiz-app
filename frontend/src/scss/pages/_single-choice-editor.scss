@@ -1,4 +1,4 @@
-.single-choice-creator {
+.single-choice-editor {
   &__save-quiz-wrapper {
     @include flex(center, flex-end);
     margin: 10px 0 15px;
@@ -18,7 +18,7 @@
   }
 }
 
-.single-choice-creator-wrapper {
+.single-choice-editor-wrapper {
   margin-top: 20px;
   padding: 10px;
 }

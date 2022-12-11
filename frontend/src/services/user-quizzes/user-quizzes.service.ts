@@ -14,6 +14,19 @@ class UserQuizzesService extends QuizzesService {
       payload: quiz,
     });
   };
+
+  public deleteById = async (id: IQuiz['id']): Promise<void> => {
+    await this.http.load(`${this.path}/${id}`, {
+      method: HttpMethod.DELETE,
+    });
+  };
+
+  public update = async (data: any): Promise<void> => {
+    await this.http.load(`${this.path}/${data.id}`, {
+      method: HttpMethod.PUT,
+      payload: data,
+    });
+  };
 }
 
 export default UserQuizzesService;

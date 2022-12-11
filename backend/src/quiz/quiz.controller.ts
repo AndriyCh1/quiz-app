@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
-import { RoleType } from '../common/enums';
+import { HttpCode, RoleType } from '../common/enums';
 import { IAuthRequest } from '../common/interfaces';
 import { IDeepQuiz } from '../common/interfaces';
 
@@ -8,6 +8,7 @@ import QuizDto from './dto/quiz.dto';
 import validatePermission from '../middlewares/validatePermission.middleware';
 
 import QuizService from './quiz.service';
+import { IDeepUpdateQuiz } from '../common/interfaces/quizzes.interface';
 
 class QuizController {
   public path = '/quizzes';
@@ -46,12 +47,12 @@ class QuizController {
       this.createDeepQuiz.bind(this),
     );
     this.router.put(
-      `${this.path}/:id`,
+      `${this.path}/user/:id`,
       validatePermission([RoleType.USER]),
-      this.updateQuiz.bind(this),
+      this.updateDeepQuiz.bind(this),
     );
     this.router.delete(
-      `${this.path}/:id`,
+      `${this.path}/user/:id`,
       validatePermission([RoleType.USER]),
       this.deleteQuiz.bind(this),
     );
@@ -111,7 +112,7 @@ class QuizController {
     try {
       const quizData: IDeepQuiz = req.body as unknown as IDeepQuiz;
       const newQuiz = await this.quizService.createDeep(req.user.id, quizData);
-      res.send(newQuiz);
+      res.status(HttpCode.CREATED).send(newQuiz);
     } catch (e) {
       next(e);
     }
@@ -121,18 +122,18 @@ class QuizController {
     try {
       const quizId: string = req.params.id as unknown as string;
       const quiz = await this.quizService.delete(quizId);
-      res.send(quiz);
+      res.status(HttpCode.OK).send(quiz);
     } catch (e) {
       next(e);
     }
   }
 
-  private async updateQuiz(req: IAuthRequest, res: Response, next: NextFunction) {
+  private async updateDeepQuiz(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
       const quizId: string = req.params.id as unknown as string;
-      const quizData: QuizDto = req.body as unknown as QuizDto;
-      const quiz = await this.quizService.update(quizId, quizData);
-      res.send(quiz);
+      const quizData: IDeepUpdateQuiz = req.body as unknown as IDeepUpdateQuiz;
+      await this.quizService.updateDeep(quizId, quizData);
+      res.status(HttpCode.OK).send();
     } catch (e) {
       next(e);
     }

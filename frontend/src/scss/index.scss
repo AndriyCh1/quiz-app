@@ -16,6 +16,9 @@
 @import "components/toggle";
 @import "components/multiline-input";
 @import "components/select";
+@import "components/single-choice";
+@import "components/single-choice-question";
+@import "components/single-choice-answer";
 
 @import "pages/auth";
 @import "pages/home";
@@ -26,3 +29,4 @@
 @import "pages/single-choice-creator";
 @import "pages/visitor-home";
 @import "pages/loading";
+@import "pages/single-choice-editor";

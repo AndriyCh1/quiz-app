@@ -7,11 +7,13 @@ interface IProps {
   content: string;
   questionCount: number;
   onClick?: () => void;
-  onButtonClick?: () => void;
+  onStart?: () => void;
+  onDelete?: () => void;
+  onEdit?: () => void;
 }
 
 const QuizItem: React.FC<IProps> = (props) => {
-  const { content, type, title, questionCount, onClick, onButtonClick } = props;
+  const { content, type, title, questionCount, onClick, onStart, onDelete, onEdit } = props;
 
   const withoutPropagationClick = <T extends unknown>(callback: () => void) => {
     return (e: React.MouseEvent<T>) => {
@@ -37,12 +39,30 @@ const QuizItem: React.FC<IProps> = (props) => {
           <p className="quiz-item__info__questions">
             <span>{questionCount}</span> questions
           </p>
-          <Button
-            className="quiz-item__info__button"
-            onClick={onButtonClick && withoutPropagationClick<HTMLButtonElement>(onButtonClick)}
-          >
-            Start
-          </Button>
+          <div className="quiz-item__actions">
+            <Button
+              className="quiz-item__actions__button"
+              onClick={onStart && withoutPropagationClick<HTMLButtonElement>(onStart)}
+            >
+              Start
+            </Button>
+            {onDelete ? (
+              <>
+                <Button
+                  className="quiz-item__actions__button"
+                  onClick={onDelete && withoutPropagationClick<HTMLButtonElement>(onDelete)}
+                >
+                  Delete
+                </Button>
+                <Button
+                  className="quiz-item__actions__button"
+                  onClick={onEdit && withoutPropagationClick<HTMLButtonElement>(onEdit)}
+                >
+                  Edit
+                </Button>
+              </>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

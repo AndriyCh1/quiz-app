@@ -9,13 +9,20 @@ interface IResponse {
 }
 
 interface IProps {
+  defaultTitle?: string;
+  defaultDescription?: string;
   className?: string;
   onChange?: (data: IResponse) => void;
 }
 
-const SetQuizMeta: React.FC<IProps> = ({ className, onChange }) => {
-  const [titleValue, setTitleValue] = useState('');
-  const [descriptionValue, setDescriptionValue] = useState('');
+const SetQuizMeta: React.FC<IProps> = ({
+  defaultTitle,
+  defaultDescription,
+  className,
+  onChange,
+}) => {
+  const [titleValue, setTitleValue] = useState(defaultTitle || '');
+  const [descriptionValue, setDescriptionValue] = useState(defaultDescription || '');
 
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => setTitleValue(e.target.value);
   const handleClearTitle = () => setTitleValue('');

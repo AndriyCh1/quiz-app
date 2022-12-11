@@ -13,4 +13,6 @@ export enum QuizzesAction {
   GET_All_USER = 'GET_All_USER',
   GET_ONE_USER = 'GET_ONE_USER',
   CREATE = 'CREATE',
+  DELETE = 'DELETE',
+  UPDATE = 'UPDATE',
 }

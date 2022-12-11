@@ -18,7 +18,7 @@ export class QuizQuestion extends AbstractEntity {
   @Column({ type: 'enum', enum: QuestionTypes })
   type: string;
 
-  @ManyToOne(() => Quiz, (quiz) => quiz.questions)
+  @ManyToOne(() => Quiz, (quiz) => quiz.questions, { onDelete: 'CASCADE' })
   quiz: Quiz;
 
   @OneToMany(() => QuizAnswer, (quizAnswer) => quizAnswer.question, { onDelete: 'CASCADE' })

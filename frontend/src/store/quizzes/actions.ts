@@ -57,3 +57,26 @@ export const create = createAsyncThunk<IQuiz, IDeepQuiz>(
     }
   },
 );
+
+export const deleteById = createAsyncThunk<IQuiz['id'], IQuiz['id']>(
+  QuizzesAction.DELETE,
+  async (id: IQuiz['id'], { rejectWithValue }) => {
+    try {
+      await userQuizzesService.deleteById(id);
+      return id;
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  },
+);
+
+export const update = createAsyncThunk(
+  QuizzesAction.UPDATE,
+  async (data: any, { rejectWithValue }) => {
+    try {
+      await userQuizzesService.update(data);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  },
+);

@@ -55,3 +55,24 @@ export type IDeepQuiz = {
   time: number;
   questions: IDeepQuizQuestion[];
 };
+
+export interface IAnswer {
+  id: string;
+  active: boolean;
+  correct: boolean;
+  content: string;
+  queryConfig: {
+    status: 'new' | 'edited' | 'fetched' | 'deleted';
+  };
+}
+
+export interface IQuestion {
+  id: string;
+  content: string;
+  score: number;
+  active: boolean;
+  answers: IAnswer[];
+  queryConfig: {
+    status: 'new' | 'edited' | 'fetched' | 'deleted';
+  };
+}

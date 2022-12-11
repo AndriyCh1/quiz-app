@@ -13,6 +13,6 @@ export class QuizAnswer extends AbstractEntity {
   @Column()
   content: string;
 
-  @ManyToOne(() => QuizQuestion, (quizQuestion) => quizQuestion.answers)
+  @ManyToOne(() => QuizQuestion, (quizQuestion) => quizQuestion.answers, { onDelete: 'CASCADE' })
   question: QuizQuestion;
 }

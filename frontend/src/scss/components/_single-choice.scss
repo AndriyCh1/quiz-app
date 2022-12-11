@@ -1,24 +1,23 @@
-.single-choice-creator {
-  &__save-quiz-wrapper {
+.single-choice {
+  &__add-question-wrapper {
     @include flex(center, flex-end);
     margin: 10px 0 15px;
     gap: 10px;
   }
 
-  &__save-quiz-wrapper {
-    margin-top: 20px;
-  }
-
-  &__save-quiz-btn {
+  &__add-question-btn {
     padding-left: 10px;
     padding-right: 10px;
     @include flex(center, center);
     gap: 8px;
     color: $color-white;
-  }
-}
 
-.single-choice-creator-wrapper {
-  margin-top: 20px;
-  padding: 10px;
+    &__icon {
+      font-size: 0.9rem;
+    }
+  }
+
+  &__add-question-wrapper {
+    margin-top: 40px;
+  }
 }

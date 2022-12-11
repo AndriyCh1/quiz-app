@@ -3,6 +3,9 @@ import { IQuizzesState } from './common';
 import { quizzesActions } from './index';
 
 export const quizzesReducer = (builder: ActionReducerMapBuilder<IQuizzesState>): void => {
+  builder.addCase(quizzesActions.deleteById.fulfilled, (state: IQuizzesState, payload) => {
+    state.quizzes = state.quizzes.filter((item) => item.id !== payload.payload);
+  });
   builder.addMatcher(
     isAnyOf(quizzesActions.getAllVisitor.pending, quizzesActions.getAllUser.pending),
     (state: IQuizzesState, payload) => {
@@ -20,6 +23,7 @@ export const quizzesReducer = (builder: ActionReducerMapBuilder<IQuizzesState>):
   builder.addMatcher(
     isAnyOf(quizzesActions.getOneByIdVisitor.pending, quizzesActions.getOneByIdUser.pending),
     (state: IQuizzesState, payload) => {
+      state.quiz = null;
       state.isLoadingQuiz = true;
     },
   );

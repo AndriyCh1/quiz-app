@@ -24,7 +24,7 @@ export class Quiz extends AbstractEntity {
   @Column()
   time: number;
 
-  @ManyToOne(() => User, (user) => user.quiz)
+  @ManyToOne(() => User, (user) => user.quiz, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToMany(() => QuizQuestion, (quizQuestion) => quizQuestion.quiz, { onDelete: 'CASCADE' })

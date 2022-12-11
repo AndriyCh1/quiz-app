@@ -6,6 +6,7 @@ export enum UserRoutes {
   History = '/quiz/history',
   SingleChoiceCreator = '/quizzes/create/single-choice',
   InDevelopment = '/in-development',
+  EditQuiz = '/quiz/:id/edit',
 }
 
 export enum VisitorRoutes {
