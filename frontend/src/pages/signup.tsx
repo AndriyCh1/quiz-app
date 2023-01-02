@@ -12,6 +12,7 @@ import Button from '../components/button';
 import { MdAlternateEmail as EmailIcon } from 'react-icons/md';
 import { AiFillLock as LockIcon } from 'react-icons/ai';
 import { FaUser as UserIcon } from 'react-icons/fa';
+import { UserRoutes } from '../common/enums';
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
@@ -48,7 +49,7 @@ const SignUp = () => {
   }
 
   if (isAuth) {
-    navigate('/home');
+    navigate(UserRoutes.Quizzes);
   }
 
   return (
