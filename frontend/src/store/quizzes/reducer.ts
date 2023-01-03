@@ -7,31 +7,31 @@ export const quizzesReducer = (builder: ActionReducerMapBuilder<IQuizzesState>):
     state.quizzes = state.quizzes.filter((item) => item.id !== payload.payload);
   });
   builder.addMatcher(
-    isAnyOf(quizzesActions.getAllVisitor.pending, quizzesActions.getAllUser.pending),
+    isAnyOf(quizzesActions.getAllPublic.pending, quizzesActions.getAllForUser.pending),
     (state: IQuizzesState, payload) => {
       state.quizzes = [];
-      state.isLoading = true;
+      state.isLoadingQuizzes = true;
     },
   );
   builder.addMatcher(
-    isAnyOf(quizzesActions.getAllVisitor.fulfilled, quizzesActions.getAllUser.fulfilled),
+    isAnyOf(quizzesActions.getAllPublic.fulfilled, quizzesActions.getAllForUser.fulfilled),
     (state: IQuizzesState, payload) => {
       state.quizzes = payload.payload;
-      state.isLoading = false;
+      state.isLoadingQuizzes = false;
     },
   );
   builder.addMatcher(
-    isAnyOf(quizzesActions.getOneByIdVisitor.pending, quizzesActions.getOneByIdUser.pending),
+    isAnyOf(quizzesActions.getOnePublicById.pending, quizzesActions.getOneForUserById.pending),
     (state: IQuizzesState, payload) => {
-      state.quiz = null;
-      state.isLoadingQuiz = true;
+      state.chosenQuiz = null;
+      state.isLoadingChosenQuiz = true;
     },
   );
   builder.addMatcher(
-    isAnyOf(quizzesActions.getOneByIdVisitor.fulfilled, quizzesActions.getOneByIdUser.fulfilled),
+    isAnyOf(quizzesActions.getOnePublicById.fulfilled, quizzesActions.getOneForUserById.fulfilled),
     (state: IQuizzesState, payload) => {
-      state.quiz = payload.payload;
-      state.isLoadingQuiz = false;
+      state.chosenQuiz = payload.payload;
+      state.isLoadingChosenQuiz = false;
     },
   );
 };

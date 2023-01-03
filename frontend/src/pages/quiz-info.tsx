@@ -31,18 +31,22 @@ const QuizInfo = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const user = useAppSelector((state) => state.auth.user);
-  const { quiz, isLoadingQuiz } = useAppSelector((state) => state.quizzes);
+  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
+  const { chosenQuiz: quiz, isLoadingChosenQuiz: isLoadingQuiz } = useAppSelector(
+    (state) => state.quizzes,
+  );
 
   const params = useParams() as { id: string };
 
   useEffect(() => {
-    if (user?.fullName) {
-      dispatch(quizzesActions.getOneByIdUser(params.id));
+    if (isLoading) return;
+
+    if (isAuth) {
+      dispatch(quizzesActions.getOneForUserById(params.id));
     } else {
-      dispatch(quizzesActions.getOneByIdVisitor(params.id));
+      dispatch(quizzesActions.getOnePublicById(params.id));
     }
-  }, [user]);
+  }, [isAuth]);
 
   if (isLoadingQuiz) {
     return <Loading />;

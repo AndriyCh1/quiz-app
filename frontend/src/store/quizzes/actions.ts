@@ -3,8 +3,8 @@ import { QuizzesAction } from './common';
 import { IDeepQuiz, IQuiz } from '../../common/interfaces';
 import { userQuizzesService, visitorQuizzesService } from '../../services';
 
-export const getAllVisitor = createAsyncThunk<IQuiz[]>(
-  QuizzesAction.GET_All_VISITOR,
+export const getAllPublic = createAsyncThunk<IQuiz[]>(
+  QuizzesAction.GET_All_PUBLIC,
   async (_, { rejectWithValue }) => {
     try {
       return await visitorQuizzesService.getAll();
@@ -14,8 +14,8 @@ export const getAllVisitor = createAsyncThunk<IQuiz[]>(
   },
 );
 
-export const getOneByIdVisitor = createAsyncThunk<IQuiz, IQuiz['id']>(
-  QuizzesAction.GET_ONE_VISITOR,
+export const getOnePublicById = createAsyncThunk<IQuiz, IQuiz['id']>(
+  QuizzesAction.GET_ONE_PUBLIC,
   async (id: IQuiz['id'], { rejectWithValue }) => {
     try {
       return await visitorQuizzesService.getOneById(id);
@@ -25,8 +25,8 @@ export const getOneByIdVisitor = createAsyncThunk<IQuiz, IQuiz['id']>(
   },
 );
 
-export const getAllUser = createAsyncThunk<IQuiz[]>(
-  QuizzesAction.GET_All_USER,
+export const getAllForUser = createAsyncThunk<IQuiz[]>(
+  QuizzesAction.GET_All_FOR_USER,
   async (_, { rejectWithValue }) => {
     try {
       return await userQuizzesService.getAll();
@@ -36,8 +36,8 @@ export const getAllUser = createAsyncThunk<IQuiz[]>(
   },
 );
 
-export const getOneByIdUser = createAsyncThunk<IQuiz, IQuiz['id']>(
-  QuizzesAction.GET_ONE_USER,
+export const getOneForUserById = createAsyncThunk<IQuiz, IQuiz['id']>(
+  QuizzesAction.GET_ONE_FOR_USER,
   async (id: IQuiz['id'], { rejectWithValue }) => {
     try {
       return await userQuizzesService.getOneById(id);

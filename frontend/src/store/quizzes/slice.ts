@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { quizzesReducer } from './reducer';
 
 const initialState: IQuizzesState = {
-  quiz: null,
+  chosenQuiz: null,
   quizzes: [],
-  isLoading: false,
-  isLoadingQuiz: false,
+  isLoadingQuizzes: false,
+  isLoadingChosenQuiz: false,
 };
 
 const { reducer, actions } = createSlice({

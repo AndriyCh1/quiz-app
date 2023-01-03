@@ -1,17 +1,17 @@
 import { IQuiz } from '../../common/interfaces';
 
 export interface IQuizzesState {
-  quiz: IQuiz | null;
+  chosenQuiz: IQuiz | null;
   quizzes: IQuiz[];
-  isLoading: boolean;
-  isLoadingQuiz: boolean;
+  isLoadingQuizzes: boolean;
+  isLoadingChosenQuiz: boolean;
 }
 
 export enum QuizzesAction {
-  GET_All_VISITOR = 'GET_All_VISITOR',
-  GET_ONE_VISITOR = 'GET_ONE_VISITOR',
-  GET_All_USER = 'GET_All_USER',
-  GET_ONE_USER = 'GET_ONE_USER',
+  GET_All_PUBLIC = 'GET_All_PUBLIC',
+  GET_ONE_PUBLIC = 'GET_ONE_PUBLIC',
+  GET_All_FOR_USER = 'GET_All_FOR_USER',
+  GET_ONE_FOR_USER = 'GET_ONE_FOR_USER',
   CREATE = 'CREATE',
   DELETE = 'DELETE',
   UPDATE = 'UPDATE',

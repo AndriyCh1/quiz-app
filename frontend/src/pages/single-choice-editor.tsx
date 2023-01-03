@@ -29,7 +29,9 @@ const SingleChoiceEditor = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { quiz, isLoadingQuiz } = useAppSelector((state) => state.quizzes);
+  const { chosenQuiz: quiz, isLoadingChosenQuiz: isLoadingQuiz } = useAppSelector(
+    (state) => state.quizzes,
+  );
 
   const { id } = useParams();
 
@@ -90,7 +92,7 @@ const SingleChoiceEditor = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(quizzesActions.getOneByIdUser(id))
+      dispatch(quizzesActions.getOneForUserById(id))
         .unwrap()
         .catch(() => {
           setQuizErrorMessage('Quiz has not been found');

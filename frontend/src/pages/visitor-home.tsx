@@ -32,7 +32,8 @@ const VisitorHome = () => {
   };
 
   useEffect(() => {
-    dispatch(quizzesActions.getAllVisitor());
+    dispatch(quizzesActions.getAllPublic());
+    console.log('getAllPublic');
   }, []);
 
   useEffect(() => {
