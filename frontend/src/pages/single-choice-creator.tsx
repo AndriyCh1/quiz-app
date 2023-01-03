@@ -22,7 +22,7 @@ interface IMetaData {
 }
 
 const QUIZ_TYPE = 'single-choice';
-const TEMP_QUIZ_TIME = 100;
+const TEMP_QUIZ_TIME = 100; // TODO: get rid of this
 
 const SingleChoiceCreator = () => {
   // TODO: use SET for questions and answers arrays
