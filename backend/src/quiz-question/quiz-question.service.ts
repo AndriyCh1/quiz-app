@@ -67,13 +67,13 @@ class QuizQuestionService {
     return await this.questionRepository.findOne(id);
   }
 
-  public async delete(id: QuizQuestion['id']): Promise<QuizQuestion> {
+  public async delete(id: QuizQuestion['id']): Promise<void> {
     const question = await this.questionRepository.findOne(id);
 
     if (!question) {
       throw new HttpException(HttpCode.NOT_FOUND, 'Question not found');
     }
-    return await question.remove();
+    await question.remove();
   }
 }
 

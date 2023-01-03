@@ -49,6 +49,12 @@ class QuizService {
       throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
     }
 
+    quiz.questions.forEach((question) => {
+      question.answers.forEach((answer) => {
+        answer.correct = undefined;
+      });
+    });
+
     return quiz;
   }
 
@@ -66,6 +72,12 @@ class QuizService {
     if (!quiz) {
       throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
     }
+
+    quiz.questions.forEach((question) => {
+      question.answers.forEach((answer) => {
+        answer.correct = undefined;
+      });
+    });
 
     return quiz;
   }
@@ -144,10 +156,16 @@ class QuizService {
       throw new HttpException(HttpCode.INTERNAL_SERVER_ERROR, 'Cannot create quiz');
     }
 
+    createdQuiz.questions.forEach((question) => {
+      question.answers.forEach((answer) => {
+        answer.correct = undefined;
+      });
+    });
+
     return createdQuiz;
   }
 
-  public async delete(id: Quiz['id']): Promise<Quiz> {
+  public async delete(id: Quiz['id']): Promise<void> {
     const quiz = await this.quizRepository.findOne({ id });
 
     if (!quiz) {
@@ -155,7 +173,6 @@ class QuizService {
     }
 
     await this.quizRepository.delete({ id });
-    return quiz;
   }
 
   public async update(id: Quiz['id'], quizData: QuizDto): Promise<Quiz> {

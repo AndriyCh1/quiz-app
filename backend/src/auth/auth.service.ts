@@ -76,6 +76,8 @@ class AuthService {
     const user = await this.userRepository.findOne({ id: userData.id });
     const tokens = this.tokenService.generateTokens({ ...user });
 
+    user.password = undefined;
+
     await this.tokenService.saveToken(user.id, tokens.refreshToken);
     return { ...tokens, user };
   }
