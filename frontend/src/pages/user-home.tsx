@@ -80,7 +80,6 @@ const UserHome = () => {
 
   useEffect(() => {
     dispatch(quizzesActions.getAllForUser()).then(() => setQuizzes(allQuizzes));
-    console.log('getAllForUser');
   }, []);
 
   useEffect(() => {

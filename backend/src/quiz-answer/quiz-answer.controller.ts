@@ -7,6 +7,7 @@ import validationMiddleware from '../middlewares/validation.middleware';
 
 import AnswerDto from './dto/quiz-answer.dto';
 import QuizAnswerService from './quiz-answer.service';
+import { HttpCode } from '../common/enums';
 
 class QuizAnswerController implements IController {
   public path = '/answer';
@@ -33,7 +34,7 @@ class QuizAnswerController implements IController {
     try {
       const answerId: string = req.params.id as unknown as string;
       const answer = await this.answerService.getById(answerId);
-      res.send(answer);
+      res.status(HttpCode.OK).send(answer);
     } catch (e) {
       next(e);
     }
@@ -43,7 +44,7 @@ class QuizAnswerController implements IController {
     try {
       const questionId: string = req.params.questionId as unknown as string;
       const answers = await this.answerService.getAllByQuestionId(questionId);
-      res.send(answers);
+      res.status(HttpCode.OK).send(answers);
     } catch (e) {
       next(e);
     }
@@ -54,7 +55,7 @@ class QuizAnswerController implements IController {
       const questionId: string = req.params.questionId as unknown as string;
       const answerData: AnswerDto = req.body as unknown as AnswerDto;
       const answer = await this.answerService.create(questionId, answerData);
-      res.send(answer);
+      res.status(HttpCode.CREATED).send(answer);
     } catch (e) {
       next(e);
     }
@@ -65,7 +66,7 @@ class QuizAnswerController implements IController {
       const answerId: string = req.params.id as unknown as string;
       const answerData: AnswerDto = req.body as unknown as AnswerDto;
       const answer = await this.answerService.update(answerId, answerData);
-      res.send(answer);
+      res.status(HttpCode.NO_CONTENT).send(answer);
     } catch (e) {
       next(e);
     }
@@ -75,7 +76,7 @@ class QuizAnswerController implements IController {
     try {
       const answerId: string = req.params.id as unknown as string;
       const answer = await this.answerService.delete(answerId);
-      res.send(answer);
+      res.status(HttpCode.NO_CONTENT).send(answer);
     } catch (e) {
       next(e);
     }

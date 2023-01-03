@@ -117,18 +117,18 @@ const QuizInfo = () => {
               </div>
             </div>
           </Wrapper>
-          {quiz.questions.map((item, index) => (
-            <QuizQuestion
-              index={index + 1}
-              key={index}
-              content={item.content}
-              active={item.active}
-              type={item.type}
-              score={item.score}
-              // time={item.time}
-              quizAnswers={item.answers}
-            />
-          ))}
+          {/*{quiz.questions.map((item, index) => (*/}
+          {/*  <QuizQuestion*/}
+          {/*    index={index + 1}*/}
+          {/*    key={index}*/}
+          {/*    content={item.content}*/}
+          {/*    active={item.active}*/}
+          {/*    type={item.type}*/}
+          {/*    score={item.score}*/}
+          {/*    // time={item.time}*/}
+          {/*    quizAnswers={item.answers}*/}
+          {/*  />*/}
+          {/*))}*/}
         </Container>
       </Helmet>
     );
@@ -137,72 +137,72 @@ const QuizInfo = () => {
   return <NotFound />;
 };
 
-// TODO: implement logic for "active" property
-type IQuizQuestionAnswer = Pick<IQuizAnswer, 'active' | 'correct' | 'content'>;
+// // TODO: implement logic for "active" property
+// type IQuizQuestionAnswer = Pick<IQuizAnswer, 'active' | 'correct' | 'content'>;
+//
+// type IQuizQuestionProps = {
+//   index: number;
+//   quizAnswers: IQuizQuestionAnswer[];
+// } & Pick<IQuizQuestion, 'active' | 'type' | 'score' | 'content'>;
+//
+// const QuizQuestion: React.FC<IQuizQuestionProps> = (props) => {
+//   const { index, type, score, content, quizAnswers } = props;
+//
+//   return (
+//     <Wrapper className="quiz-question">
+//       <div className="quiz-question__top">
+//         <div className="quiz-question__meta">
+//           <InfoIcon className="quiz-question__meta__icon" />
+//           <span>
+//             {index}. {type}
+//           </span>
+//         </div>
+//         <div className="quiz-question__top__right">
+//           {/*<div className="quiz-question__meta">*/}
+//           {/*  <DurationIcon className="quiz-question__meta__icon" />*/}
+//           {/*  <span>{time} seconds</span>*/}
+//           {/*</div>*/}
+//           <div className="quiz-question__meta">
+//             <CheckIcon className="quiz-question__meta__icon" />
+//             <span>{score} points</span>
+//           </div>
+//         </div>
+//       </div>
+//       <div className="quiz-question__main">
+//         <p className="quiz-question__question">{content}</p>
+//         {/*<div className='quiz-question__hide-asnwers'></div>*/}
+//         <div className="quiz-question__answers">
+//           {quizAnswers.map((item, index) => (
+//             <QuizAnswer
+//               key={index}
+//               index={index}
+//               content={item.content}
+//               active={item.active}
+//               correct={item.correct}
+//             />
+//           ))}
+//         </div>
+//       </div>
+//     </Wrapper>
+//   );
+// };
 
-type IQuizQuestionProps = {
-  index: number;
-  quizAnswers: IQuizQuestionAnswer[];
-} & Pick<IQuizQuestion, 'active' | 'type' | 'score' | 'content'>;
-
-const QuizQuestion: React.FC<IQuizQuestionProps> = (props) => {
-  const { index, type, score, content, quizAnswers } = props;
-
-  return (
-    <Wrapper className="quiz-question">
-      <div className="quiz-question__top">
-        <div className="quiz-question__meta">
-          <InfoIcon className="quiz-question__meta__icon" />
-          <span>
-            {index}. {type}
-          </span>
-        </div>
-        <div className="quiz-question__top__right">
-          {/*<div className="quiz-question__meta">*/}
-          {/*  <DurationIcon className="quiz-question__meta__icon" />*/}
-          {/*  <span>{time} seconds</span>*/}
-          {/*</div>*/}
-          <div className="quiz-question__meta">
-            <CheckIcon className="quiz-question__meta__icon" />
-            <span>{score} points</span>
-          </div>
-        </div>
-      </div>
-      <div className="quiz-question__main">
-        <p className="quiz-question__question">{content}</p>
-        {/*<div className='quiz-question__hide-asnwers'></div>*/}
-        <div className="quiz-question__answers">
-          {quizAnswers.map((item, index) => (
-            <QuizAnswer
-              key={index}
-              index={index}
-              content={item.content}
-              active={item.active}
-              correct={item.correct}
-            />
-          ))}
-        </div>
-      </div>
-    </Wrapper>
-  );
-};
-
-interface IQuizAnswerProps extends IQuizQuestionAnswer {
-  index: number;
-}
-
-const QuizAnswer: React.FC<IQuizAnswerProps> = (props) => {
-  const { content, correct } = props;
-  return (
-    <div className="quiz-question__answers__item">
-      {correct ? (
-        <CorrectIcon className="quiz-question__answers__item__icon correct-answer" />
-      ) : (
-        <WrongIcon className="quiz-question__answers__item__icon wrong-answer" />
-      )}
-      <span>{content}</span>
-    </div>
-  );
-};
+// interface IQuizAnswerProps extends IQuizQuestionAnswer {
+//   index: number;
+// }
+//
+// const QuizAnswer: React.FC<IQuizAnswerProps> = (props) => {
+//   const { content, correct } = props;
+//   return (
+//     <div className="quiz-question__answers__item">
+//       {correct ? (
+//         <CorrectIcon className="quiz-question__answers__item__icon correct-answer" />
+//       ) : (
+//         <WrongIcon className="quiz-question__answers__item__icon wrong-answer" />
+//       )}
+//       <span>{content}</span>
+//     </div>
+//   );
+// };
 
 export default QuizInfo;

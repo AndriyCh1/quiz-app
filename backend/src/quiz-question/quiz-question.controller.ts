@@ -4,6 +4,7 @@ import QuizQuestionService from './quiz-question.service';
 import authMiddleware from '../middlewares/authMiddleware';
 import QuestionDto from './dto/quiz-question.dto';
 import validationMiddleware from '../middlewares/validation.middleware';
+import { HttpCode } from '../common/enums';
 
 class QuizQuestionController implements IController {
   public path = '/question';
@@ -30,7 +31,7 @@ class QuizQuestionController implements IController {
     try {
       const questionId: string = req.params.id as unknown as string;
       const question = await this.questionService.getById(questionId);
-      res.send(question);
+      res.status(HttpCode.OK).send(question);
     } catch (e) {
       next(e);
     }
@@ -40,7 +41,7 @@ class QuizQuestionController implements IController {
     try {
       const quizId: string = req.params.quizId as unknown as string;
       const question = await this.questionService.getAllByQuizId(quizId);
-      res.send(question);
+      res.status(HttpCode.OK).send(question);
     } catch (e) {
       next(e);
     }
@@ -51,7 +52,7 @@ class QuizQuestionController implements IController {
       const quizId: string = req.params.quizId as unknown as string;
       const questionData: QuestionDto = req.body as unknown as QuestionDto;
       const question = await this.questionService.create(quizId, questionData);
-      res.send(question);
+      res.status(HttpCode.CREATED).send(question);
     } catch (e) {
       next(e);
     }
@@ -62,7 +63,7 @@ class QuizQuestionController implements IController {
       const questionId: string = req.params.id as unknown as string;
       const questionData: QuestionDto = req.body as unknown as QuestionDto;
       const question = await this.questionService.update(questionId, questionData);
-      res.send(question);
+      res.status(HttpCode.OK).send(question);
     } catch (e) {
       next(e);
     }
@@ -71,8 +72,8 @@ class QuizQuestionController implements IController {
   private async deleteQuestion(req: Request, res: Response, next: NextFunction) {
     try {
       const questionId: string = req.params.id as unknown as string;
-      const question = await this.questionService.delete(questionId);
-      res.send(question);
+      await this.questionService.delete(questionId);
+      res.status(HttpCode.NO_CONTENT).send();
     } catch (e) {
       next(e);
     }

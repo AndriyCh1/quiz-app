@@ -63,7 +63,7 @@ class QuizController {
       const userId = req.user.id as unknown as string;
       const quizId: string = req.params.id as unknown as string;
       const quiz = await this.quizService.getDeepById(quizId, userId);
-      res.send(quiz);
+      res.status(HttpCode.OK).send(quiz);
     } catch (e) {
       next(e);
     }
@@ -73,7 +73,7 @@ class QuizController {
     try {
       const quizId: string = req.params.id as unknown as string;
       const quiz = await this.quizService.getPublicDeepById(quizId);
-      res.send(quiz);
+      res.status(HttpCode.OK).send(quiz);
     } catch (e) {
       next(e);
     }
@@ -83,7 +83,7 @@ class QuizController {
     try {
       const userId = req.user.id as unknown as string;
       const quizzes = await this.quizService.getAll(userId);
-      res.send(quizzes);
+      res.status(HttpCode.OK).send(quizzes);
     } catch (e) {
       next(e);
     }
@@ -92,7 +92,7 @@ class QuizController {
   private async getPublicQuizzes(req: Request, res: Response, next: NextFunction) {
     try {
       const quizzes = await this.quizService.getPublic();
-      res.send(quizzes);
+      res.status(HttpCode.OK).send(quizzes);
     } catch (e) {
       next(e);
     }
@@ -102,7 +102,7 @@ class QuizController {
     try {
       const quizData: QuizDto = req.body as unknown as QuizDto;
       const newQuiz = await this.quizService.create(req.user.id, quizData);
-      res.send(newQuiz);
+      res.status(HttpCode.CREATED).send(newQuiz);
     } catch (e) {
       next(e);
     }
@@ -121,8 +121,8 @@ class QuizController {
   private async deleteQuiz(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
       const quizId: string = req.params.id as unknown as string;
-      const quiz = await this.quizService.delete(quizId);
-      res.status(HttpCode.OK).send(quiz);
+      await this.quizService.delete(quizId);
+      res.status(HttpCode.NO_CONTENT).send();
     } catch (e) {
       next(e);
     }
@@ -132,8 +132,8 @@ class QuizController {
     try {
       const quizId: string = req.params.id as unknown as string;
       const quizData: IDeepUpdateQuiz = req.body as unknown as IDeepUpdateQuiz;
-      await this.quizService.updateDeep(quizId, quizData);
-      res.status(HttpCode.OK).send();
+      const updatedQuiz = await this.quizService.updateDeep(quizId, quizData);
+      res.status(HttpCode.CREATED).send(updatedQuiz);
     } catch (e) {
       next(e);
     }

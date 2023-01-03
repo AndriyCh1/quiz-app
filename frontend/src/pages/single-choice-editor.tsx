@@ -82,9 +82,6 @@ const SingleChoiceEditor = () => {
         navigate(`${UserRoutes.QuizInfo.replace(':id', quiz.id)}`);
       })
       .catch(() => setQuizErrorMessage('Oops, something went wrong, your quiz wasn`t created'));
-
-    console.log('update');
-    console.log(quizToUpdate, 'questions');
   };
 
   const handleError = (error: string) => setErrorMessage(error);
