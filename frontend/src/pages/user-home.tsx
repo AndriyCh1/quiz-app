@@ -12,7 +12,6 @@ import Select, { Option } from '../components/select';
 import { IQuiz } from '../common/interfaces';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { quizzesActions } from '../store/quizzes';
-import { getAllForUser } from '../store/quizzes/actions';
 
 enum SelectOptions {
   ALL = 'all',
@@ -79,7 +78,7 @@ const UserHome = () => {
   };
 
   useEffect(() => {
-    dispatch(quizzesActions.getAllForUser()).then(() => setQuizzes(allQuizzes));
+    dispatch(quizzesActions.getAll()).then(() => setQuizzes(allQuizzes));
   }, []);
 
   useEffect(() => {

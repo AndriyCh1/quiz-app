@@ -46,7 +46,10 @@ class QuizService {
       .getOne();
 
     if (!quiz) {
-      throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
+      throw new HttpException(
+        HttpCode.NOT_FOUND,
+        'Quiz not found or you don`t have permission on that',
+      );
     }
 
     return quiz;
@@ -64,7 +67,10 @@ class QuizService {
       .getOne();
 
     if (!quiz) {
-      throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
+      throw new HttpException(
+        HttpCode.NOT_FOUND,
+        'Quiz not found or you don`t have permission on that',
+      );
     }
 
     return quiz;

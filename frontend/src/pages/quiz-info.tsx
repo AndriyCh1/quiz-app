@@ -41,11 +41,7 @@ const QuizInfo = () => {
   useEffect(() => {
     if (isLoading) return;
 
-    if (isAuth) {
-      dispatch(quizzesActions.getOneForUserById(params.id));
-    } else {
-      dispatch(quizzesActions.getOnePublicById(params.id));
-    }
+    dispatch(quizzesActions.getOneById(params.id));
   }, [isAuth]);
 
   if (isLoadingQuiz) {
