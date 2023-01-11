@@ -117,6 +117,10 @@ const ActiveQuiz = () => {
 
   useEffect(() => {
     stopwatch.start();
+
+    // TODO: get rid of this, and implement only one endpoint on the backend,
+    // which will handle this logic for authenticated and non-authenticated
+    // users
     if (user?.fullName) {
       dispatch(quizzesActions.getOneForUserById(params.id));
     } else {

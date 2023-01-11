@@ -6,12 +6,15 @@ import { TakeAnswer } from '../take-asnwer/take-answer.entity';
 @Entity()
 export class TakeQuestion extends AbstractEntity {
   @Column()
-  score: number;
-
-  @Column()
   content: string;
 
-  @Column()
+  @Column({ default: 0 })
+  score: number;
+
+  @Column({ default: false })
+  answered: boolean;
+
+  @Column({ nullable: true })
   correctlyAnswered: boolean;
 
   @ManyToOne(() => Take, (take) => take.questions, { onDelete: 'CASCADE' })

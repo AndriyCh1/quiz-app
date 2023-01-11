@@ -49,12 +49,6 @@ class QuizService {
       throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
     }
 
-    quiz.questions.forEach((question) => {
-      question.answers.forEach((answer) => {
-        answer.correct = undefined;
-      });
-    });
-
     return quiz;
   }
 
@@ -72,12 +66,6 @@ class QuizService {
     if (!quiz) {
       throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
     }
-
-    quiz.questions.forEach((question) => {
-      question.answers.forEach((answer) => {
-        answer.correct = undefined;
-      });
-    });
 
     return quiz;
   }
@@ -104,8 +92,7 @@ class QuizService {
     const userRepository = getCustomRepository(UserRepository);
     const user = await userRepository.findOne(userId);
 
-    const quiz = await this.quizRepository.create({ ...quizData, user }).save();
-    return quiz;
+    return await this.quizRepository.create({ ...quizData, user }).save();
   }
 
   public async createDeep(userId: User['id'], quizData: IDeepQuiz): Promise<Quiz> {
@@ -155,12 +142,6 @@ class QuizService {
     if (!createdQuiz) {
       throw new HttpException(HttpCode.INTERNAL_SERVER_ERROR, 'Cannot create quiz');
     }
-
-    createdQuiz.questions.forEach((question) => {
-      question.answers.forEach((answer) => {
-        answer.correct = undefined;
-      });
-    });
 
     return createdQuiz;
   }
@@ -332,6 +313,18 @@ class QuizService {
         }
       }
     }
+  }
+
+  public hideCorrectAnswers(quiz: IDeepQuiz): IDeepQuiz {
+    return {
+      ...quiz,
+      questions: [
+        ...quiz.questions.map((question) => ({
+          ...question,
+          answers: [...question.answers.map((answer) => ({ ...answer, correct: undefined }))],
+        })),
+      ],
+    };
   }
 }
 

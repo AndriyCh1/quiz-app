@@ -3,16 +3,20 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Quiz } from '../quiz/quiz.entity';
 import { User } from '../user/user.entity';
 import { TakeQuestion } from '../take-question/take-question.entity';
+import { TakeStatuses } from '../common/enums/take-statuses.enum';
 
 @Entity()
 export class Take extends AbstractEntity {
-  @Column({ nullable: true })
+  @Column()
+  content: string;
+
+  @Column({ nullable: true, enum: TakeStatuses })
   status: string;
 
-  @Column()
+  @Column({ default: 0 })
   currentScore: number;
 
-  @Column()
+  @Column({ nullable: true })
   totalScore: number;
 
   @ManyToOne(() => Quiz, (quiz) => quiz.takes, { onDelete: 'SET NULL', onUpdate: 'SET NULL' })

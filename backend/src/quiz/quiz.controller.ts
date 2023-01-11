@@ -63,7 +63,7 @@ class QuizController {
       const userId = req.user.id as unknown as string;
       const quizId: string = req.params.id as unknown as string;
       const quiz = await this.quizService.getDeepById(quizId, userId);
-      res.status(HttpCode.OK).send(quiz);
+      res.status(HttpCode.OK).send(this.quizService.hideCorrectAnswers(quiz));
     } catch (e) {
       next(e);
     }
@@ -73,7 +73,7 @@ class QuizController {
     try {
       const quizId: string = req.params.id as unknown as string;
       const quiz = await this.quizService.getPublicDeepById(quizId);
-      res.status(HttpCode.OK).send(quiz);
+      res.status(HttpCode.OK).send(this.quizService.hideCorrectAnswers(quiz));
     } catch (e) {
       next(e);
     }
@@ -112,7 +112,7 @@ class QuizController {
     try {
       const quizData: IDeepQuiz = req.body as unknown as IDeepQuiz;
       const newQuiz = await this.quizService.createDeep(req.user.id, quizData);
-      res.status(HttpCode.CREATED).send(newQuiz);
+      res.status(HttpCode.CREATED).send(this.quizService.hideCorrectAnswers(newQuiz));
     } catch (e) {
       next(e);
     }
