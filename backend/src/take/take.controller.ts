@@ -10,7 +10,6 @@ class TakeController implements IController {
   public router = Router();
 
   constructor(private readonly takeService: TakeService) {
-    this.initializeMiddlewares();
     this.initializeRoutes();
   }
 
@@ -25,10 +24,6 @@ class TakeController implements IController {
       validatePermission([RoleType.USER]),
       this.saveAnswer.bind(this),
     );
-  }
-
-  private initializeMiddlewares() {
-    this.router.use(authMiddleware);
   }
 
   private async takeQuiz(req: IAuthRequest, res: Response, next: NextFunction) {
