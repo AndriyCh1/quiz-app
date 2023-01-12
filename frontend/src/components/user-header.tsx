@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Header from './header';
 import Button from './button';
 import { ILink } from '../common/interfaces/header';
 
-import { UserRoutes as Routes } from '../common/enums';
+import { UserRoutes as Routes, VisitorRoutes } from '../common/enums';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { authActions } from '../store/auth';
 
@@ -17,9 +17,11 @@ const links: ILink[] = [
 
 const UserHeader = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(authActions.logout());
+    navigate(VisitorRoutes.PublicQuizzes);
   };
 
   return (
