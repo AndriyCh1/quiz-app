@@ -9,7 +9,7 @@ import QuizService from '../quiz/quiz.service';
 import TakeQuestionService from '../take-question/take-question.service';
 import TakeAnswerService from '../take-asnwer/take-answer.service';
 
-import { ITakeDeepResponse } from '../common/interfaces';
+import { IResultResponse, ITakeDeepResponse } from '../common/interfaces';
 import { TakeStatuses } from '../common/enums';
 import UpdateTakeDto from './dto/update-take.dto';
 
@@ -29,16 +29,18 @@ class TakeService {
       .leftJoinAndSelect('take.questions', 'question')
       .leftJoinAndSelect('question.answers', 'answer')
       .select([
-        'take.content',
+        'take.id',
+        'take.title',
         'take.status',
         'take.currentScore',
         'take.totalScore',
         'take.content',
-        'take.content',
+        'question.id',
         'question.content',
         'question.score',
         'question.answered',
         'question.correctlyAnswered',
+        'answer.id',
         'answer.content',
         'answer.chosen',
       ])
@@ -73,9 +75,11 @@ class TakeService {
 
     const createdTake = await this.takeRepository
       .create({
+        title: quiz.title,
         content: quiz.content,
         status: TakeStatuses.STARTED,
         totalScore,
+        spentTime: 0,
         quiz,
         user,
       })
@@ -132,7 +136,7 @@ class TakeService {
 
     const isCorrectlyAnswered = updatedAnswer.chosen && updatedAnswer.correct;
     const wasCorrectlyAnsweredBefore =
-      previousAnswer && previousAnswer.chosen && previousAnswer.correct;
+      previousAnswer !== null && previousAnswer.chosen && previousAnswer.correct;
 
     const updatedQuestion = await this.takeQuestionService.update(questionId, {
       answered: true,
@@ -150,6 +154,37 @@ class TakeService {
         : take.currentScore;
 
     await this.update(takeId, { currentScore: newScore });
+  }
+
+  public async getResults(takeId: string): Promise<IResultResponse> {
+    const { currentScore, totalScore, spentTime } = await this.takeRepository.findOne(
+      { id: takeId },
+      { select: ['currentScore', 'totalScore', 'spentTime'] },
+    );
+
+    const { questionsNumber } = await this.takeRepository
+      .createQueryBuilder('take')
+      .leftJoin('take.questions', 'questions')
+      .select('COUNT(*)', 'questionsNumber')
+      .where('take.id = :takeId', { takeId })
+      .getRawOne();
+
+    const { correctNumber } = await this.takeRepository
+      .createQueryBuilder('take')
+      .leftJoin('take.questions', 'questions')
+      .select('COUNT(*)', 'correctNumber')
+      .where('questions.correctlyAnswered = :correct', { correct: true })
+      .andWhere('take.id = :takeId', { takeId })
+      .getRawOne();
+
+    return {
+      correctNumber,
+      score: currentScore,
+      totalScore,
+      spentTime,
+      totalTime: 111,
+      questionsNumber,
+    };
   }
 }
 

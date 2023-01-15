@@ -8,27 +8,21 @@ import Button from './button';
 
 interface IProps {
   title: string;
-  selectedAnswer: boolean;
-  currentScore: number;
-  totalScore: number;
-  showScore?: boolean;
+  isSelectedAnswer: boolean;
   letChangeAnswer?: boolean;
   currentQuestionNumber: number;
   totalQuestionsNumber: number;
   onBack: () => void;
   onClose: () => void;
-  onAnswer: () => void;
+  onAnswer?: () => void;
   onFinish: () => void;
 }
 
-const ActiveQuizWrapper: React.FC<IProps> = (props) => {
+const QuizPassingWrapper: React.FC<IProps> = (props) => {
   const {
     children,
     title,
-    selectedAnswer,
-    currentScore,
-    totalScore,
-    showScore = false,
+    isSelectedAnswer,
     letChangeAnswer = false,
     currentQuestionNumber,
     totalQuestionsNumber,
@@ -52,14 +46,6 @@ const ActiveQuizWrapper: React.FC<IProps> = (props) => {
         )}
         <div className="active-quiz-wrapper__top__info">
           <h1>{title}</h1>
-          {showScore && (
-            <div className="active-quiz-wrapper__top__score">
-              <ScoreIcon className="active-quiz-wrapper__top__score__icon" />
-              <span>
-                score: {currentScore}/{totalScore}
-              </span>
-            </div>
-          )}
         </div>
         <div className="active-quiz-wrapper__top__close-wrapper">
           <div className="active-quiz-wrapper__top__close" onClick={onClose}>
@@ -86,7 +72,7 @@ const ActiveQuizWrapper: React.FC<IProps> = (props) => {
           <Button
             className="active-quiz-wrapper__bottom__btn"
             onClick={onAnswer}
-            disabled={!selectedAnswer}
+            disabled={!isSelectedAnswer}
           >
             Continue
           </Button>
@@ -94,7 +80,7 @@ const ActiveQuizWrapper: React.FC<IProps> = (props) => {
           <Button
             className="active-quiz-wrapper__bottom__btn"
             onClick={onFinish}
-            disabled={!selectedAnswer}
+            disabled={!isSelectedAnswer}
           >
             Finish
           </Button>
@@ -104,4 +90,4 @@ const ActiveQuizWrapper: React.FC<IProps> = (props) => {
   );
 };
 
-export default ActiveQuizWrapper;
+export default QuizPassingWrapper;

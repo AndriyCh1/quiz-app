@@ -11,7 +11,7 @@ import { GrClose as CloseIcon } from 'react-icons/gr';
 interface IProps {
   title: string;
   description?: string;
-  totalAnswers: number;
+  totalQuestions: number;
   correctAnswers: number;
   score: number;
   totalScore: number;
@@ -22,14 +22,14 @@ interface IProps {
 ChartJS.register(ArcElement, Tooltip);
 
 const Result: React.FC<IProps> = (props) => {
-  const { correctAnswers, totalAnswers, score, totalScore, onClose, time } = props;
+  const { correctAnswers, totalQuestions, score, totalScore, onClose, time } = props;
 
   const data = {
     labels: ['Wrong', 'Correct'],
     datasets: [
       {
         label: '# of Votes',
-        data: [totalAnswers - correctAnswers, correctAnswers],
+        data: [totalQuestions - correctAnswers, correctAnswers],
         backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 192, 0.2)'],
         borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'],
         borderWidth: 1,
@@ -57,7 +57,7 @@ const Result: React.FC<IProps> = (props) => {
         </div>
         <div className="quiz-finish-wrapper__details__item quiz-finish-wrapper__details__incorrect">
           <IncorrectIcon className="quiz-finish-wrapper__details__incorrect__icon" />
-          <span>{totalAnswers - correctAnswers} incorrect answers</span>
+          <span>{totalQuestions - correctAnswers} incorrect answers</span>
         </div>
         <div className="quiz-finish-wrapper__details__item quiz-result__details__time">
           <TimeIcon className="quiz-finish-wrapper__details__time__icon" />

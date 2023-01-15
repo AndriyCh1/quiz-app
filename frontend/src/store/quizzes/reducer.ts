@@ -22,4 +22,17 @@ export const quizzesReducer = (builder: ActionReducerMapBuilder<IQuizzesState>):
     state.chosenQuiz = payload.payload;
     state.isLoadingChosenQuiz = false;
   });
+  builder.addCase(quizzesActions.checkAnswer.fulfilled, (state: IQuizzesState, payload) => {
+    state.isCheckingAnswer = false;
+    state.isAnswerCorrect = payload.payload.correct;
+    state.isCheckingFailed = false;
+  });
+  builder.addCase(quizzesActions.checkAnswer.pending, (state: IQuizzesState, payload) => {
+    state.isCheckingAnswer = true;
+    state.isCheckingFailed = false;
+  });
+  builder.addCase(quizzesActions.checkAnswer.rejected, (state: IQuizzesState, payload) => {
+    state.isCheckingAnswer = false;
+    state.isCheckingFailed = true;
+  });
 };

@@ -18,6 +18,7 @@ import {
   IQuiz,
   IUpdateAnswer,
 } from '../common/interfaces/quizzes.interface';
+import { QuizAnswer } from '../quiz-answer/quiz-answer.entity';
 
 class QuizService {
   private quizRepository = getRepository(Quiz);
@@ -331,6 +332,26 @@ class QuizService {
         })),
       ],
     };
+  }
+
+  public async checkIfAnswerCorrect(
+    quizId: Quiz['id'],
+    answerId: QuizAnswer['id'],
+  ): Promise<boolean> {
+    const isQuizPublic = await this.quizRepository.findOne({ id: quizId });
+
+    if (isQuizPublic.published === false) {
+      throw new HttpException(
+        HttpCode.FORBIDDEN,
+        'You don`t have permission for this action, quiz has to be public',
+      );
+    }
+
+    const answerRepository = getRepository(QuizAnswer);
+
+    const { correct } = await answerRepository.findOne({ id: answerId }, { select: ['correct'] });
+
+    return correct;
   }
 }
 

@@ -1,5 +1,10 @@
 import HttpService from '../http/http.service';
-import { IDeepQuiz, IQuiz } from '../../common/interfaces';
+import {
+  ICheckAnswerRequest,
+  ICheckAnswerResponse,
+  IDeepQuiz,
+  IQuiz,
+} from '../../common/interfaces';
 import { HttpMethod } from '../../common/enums';
 
 class QuizzesService {
@@ -42,6 +47,14 @@ class QuizzesService {
     await this.http.load(`${this.path}/${data.id}`, {
       method: HttpMethod.PUT,
       payload: data,
+    });
+  };
+
+  public checkAnswer = async (data: ICheckAnswerRequest): Promise<ICheckAnswerResponse> => {
+    const { quizId, answerId } = data;
+
+    return await this.http.load<ICheckAnswerResponse>(`${this.path}/${quizId}/answer/${answerId}`, {
+      method: HttpMethod.GET,
     });
   };
 }

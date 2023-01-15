@@ -24,8 +24,18 @@ export interface ICreateTakeAnswer {
   correct: boolean;
   question: any;
 }
+
 export interface ICreateTakeQuestion {
   score: number;
   content: string;
   take: any;
+}
+
+export interface IResultResponse {
+  questionsNumber: number;
+  correctNumber: number;
+  score: number;
+  totalScore: number;
+  totalTime: number;
+  spentTime: number;
 }

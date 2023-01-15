@@ -16,18 +16,15 @@ const useStopwatch = () => {
         setSeconds((seconds) => seconds + 1);
         console.log('stopwatch is running');
       }, 1000);
-    } else {
-      if (interval) {
-        clearInterval(interval);
-      }
     }
 
     return () => {
       if (interval) {
         clearInterval(interval);
+        console.log('stopwatch is stopped');
       }
     };
-  }, [isRunning, seconds]);
+  }, [isRunning]);
 
   return {
     start,

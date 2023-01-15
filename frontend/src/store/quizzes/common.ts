@@ -5,6 +5,9 @@ export interface IQuizzesState {
   quizzes: IQuiz[];
   isLoadingQuizzes: boolean;
   isLoadingChosenQuiz: boolean;
+  isAnswerCorrect: boolean | null;
+  isCheckingAnswer: boolean;
+  isCheckingFailed: boolean;
 }
 
 export enum QuizzesAction {
@@ -13,4 +16,5 @@ export enum QuizzesAction {
   CREATE = 'CREATE',
   DELETE = 'DELETE',
   UPDATE = 'UPDATE',
+  CHECK_ANSWER = 'CHECK_ANSWER',
 }

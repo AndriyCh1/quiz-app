@@ -8,4 +8,5 @@ export {
   ITakeAnswerResponse,
   ICreateTakeAnswer,
   ICreateTakeQuestion,
+  IResultResponse,
 } from './take.interface';

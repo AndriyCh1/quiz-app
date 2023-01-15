@@ -10,8 +10,7 @@ import Button from './button';
 import SingleChoiceAnswer from './single-choice-answer';
 
 import { generateUniqueId } from '../utils/generate-unique-id';
-import { IQuizAnswer, IQuizQuestion } from '../common/interfaces';
-import { IAnswer } from '../common/interfaces/quizzes';
+import { IQuizAnswer, IQuizQuestion, IAnswer } from '../common/interfaces';
 
 interface IProps extends IQuizQuestion {
   onChange: (content: string, answers: IAnswer[], active: boolean, score: number) => void;

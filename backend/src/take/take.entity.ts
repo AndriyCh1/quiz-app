@@ -8,6 +8,9 @@ import { TakeStatuses } from '../common/enums/take-statuses.enum';
 @Entity()
 export class Take extends AbstractEntity {
   @Column()
+  title: string;
+
+  @Column()
   content: string;
 
   @Column({ nullable: true, enum: TakeStatuses })
@@ -18,6 +21,9 @@ export class Take extends AbstractEntity {
 
   @Column({ nullable: true })
   totalScore: number;
+
+  @Column({ default: 0 })
+  spentTime: number;
 
   @ManyToOne(() => Quiz, (quiz) => quiz.takes, { onDelete: 'SET NULL', onUpdate: 'SET NULL' })
   quiz: Quiz;

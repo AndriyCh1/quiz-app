@@ -4,7 +4,6 @@ import { HttpCode, RoleType } from '../common/enums';
 import { IAuthRequest } from '../common/interfaces';
 import { IDeepQuiz } from '../common/interfaces';
 
-import QuizDto from './dto/quiz.dto';
 import validatePermission from '../middlewares/validatePermission.middleware';
 
 import QuizService from './quiz.service';
@@ -21,7 +20,7 @@ class QuizController {
   private initializeRoutes() {
     this.router.get(`${this.path}/`, this.getAllQuizzes.bind(this));
     this.router.get(`${this.path}/:id`, this.getQuizById.bind(this));
-
+    this.router.get(`${this.path}/:quizId/answer/:answerId`, this.checkIfAnswerCorrect.bind(this));
     this.router.post(
       `${this.path}/`,
       validatePermission([RoleType.USER]),
@@ -101,6 +100,16 @@ class QuizController {
       const quizData: IDeepUpdateQuiz = req.body as unknown as IDeepUpdateQuiz;
       const updatedQuiz = await this.quizService.updateDeep(quizId, quizData);
       res.status(HttpCode.CREATED).send(updatedQuiz);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  private async checkIfAnswerCorrect(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { quizId, answerId } = req.params;
+      const isCorrect = await this.quizService.checkIfAnswerCorrect(quizId, answerId);
+      res.status(HttpCode.OK).send({ correct: isCorrect });
     } catch (e) {
       next(e);
     }
