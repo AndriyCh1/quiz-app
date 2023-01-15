@@ -1,22 +1,5 @@
 import { IBase } from '../base';
 
-export interface IQuizAnswer {
-  id: string;
-  active: boolean;
-  correct: boolean;
-  content: string;
-}
-
-export interface IQuizQuestion {
-  id: string;
-  active: boolean;
-  type: 'single-choice' | 'multiple-choice' | 'select' | 'input';
-  score: number;
-  content: string;
-  time: number; // seconds
-  answers: IQuizAnswer[];
-}
-
 export interface IQuiz extends IBase {
   id: string;
   title: string; // max 30 symbols
@@ -32,18 +15,21 @@ export interface IQuiz extends IBase {
   };
 }
 
-interface IDeepQuizAnswer {
+export interface IQuizQuestion {
+  id: string;
+  active: boolean;
+  type: 'single-choice' | 'multiple-choice' | 'select' | 'input';
+  score: number;
+  content: string;
+  time: number; // seconds
+  answers: IQuizAnswer[];
+}
+
+export interface IQuizAnswer {
+  id: string;
   active: boolean;
   correct: boolean;
   content: string;
-}
-
-interface IDeepQuizQuestion {
-  active: boolean;
-  type: string;
-  score: number;
-  content: string;
-  answers: IDeepQuizAnswer[];
 }
 
 export type IDeepQuiz = {
@@ -56,14 +42,18 @@ export type IDeepQuiz = {
   questions: IDeepQuizQuestion[];
 };
 
-export interface IAnswer {
-  id: string;
+interface IDeepQuizQuestion {
+  active: boolean;
+  type: string;
+  score: number;
+  content: string;
+  answers: IDeepQuizAnswer[];
+}
+
+interface IDeepQuizAnswer {
   active: boolean;
   correct: boolean;
   content: string;
-  queryConfig: {
-    status: 'new' | 'edited' | 'fetched' | 'deleted';
-  };
 }
 
 export interface IQuestion {
@@ -75,4 +65,23 @@ export interface IQuestion {
   queryConfig: {
     status: 'new' | 'edited' | 'fetched' | 'deleted';
   };
+}
+
+export interface IAnswer {
+  id: string;
+  active: boolean;
+  correct: boolean;
+  content: string;
+  queryConfig: {
+    status: 'new' | 'edited' | 'fetched' | 'deleted';
+  };
+}
+
+export interface ICheckAnswerRequest {
+  quizId: string;
+  answerId: string;
+}
+
+export interface ICheckAnswerResponse {
+  correct: boolean;
 }

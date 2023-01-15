@@ -4,10 +4,12 @@ import { authReducer } from './auth';
 import { quizzesReducer } from './quizzes';
 
 import { AuthAction } from './auth/common';
+import { takeReducer } from './take';
 
 export const combinedReducer = combineReducers({
   auth: authReducer,
   quizzes: quizzesReducer,
+  take: takeReducer,
 });
 
 export type RootState = ReturnType<typeof combinedReducer>;

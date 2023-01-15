@@ -5,14 +5,16 @@ export interface IQuizzesState {
   quizzes: IQuiz[];
   isLoadingQuizzes: boolean;
   isLoadingChosenQuiz: boolean;
+  isAnswerCorrect: boolean | null;
+  isCheckingAnswer: boolean;
+  isCheckingFailed: boolean;
 }
 
 export enum QuizzesAction {
-  GET_All_PUBLIC = 'GET_All_PUBLIC',
-  GET_ONE_PUBLIC = 'GET_ONE_PUBLIC',
-  GET_All_FOR_USER = 'GET_All_FOR_USER',
-  GET_ONE_FOR_USER = 'GET_ONE_FOR_USER',
+  GET_All = 'GET_All',
+  GET_ONE = 'GET_ONE',
   CREATE = 'CREATE',
   DELETE = 'DELETE',
   UPDATE = 'UPDATE',
+  CHECK_ANSWER = 'CHECK_ANSWER',
 }

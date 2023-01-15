@@ -3,6 +3,7 @@ import { AbstractEntity } from '../abstract/abstract-entity';
 import { User } from '../user/user.entity';
 import { QuizQuestion } from '../quiz-question/quiz-question.entity';
 import { QuizTypes } from '../common/enums';
+import { Take } from '../take/take.entity';
 
 @Entity()
 export class Quiz extends AbstractEntity {
@@ -27,6 +28,9 @@ export class Quiz extends AbstractEntity {
   @ManyToOne(() => User, (user) => user.quiz, { onDelete: 'CASCADE' })
   user: User;
 
-  @OneToMany(() => QuizQuestion, (quizQuestion) => quizQuestion.quiz, { onDelete: 'CASCADE' })
+  @OneToMany(() => QuizQuestion, (quizQuestion) => quizQuestion.quiz)
   questions: QuizQuestion[];
+
+  @OneToMany(() => Take, (take) => take.quiz)
+  takes: Take[];
 }

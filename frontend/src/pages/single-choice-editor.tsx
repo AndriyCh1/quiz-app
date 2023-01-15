@@ -89,7 +89,7 @@ const SingleChoiceEditor = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(quizzesActions.getOneForUserById(id))
+      dispatch(quizzesActions.getOneById(id))
         .unwrap()
         .catch(() => {
           setQuizErrorMessage('Quiz has not been found');

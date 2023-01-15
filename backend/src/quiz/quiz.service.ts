@@ -18,6 +18,7 @@ import {
   IQuiz,
   IUpdateAnswer,
 } from '../common/interfaces/quizzes.interface';
+import { QuizAnswer } from '../quiz-answer/quiz-answer.entity';
 
 class QuizService {
   private quizRepository = getRepository(Quiz);
@@ -46,14 +47,11 @@ class QuizService {
       .getOne();
 
     if (!quiz) {
-      throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
+      throw new HttpException(
+        HttpCode.NOT_FOUND,
+        'Quiz not found or you don`t have permission on that',
+      );
     }
-
-    quiz.questions.forEach((question) => {
-      question.answers.forEach((answer) => {
-        answer.correct = undefined;
-      });
-    });
 
     return quiz;
   }
@@ -70,14 +68,11 @@ class QuizService {
       .getOne();
 
     if (!quiz) {
-      throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
+      throw new HttpException(
+        HttpCode.NOT_FOUND,
+        'Quiz not found or you don`t have permission on that',
+      );
     }
-
-    quiz.questions.forEach((question) => {
-      question.answers.forEach((answer) => {
-        answer.correct = undefined;
-      });
-    });
 
     return quiz;
   }
@@ -104,8 +99,7 @@ class QuizService {
     const userRepository = getCustomRepository(UserRepository);
     const user = await userRepository.findOne(userId);
 
-    const quiz = await this.quizRepository.create({ ...quizData, user }).save();
-    return quiz;
+    return await this.quizRepository.create({ ...quizData, user }).save();
   }
 
   public async createDeep(userId: User['id'], quizData: IDeepQuiz): Promise<Quiz> {
@@ -155,12 +149,6 @@ class QuizService {
     if (!createdQuiz) {
       throw new HttpException(HttpCode.INTERNAL_SERVER_ERROR, 'Cannot create quiz');
     }
-
-    createdQuiz.questions.forEach((question) => {
-      question.answers.forEach((answer) => {
-        answer.correct = undefined;
-      });
-    });
 
     return createdQuiz;
   }
@@ -332,6 +320,38 @@ class QuizService {
         }
       }
     }
+  }
+
+  public hideCorrectAnswers(quiz: IDeepQuiz): IDeepQuiz {
+    return {
+      ...quiz,
+      questions: [
+        ...quiz.questions.map((question) => ({
+          ...question,
+          answers: [...question.answers.map((answer) => ({ ...answer, correct: undefined }))],
+        })),
+      ],
+    };
+  }
+
+  public async checkIfAnswerCorrect(
+    quizId: Quiz['id'],
+    answerId: QuizAnswer['id'],
+  ): Promise<boolean> {
+    const isQuizPublic = await this.quizRepository.findOne({ id: quizId });
+
+    if (isQuizPublic.published === false) {
+      throw new HttpException(
+        HttpCode.FORBIDDEN,
+        'You don`t have permission for this action, quiz has to be public',
+      );
+    }
+
+    const answerRepository = getRepository(QuizAnswer);
+
+    const { correct } = await answerRepository.findOne({ id: answerId }, { select: ['correct'] });
+
+    return correct;
   }
 }
 

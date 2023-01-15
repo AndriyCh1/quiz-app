@@ -19,6 +19,11 @@ import QuizQuestionService from './quiz-question/quiz-question.service';
 import QuizAnswerController from './quiz-answer/quiz-answer.controller';
 import QuizAnswerService from './quiz-answer/quiz-answer.service';
 
+import TakeController from './take/take.controller';
+import TakeService from './take/take.service';
+import TakeQuestionService from './take-question/take-question.service';
+import TakeAnswerService from './take-asnwer/take-answer.service';
+
 validateEnv();
 
 (async () => {
@@ -35,6 +40,9 @@ validateEnv();
     new QuizController(new QuizService()),
     new QuizQuestionController(new QuizQuestionService()),
     new QuizAnswerController(new QuizAnswerService()),
+    new TakeController(
+      new TakeService(new QuizService(), new TakeQuestionService(), new TakeAnswerService()),
+    ),
   ]);
 
   app.listen();
