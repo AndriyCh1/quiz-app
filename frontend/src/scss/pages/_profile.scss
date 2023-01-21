@@ -1,0 +1,87 @@
+.profile-info {
+  @include flex(center, start);
+  gap: 30px;
+  padding: 15px 40px;
+
+  &__image-wrapper {
+    max-width: 10rem;
+    max-height: 100%;
+  }
+
+  &__image {
+    display: block;
+    border-radius: 5%;
+  }
+
+  &__text {
+    font-size: .9rem;
+
+    &__username {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 20px 0;
+    }
+
+    &__join-time {
+      font-size: .8rem;
+      margin-top: 5px;
+      font-style: italic;
+    }
+  }
+}
+
+.profile-info-wrapper,
+.profile-charts-wrapper,{
+  margin-bottom: 10px;
+}
+
+.profile-charts {
+  @include flex(center, space-between);
+  gap: 10px;
+  padding: 10px;
+
+  @include tablet {
+    flex-wrap: wrap;
+  }
+
+  &__chart {
+    width: 50%;
+    height: auto;
+    padding: 20px 10px;
+    @include flex(center, center);
+    flex-direction: column;
+
+    @include tablet {
+      width: 100%;
+    }
+
+    &__title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    &__diagram-wrapper {
+      @include flex(center, space-between);
+      gap: 15px;
+    }
+
+    &__diagram {
+      max-width: 200px;
+    }
+  }
+}
+
+.profile-takes {
+  padding: 10px;
+
+  &__take + &__take {
+    margin-top: 10px;
+  }
+
+  &__summary {
+    @include flex(start, start);
+    flex-direction: column;
+    gap: 15px
+  }
+}

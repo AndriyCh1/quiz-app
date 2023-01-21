@@ -12,7 +12,7 @@ import { authActions } from '../store/auth';
 const links: ILink[] = [
   { display: 'Quizzes', to: Routes.Quizzes },
   { display: 'Creator', to: Routes.CreateQuiz },
-  { display: 'History', to: Routes.History },
+  { display: 'Profile', to: Routes.Profile },
 ];
 
 const UserHeader = () => {

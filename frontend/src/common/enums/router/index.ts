@@ -3,7 +3,7 @@ export enum UserRoutes {
   ActiveQuiz = '/quiz/:id/start',
   Quizzes = '/quizzes', // Entry page, must have the same route as a visitor
   CreateQuiz = '/quizzes/create',
-  History = '/quiz/history',
+  Profile = '/quiz/profile',
   SingleChoiceCreator = '/quizzes/create/single-choice',
   InDevelopment = '/in-development',
   EditQuiz = '/quiz/:id/edit',

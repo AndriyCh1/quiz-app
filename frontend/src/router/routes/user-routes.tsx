@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import QuizInfo from '../../pages/quiz-info';
 import UserQuizPassing from '../../pages/user-quiz-passing';
 import CreateQuiz from '../../pages/create-quiz';
-import History from '../../pages/history';
+import Profile from '../../pages/profile';
 
 import { UserRoutes as Routes } from '../../common/enums';
 import SingleChoiceCreator from '../../pages/single-choice-creator';
@@ -17,7 +17,7 @@ const userRoutes: IRoute[] = [
   { path: Routes.ActiveQuiz, element: <UserQuizPassing /> },
   { path: Routes.Quizzes, element: <UserHome /> },
   { path: Routes.CreateQuiz, element: <CreateQuiz /> },
-  { path: Routes.History, element: <History /> },
+  { path: Routes.Profile, element: <Profile /> },
   { path: Routes.SingleChoiceCreator, element: <SingleChoiceCreator /> },
   { path: Routes.EditQuiz, element: <SingleChoiceEditor /> },
   { path: Routes.InDevelopment, element: <InDevelopment /> },

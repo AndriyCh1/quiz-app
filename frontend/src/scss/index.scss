@@ -19,6 +19,8 @@
 @import "components/single-choice";
 @import "components/single-choice-question";
 @import "components/single-choice-answer";
+@import "components/expand-down";
+@import "components/take-summary";
 
 @import "pages/auth";
 @import "pages/home";
@@ -30,3 +32,4 @@
 @import "pages/visitor-home";
 @import "pages/loading";
 @import "pages/single-choice-editor";
+@import "pages/profile";
