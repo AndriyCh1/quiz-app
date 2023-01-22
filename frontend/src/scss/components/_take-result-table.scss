@@ -1,0 +1,29 @@
+.take-result-table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 0.9em;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+   & thead tr {
+    background-color: $color-grey-4;
+    color: $color-white;
+    text-align: left;
+  }
+
+  & th, td {
+    padding: 12px 15px;
+  }
+
+  & tbody tr {
+    border-bottom: 1px solid $color-white;
+
+    &:nth-of-type(even) {
+      background-color: #f3f3f3;
+    }
+
+    &:last-of-type {
+      border-bottom: 2px solid $color-grey-4;
+    }
+  }
+}
