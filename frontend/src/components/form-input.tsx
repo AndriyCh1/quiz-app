@@ -33,6 +33,7 @@ const FormInput: FC<Props> = ({
         onBlur={onBlur}
         value={value}
         style={icon ? { paddingLeft: '30px' } : {}}
+        autoComplete="on"
       />
     </div>
   );

@@ -9,7 +9,7 @@
   background-color: rgba(0,0,0,0.7);
 
   &.show {
-    display: block;
+    @include flex(center, center);
     animation-name: showUp;
     animation-duration: 0.4s;
   }
@@ -18,7 +18,6 @@
 .modal {
   display: none;
   background-color: $color-white;
-  margin: 10% auto;
   width: 80%;
   z-index: 101;
   font-size: 1rem;

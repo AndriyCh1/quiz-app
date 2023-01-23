@@ -8,6 +8,7 @@ export const HttpMethod = {
 export const ContentType = {
   JSON: 'json',
   TEXT: 'text/html',
+  MULTIPART_FORM_DATA: 'multipart/form-data',
 } as const;
 
 export enum HttpCode {

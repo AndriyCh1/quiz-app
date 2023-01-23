@@ -11,6 +11,7 @@ export interface ILoginUser {
 
 export interface ISignupUser extends ILoginUser {
   fullName?: IUser['fullName'];
+  avatar?: Blob;
 }
 
 export interface IAuthResponse {
