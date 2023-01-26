@@ -23,6 +23,9 @@ import TakeController from './take/take.controller';
 import TakeService from './take/take.service';
 import TakeQuestionService from './take-question/take-question.service';
 import TakeAnswerService from './take-asnwer/take-answer.service';
+import AwsS3Service from './file-upload/aws-s3.service';
+import ConfigService from './config/config.service';
+import TokenService from './token/token-service';
 
 validateEnv();
 
@@ -35,7 +38,9 @@ validateEnv();
   }
 
   const app = new App([
-    new AuthController(new AuthService()),
+    new AuthController(
+      new AuthService(new TokenService(), new AwsS3Service(ConfigService.getInstance())),
+    ),
     new UserController(new UserService()),
     new QuizController(new QuizService()),
     new QuizQuestionController(new QuizQuestionService()),

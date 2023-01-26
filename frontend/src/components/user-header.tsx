@@ -6,7 +6,7 @@ import Button from './button';
 import { ILink } from '../common/interfaces/header';
 
 import { UserRoutes as Routes, VisitorRoutes } from '../common/enums';
-import { useAppDispatch } from '../hooks/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { authActions } from '../store/auth';
 
 const links: ILink[] = [
@@ -18,6 +18,8 @@ const links: ILink[] = [
 const UserHeader = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const user = useAppSelector((state) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(authActions.logout());
@@ -38,6 +40,7 @@ const UserHeader = () => {
           Log out
         </Button>
       </Header.Buttons>
+      {user?.avatar && <img src={user.avatar} alt="avatar" className="header__avatar" />}
     </Header>
   );
 };

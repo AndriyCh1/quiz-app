@@ -1,17 +1,16 @@
 import { IsString } from 'class-validator';
 
-class UserDto {
-  @IsString()
-  public id: string;
-
+class UserRegistrationDto {
   @IsString()
   public email: string;
 
   @IsString()
-  public fullName: string;
+  public fullName?: string;
 
   @IsString()
   public password: string;
+
+  public avatar?: Express.Multer.File;
 }
 
-export default UserDto;
+export default UserRegistrationDto;

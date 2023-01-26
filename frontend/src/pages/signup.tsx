@@ -105,24 +105,25 @@ const SignUp = () => {
   const handleSubmit = (evnt: React.FormEvent) => {
     evnt.preventDefault();
 
-    let imageBlob: Blob | null = null;
+    const requiredUserData = {
+      email: emailInput.value,
+      password: passwordInput.value,
+      fullName: usernameInput.value,
+    };
 
-    cropper?.getCroppedCanvas().toBlob((blob): void => {
-      imageBlob = blob;
-    });
-
-    dispatch(
-      authActions.signup({
-        email: emailInput.value,
-        password: passwordInput.value,
-        fullName: usernameInput.value,
-        avatar: imageBlob || undefined,
-      }),
-    )
-      .unwrap()
-      .catch((e) => {
-        setSignupError(e.response.data.message);
+    if (cropper !== undefined) {
+      cropper.getCroppedCanvas().toBlob((blob): void => {
+        dispatch(authActions.signup({ ...requiredUserData, avatar: blob || undefined }))
+          .unwrap()
+          .catch((e) => setSignupError(e.response.data.message));
       });
+
+      return;
+    }
+
+    dispatch(authActions.signup(requiredUserData))
+      .unwrap()
+      .catch((e) => setSignupError(e.response.data.message));
   };
 
   if (isLoading) {

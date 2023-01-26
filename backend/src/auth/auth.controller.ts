@@ -1,12 +1,15 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import multer from 'multer';
+
 import validationMiddleware from '../middlewares/validation.middleware';
 import { IController } from '../common/interfaces';
 import LoginDto from './dto/login.dto';
-import UserDto from '../user/dto/user.dto';
 import AuthService from './auth.service';
-import SignupDto from './dto/signup.dto';
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 class AuthController implements IController {
   public path = '/auth';
@@ -20,7 +23,9 @@ class AuthController implements IController {
   private initializeRoutes() {
     this.router.post(
       `${this.path}/register`,
-      validationMiddleware(SignupDto),
+      // TODO: find out how to use class-validator in DTO with BLOB property inside
+      // validationMiddleware(SignupDto),
+      upload.single('avatar'),
       this.registration.bind(this),
     );
     this.router.post(`${this.path}/login`, validationMiddleware(LoginDto), this.login.bind(this));
@@ -29,19 +34,21 @@ class AuthController implements IController {
   }
 
   private async registration(req: Request, res: Response, next: NextFunction) {
-    const userData: UserDto = req.body;
+    const userData: any = { ...req.body, avatar: req?.file };
 
     try {
       const user = await this.authService.register(userData);
       res.cookie('refreshToken', user.refreshToken);
+
       return res.json(user);
+      // res.send('-');
     } catch (error) {
       next(error);
     }
   }
 
   private async login(req: Request, res: Response, next: NextFunction) {
-    const userData: UserDto = req.body;
+    const userData: LoginDto = req.body;
 
     try {
       const user = await this.authService.login(userData);
