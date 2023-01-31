@@ -3,7 +3,7 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Quiz } from '../quiz/quiz.entity';
 import { User } from '../user/user.entity';
 import { TakeQuestion } from '../take-question/take-question.entity';
-import { TakeStatuses } from '../common/enums/take-statuses.enum';
+import { TakeStatuses } from '../common/enums';
 
 @Entity()
 export class Take extends AbstractEntity {

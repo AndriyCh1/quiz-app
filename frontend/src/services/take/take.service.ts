@@ -1,7 +1,12 @@
 import HttpService from '../http/http.service';
-import { IFinishResponse, ISendAnswerRequest, ITakeStartResponse } from '../../common/interfaces';
+import {
+  IFinishResponse,
+  IQuizzesSummary,
+  ISendAnswerRequest,
+  ITakeStartResponse,
+  IFinishRequest,
+} from '../../common/interfaces';
 import { HttpMethod } from '../../common/enums';
-import { IFinishRequest } from '../../common/interfaces/take';
 
 class TakeService {
   protected readonly path: string;
@@ -32,6 +37,12 @@ class TakeService {
     return await this.http.load<IFinishResponse>(`${this.path}/finish/${takeId}`, {
       method: HttpMethod.PUT,
       payload: { spentTime },
+    });
+  };
+
+  public getUserQuizzesSummary = async (): Promise<IQuizzesSummary[]> => {
+    return await this.http.load<IQuizzesSummary[]>(`${this.path}/summary`, {
+      method: HttpMethod.GET,
     });
   };
 }

@@ -51,6 +51,72 @@
       font-size: 1rem;
     }
   }
+
+  &__edit-modal {
+    width: auto;
+    min-width: 400px;
+  }
+
+  &__edit-form {
+    padding-top: 0;
+
+    &__label {
+      display: block;
+      padding-bottom: 5px;
+    }
+
+    &__label:not(:first-child) {
+      margin-top: 15px;
+    }
+
+    &__input {
+      max-width: 390px;
+    }
+
+    &__error {
+      display: block;
+      color: $color-dangerous;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding-top: 1.5px;
+      letter-spacing: 0.04rem;
+    }
+
+    &__edit-avatar-actions {
+      @include flex(center, left);
+      gap: 10px;
+      margin: 5px 0;
+    }
+
+    &__avatar-image-wrapper {
+      position: relative;
+    }
+
+    &__avatar-image {
+      display: block;
+      max-width: 200px;
+      max-height: 150px;
+      object-fit: contain;
+      margin: 0 auto;
+      margin-bottom: 3px;
+    }
+
+    &__avatar-delete-icon {
+      font-size: 1.3rem;
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(-50%, -50%);
+      background-color: $color-white;
+      border: 1px solid $color-grey-5;
+      color: $color-grey-5;
+      border-radius: 50%;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .profile-info-wrapper,

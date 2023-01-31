@@ -21,15 +21,15 @@
       height: 100%;
 
       &.correct{
-        background-color: $color-green;
+        background-color: #84d990;
       }
 
       &.incorrect{
-        background-color: $color-red;
+        background-color: #f26060;
       }
 
       &.notAnswered{
-        background-color: $color-grey-5;
+        background-color: #9ae2f1;
       }
     }
 

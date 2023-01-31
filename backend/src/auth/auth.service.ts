@@ -41,7 +41,6 @@ class AuthService {
       avatar: uploadingAvatarResult?.Location || null,
     });
 
-    console.log(uploadingAvatarResult?.Location, 'uploadingAvatarResult?.Location');
     const createdUser = await this.userRepository.save(newUserInstance);
 
     createdUser.password = undefined;

@@ -1,4 +1,11 @@
-export type { IUser, ISignupUser, ILoginUser, ILogoutResponse, IAuthResponse } from './user';
+export type {
+  IUser,
+  ISignupUser,
+  ILoginUser,
+  ILogoutResponse,
+  IAuthResponse,
+  IUserGeneralData,
+} from './user';
 export type { IHttpOptions } from './http';
 export type {
   IQuiz,
@@ -9,6 +16,8 @@ export type {
   IAnswer,
   ICheckAnswerRequest,
   ICheckAnswerResponse,
+  IQuizzesSummary,
+  IQuizzesSummaryTake,
 } from './quizzes';
 export type {
   ISendAnswerRequest,
@@ -16,4 +25,5 @@ export type {
   ITakeStartResponseAnswer,
   ITakeStartResponseQuestion,
   IFinishResponse,
+  IFinishRequest,
 } from './take';

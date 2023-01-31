@@ -24,3 +24,16 @@ export interface IAuthResponse {
 export interface ILogoutResponse {
   refreshToken: string;
 }
+
+export interface IUserGeneralData {
+  fullName: string;
+  avatar: string;
+  joinedTime: Date;
+  quizzesPassed: number;
+  quizzesCreated: number;
+  quizzesPublished: number;
+  correctNumber: number;
+  incorrectNumber: number;
+  notAnswered: number;
+  totalAnswers: number;
+}

@@ -19,8 +19,6 @@ const TakeSummary: React.FC<IProps> = ({
   totalScore,
   score,
 }) => {
-  const questionsNumberForScale = correct + incorrect + notAnswered;
-
   return (
     <div className="take-summary">
       <div className="take-summary-left">
@@ -45,20 +43,20 @@ const TakeSummary: React.FC<IProps> = ({
           {correct ? (
             <div
               className="take-summary__answers-scale__unit correct"
-              style={{ width: `${(correct / questionsNumberForScale) * 100}%` }}
-            ></div>
+              style={{ width: `${(correct / totalQuestions) * 100}%` }}
+            />
           ) : null}
           {incorrect ? (
             <div
               className="take-summary__answers-scale__unit incorrect"
-              style={{ width: `${(incorrect / questionsNumberForScale) * 100}%` }}
-            ></div>
+              style={{ width: `${(incorrect / totalQuestions) * 100}%` }}
+            />
           ) : null}
           {notAnswered ? (
             <div
               className="take-summary__answers-scale__unit notAnswered"
-              style={{ width: `${(notAnswered / questionsNumberForScale) * 100}%` }}
-            ></div>
+              style={{ width: `${(notAnswered / totalQuestions) * 100}%` }}
+            />
           ) : null}
         </div>
       </div>

@@ -9,7 +9,12 @@ import QuizService from '../quiz/quiz.service';
 import TakeQuestionService from '../take-question/take-question.service';
 import TakeAnswerService from '../take-asnwer/take-answer.service';
 
-import { IResultResponse, ITakeDeepResponse } from '../common/interfaces';
+import {
+  IQuizzesSummaryResponse,
+  IQuizzesSummaryTakeResponse,
+  IResultResponse,
+  ITakeDeepResponse,
+} from '../common/interfaces';
 import { TakeStatuses } from '../common/enums';
 import UpdateTakeDto from './dto/update-take.dto';
 
@@ -182,9 +187,92 @@ class TakeService {
       score: currentScore,
       totalScore,
       spentTime,
-      totalTime: 111,
+      totalTime: 111, // TODO: fix this
       questionsNumber,
     };
+  }
+
+  public async getQuizzesSummary(userId: string): Promise<IQuizzesSummaryResponse[]> {
+    const userUniqueQuizzesTakes = await this.takeRepository
+      .createQueryBuilder('take')
+      .select(['take.quizId AS "id"', 'take.title AS title'])
+      .distinctOn(['take.quizId'])
+      .where('take.userId = :userId', { userId })
+      .getRawMany<{ id: string; title: string }>();
+
+    const quizzesSummary: IQuizzesSummaryResponse[] = [];
+
+    for await (const quizData of userUniqueQuizzesTakes) {
+      const quizTakes = await this.takeRepository
+        .createQueryBuilder('take')
+        .select(['take.id AS id'])
+        .where('take.quizId = :quizId AND take.userId = :userId', { quizId: quizData.id, userId })
+        .getRawMany<{ id: string }>();
+
+      const takesSummary: IQuizzesSummaryTakeResponse[] = [];
+
+      for await (const takeData of quizTakes) {
+        const takeSummary: IQuizzesSummaryTakeResponse[] = await this.takeRepository.query(
+          'SELECT \n' +
+            '    "take"."id",\n' +
+            '    "take"."totalScore",\n' +
+            '    "take"."spentTime",\n' +
+            '    "take"."currentScore" AS "score",\n' +
+            '    "take"."createdAt" AS "takeDate",\n' +
+            '    (\n' +
+            '        SELECT \n' +
+            '        COUNT (*) AS "questionsNumber"\n' +
+            '        FROM "take"\n' +
+            '        INNER JOIN "take_question" ON "take"."id" = "take_question"."takeId"\n' +
+            '        WHERE "take"."id" = $1\n' +
+            '    ),\n' +
+            '    (\n' +
+            '        SELECT \n' +
+            '        COUNT (*) AS "correctNumber"\n' +
+            '        FROM "take"\n' +
+            '        INNER JOIN "take_question" ON "take"."id" = "take_question"."takeId"\n' +
+            '        WHERE "take"."id" = $1 AND "take_question"."correctlyAnswered" = \'true\' AND "take_question"."answered" = \'true\'\n' +
+            '    ),\n' +
+            '    (\n' +
+            '        SELECT \n' +
+            '        COUNT (*) AS "incorrectNumber"\n' +
+            '        FROM "take"\n' +
+            '        INNER JOIN "take_question" ON "take"."id" = "take_question"."takeId"\n' +
+            '        WHERE "take"."id" = $1 AND "take_question"."correctlyAnswered" = \'false\' AND "take_question"."answered" = \'true\'\n' +
+            '    ),\n' +
+            '    (\n' +
+            '        SELECT \n' +
+            '        COUNT (*) AS "notAnswered"\n' +
+            '        FROM "take"\n' +
+            '        INNER JOIN "take_question" ON "take"."id" = "take_question"."takeId"\n' +
+            '        WHERE "take"."id" = $1 AND "take_question"."answered" = \'false\'\n' +
+            '    )\n' +
+            'FROM "take"\n' +
+            'WHERE "take"."id" = $1',
+          [takeData.id],
+        );
+
+        if (takeSummary.length !== 0) {
+          const convertedCountValuesToNumbers = {
+            ...takeSummary[0],
+            questionsNumber: Number(takeSummary[0].questionsNumber),
+            correctNumber: Number(takeSummary[0].correctNumber),
+            incorrectNumber: Number(takeSummary[0].incorrectNumber),
+            notAnswered: Number(takeSummary[0].notAnswered),
+          };
+
+          takesSummary.push(convertedCountValuesToNumbers);
+        }
+      }
+
+      quizzesSummary.push({
+        id: quizData.id,
+        title: quizData.title,
+        takes: takesSummary,
+      });
+    }
+
+    return quizzesSummary;
   }
 }
 

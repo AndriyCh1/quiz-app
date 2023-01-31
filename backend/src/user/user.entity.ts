@@ -18,7 +18,7 @@ export class User extends AbstractEntity {
   avatar: string;
 
   @OneToMany(() => Quiz, (quiz) => quiz.user)
-  quiz: Quiz;
+  quizzes: Quiz[];
 
   @OneToMany(() => Take, (take) => take.user)
   takes: Take[];

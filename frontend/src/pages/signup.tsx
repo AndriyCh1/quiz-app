@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import useInput from '../hooks/useInput';
@@ -17,6 +17,7 @@ import { RiCloseFill as RemoveIcon } from 'react-icons/ri';
 
 import Modal from '../components/modal';
 import ImageCropper from '../components/image-cropper';
+import FileInput from '../components/file-input';
 
 let imageObjectUrl: string | null = null;
 
@@ -47,7 +48,6 @@ const SignUp = () => {
     return () => {
       if (imageObjectUrl !== null) {
         URL.revokeObjectURL(imageObjectUrl);
-        imageObjectUrl = null;
       }
     };
   }, []);
@@ -59,24 +59,16 @@ const SignUp = () => {
     }
   }, [selectedImageError]);
 
-  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    e.preventDefault();
+  useEffect(() => {
+    resetUploadedFile();
+  }, [selectedImageError]);
 
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedImage(undefined);
-      return;
+  const handleSelectFile = (file: File | undefined) => {
+    if (file) {
+      imageObjectUrl = URL.createObjectURL(file);
+      setSelectedImage(imageObjectUrl);
+      setShowCropImageModal(true);
     }
-
-    if (e.target.files[0].size > 1024 * 1024) {
-      setSelectedImageError('File is too big. Max size - 1mb');
-      resetUploadedFile();
-      return;
-    }
-
-    const selectedImage = e.target.files[0];
-    imageObjectUrl = URL.createObjectURL(selectedImage);
-    setSelectedImage(imageObjectUrl);
-    setShowCropImageModal(true);
   };
 
   const onCloseModal = (): void => {
@@ -223,19 +215,19 @@ const SignUp = () => {
           {/* Uploading user`s avatar */}
 
           <label className="auth-form__label">Photo</label>
-          {croppedImage !== undefined && (
+          {croppedImage && (
             <div className="auth-form__avatar__image-wrapper">
               <img className="auth-form__avatar__image" src={croppedImage} alt="image" />
               <RemoveIcon className="auth-form__avatar__delete-icon" onClick={resetUploadedFile} />
             </div>
           )}
-          <input
+          <FileInput
             name="avatar"
-            type="file"
-            onChange={onSelectFile}
+            onSelect={handleSelectFile}
             accept="image/*"
-            placeholder="image"
-            ref={fileInputRef}
+            currentRef={fileInputRef}
+            maxFileLength={1024 * 1024}
+            onError={(error) => setSelectedImageError(error)}
           />
           {selectedImageError && <span className="auth-form__error">{selectedImageError}</span>}
         </div>

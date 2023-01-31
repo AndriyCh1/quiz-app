@@ -41,7 +41,6 @@ class AuthController implements IController {
       res.cookie('refreshToken', user.refreshToken);
 
       return res.json(user);
-      // res.send('-');
     } catch (error) {
       next(error);
     }

@@ -32,14 +32,14 @@ const Modal: React.FC<IProps> = ({
         if (e.currentTarget === e.target) onClose();
       }}
     >
-      <div className={`modal ${show ? 'show' : ''}`}>
+      <div className={`modal ${show ? 'show' : ''} ${className || ''}`}>
         <div className="modal__header">
           <h2 className="modal__header__title">{title}</h2>
           <div className="modal__header__close" onClick={onClose}>
             <CloseIcon />
           </div>
         </div>
-        <div className={`modal__body ${className || ''}`}>{children}</div>
+        <div className="modal__body">{children}</div>
         {footer && (
           <div className="modal__footer">
             <Button className="modal__footer__submit-button" onClick={onSubmit}>
