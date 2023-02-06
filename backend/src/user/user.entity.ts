@@ -14,8 +14,11 @@ export class User extends AbstractEntity {
   @Column({ nullable: true })
   fullName: string;
 
+  @Column({ nullable: true })
+  avatar: string;
+
   @OneToMany(() => Quiz, (quiz) => quiz.user)
-  quiz: Quiz;
+  quizzes: Quiz[];
 
   @OneToMany(() => Take, (take) => take.user)
   takes: Take[];

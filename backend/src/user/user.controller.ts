@@ -1,4 +1,4 @@
-import { IController } from '../common/interfaces/';
+import { IAuthRequest, IController } from '../common/interfaces/';
 import { NextFunction, Request, Response, Router } from 'express';
 import UserService from './user.service';
 import authMiddleware from '../middlewares/authMiddleware';
@@ -12,15 +12,15 @@ class UserController implements IController {
   }
 
   private initializeRoutes() {
-    // TODO: fix auth middleware using (problem with custom req)
-    // @ts-ignore
-    this.router.get(`${this.path}/users`, authMiddleware, this.getAllUsers.bind(this));
+    this.router.get(`${this.path}/general`, this.getGeneralData.bind(this));
   }
 
-  private async getAllUsers(req: Request, res: Response, next: NextFunction) {
+  private async getGeneralData(req: IAuthRequest, res: Response, next: NextFunction) {
+    const userId = req.user.id;
+
     try {
-      const users = await this.userService.getAll();
-      return res.send(users);
+      const profileData = await this.userService.getGeneralData(userId);
+      return res.send(profileData);
     } catch (e) {
       next(e);
     }

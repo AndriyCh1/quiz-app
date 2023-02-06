@@ -1,0 +1,66 @@
+.modal-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(0,0,0,0.7);
+
+  &.show {
+    @include flex(center, center);
+    animation-name: showUp;
+    animation-duration: 0.4s;
+  }
+}
+
+.modal {
+  display: none;
+  background-color: $color-white;
+  width: 80%;
+  z-index: 101;
+  font-size: 1rem;
+
+  &.show {
+    display: block;
+  }
+
+  &__header {
+    @include flex(center, space-between);
+    margin-bottom: 20px;
+    background-color: $color-grey-1;
+    padding: 10px;
+
+    &__title {
+      color: $color-grey-5;
+      font-weight: 600;
+    }
+
+    &__close {
+      font-size: 1.1rem;
+      cursor: pointer;
+
+      &:hover {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  &__body {
+    overflow: auto;
+    padding: 10px;
+  }
+
+  &__footer {
+    margin-top: 15px;
+    @include flex(end, end);
+    background-color: $color-grey-1;
+    padding: 10px;
+  }
+}
+
+@keyframes showUp {
+  from {opacity: 0}
+  to {opacity: 1}
+}

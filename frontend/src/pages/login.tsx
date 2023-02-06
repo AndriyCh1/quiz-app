@@ -49,7 +49,9 @@ const LogIn = () => {
         <h2 className="auth-form__title">Log In</h2>
         {loginError && <div className="auth-form__submit-error">{loginError}</div>}
         <div className="auth-form__fieldset">
-          <label className="auth-form__label">Email</label>
+          <label className="auth-form__label">
+            Email<span className="required">*</span>
+          </label>
           <FormInput
             className={emailInput.isDirty && !emailInput.isValid ? 'error-input' : ''}
             type="email"
@@ -70,7 +72,9 @@ const LogIn = () => {
 
           {/* PASSWORD */}
 
-          <label className="auth-form__label">Password</label>
+          <label className="auth-form__label">
+            Password<span className="required">*</span>
+          </label>
           <FormInput
             className={passwordInput.isDirty && !passwordInput.isValid ? 'error-input' : ''}
             name="password"

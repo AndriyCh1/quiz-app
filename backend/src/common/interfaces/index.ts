@@ -9,4 +9,8 @@ export {
   ICreateTakeAnswer,
   ICreateTakeQuestion,
   IResultResponse,
+  IQuizzesSummaryResponse,
+  IQuizzesSummaryTakeResponse,
 } from './take.interface';
+
+export { IGetUserGeneralDataResponse } from './user.interface';

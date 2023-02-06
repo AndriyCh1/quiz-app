@@ -15,6 +15,11 @@ class TakeController implements IController {
   }
 
   private initializeRoutes() {
+    this.router.get(
+      `${this.path}/summary`,
+      validatePermission([RoleType.USER]),
+      this.getQuizzesSummary.bind(this),
+    );
     this.router.post(
       `${this.path}/start/:quizId`,
       validatePermission([RoleType.USER]),
@@ -62,6 +67,17 @@ class TakeController implements IController {
       await this.takeService.update(takeId, { status: TakeStatuses.FINISHED, spentTime });
       const result = await this.takeService.getResults(takeId);
       res.status(HttpCode.OK).send(result);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  private async getQuizzesSummary(req: IAuthRequest, res: Response, next: NextFunction) {
+    const userId = req.user.id;
+
+    try {
+      const quizzesSummary = await this.takeService.getQuizzesSummary(userId);
+      res.status(HttpCode.OK).send(quizzesSummary);
     } catch (e) {
       next(e);
     }

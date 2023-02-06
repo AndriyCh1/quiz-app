@@ -1,6 +1,6 @@
 import HttpService from '../http/http.service';
 import { ILoginUser, ILogoutResponse, IAuthResponse, ISignupUser } from '../../common/interfaces';
-import { HttpMethod } from '../../common/enums';
+import { ContentType, HttpMethod } from '../../common/enums';
 
 class AuthService {
   private readonly path: string;
@@ -20,9 +20,17 @@ class AuthService {
   };
 
   public signup = async (payload: ISignupUser): Promise<IAuthResponse> => {
+    let formData = new FormData();
+
+    if (payload.fullName) formData.append('fullName', payload.fullName);
+    if (payload.avatar) formData.append('avatar', payload.avatar);
+    formData.append('email', payload.email);
+    formData.append('password', payload.password);
+
     return this.http.load<IAuthResponse>(`${this.path}/auth/register`, {
       method: HttpMethod.POST,
-      payload,
+      contentType: ContentType.MULTIPART_FORM_DATA,
+      payload: formData,
     });
   };
 

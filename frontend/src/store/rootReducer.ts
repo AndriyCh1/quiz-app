@@ -1,15 +1,16 @@
 import { AnyAction, combineReducers, Reducer } from 'redux';
+import { AuthAction } from './auth/common';
 
 import { authReducer } from './auth';
 import { quizzesReducer } from './quizzes';
-
-import { AuthAction } from './auth/common';
 import { takeReducer } from './take';
+import { profileReducer } from './profile';
 
 export const combinedReducer = combineReducers({
   auth: authReducer,
   quizzes: quizzesReducer,
   take: takeReducer,
+  profile: profileReducer,
 });
 
 export type RootState = ReturnType<typeof combinedReducer>;

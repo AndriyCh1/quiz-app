@@ -1,5 +1,5 @@
 import HttpService from '../http/http.service';
-import { IUser } from '../../common/interfaces';
+import { IUserGeneralData, IUser } from '../../common/interfaces';
 import { HttpMethod } from '../../common/enums';
 
 class UserService {
@@ -14,6 +14,13 @@ class UserService {
   public getAllUsers = async () => {
     return await this.http.load<IUser[]>(`${this.path}/user/users`, {
       method: HttpMethod.GET,
+    });
+  };
+
+  public getUserGeneralData = async () => {
+    return await this.http.load<IUserGeneralData>(`${this.path}/user/general`, {
+      method: HttpMethod.GET,
+      withCredentials: true,
     });
   };
 }

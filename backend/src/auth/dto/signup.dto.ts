@@ -9,6 +9,8 @@ class SignupDto {
 
   @IsString()
   public fullName?: string;
+
+  public avatar?: Express.Multer.File;
 }
 
 export default SignupDto;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Header from './header';
@@ -6,18 +6,20 @@ import Button from './button';
 import { ILink } from '../common/interfaces/header';
 
 import { UserRoutes as Routes, VisitorRoutes } from '../common/enums';
-import { useAppDispatch } from '../hooks/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { authActions } from '../store/auth';
 
 const links: ILink[] = [
   { display: 'Quizzes', to: Routes.Quizzes },
   { display: 'Creator', to: Routes.CreateQuiz },
-  { display: 'History', to: Routes.History },
+  { display: 'Profile', to: Routes.Profile },
 ];
 
 const UserHeader = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const user = useAppSelector((state) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(authActions.logout());
@@ -38,6 +40,7 @@ const UserHeader = () => {
           Log out
         </Button>
       </Header.Buttons>
+      {user?.avatar && <img src={user.avatar} alt="avatar" className="header__avatar" />}
     </Header>
   );
 };

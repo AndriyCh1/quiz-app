@@ -85,3 +85,21 @@ export interface ICheckAnswerRequest {
 export interface ICheckAnswerResponse {
   correct: boolean;
 }
+
+export interface IQuizzesSummary {
+  id: string | null;
+  title: string;
+  takes: IQuizzesSummaryTake[];
+}
+
+export interface IQuizzesSummaryTake {
+  id: string;
+  totalScore: number;
+  score: number;
+  spentTime: number;
+  takeDate: Date;
+  correctNumber: number;
+  incorrectNumber: number;
+  notAnswered: number;
+  questionsNumber: number;
+}

@@ -39,3 +39,21 @@ export interface IResultResponse {
   totalTime: number;
   spentTime: number;
 }
+
+export interface IQuizzesSummaryResponse {
+  id: string | null;
+  title: string;
+  takes: IQuizzesSummaryTakeResponse[];
+}
+
+export interface IQuizzesSummaryTakeResponse {
+  id: string;
+  totalScore: number;
+  score: number;
+  spentTime: number;
+  takeDate: Date;
+  correctNumber: number;
+  incorrectNumber: number;
+  notAnswered: number;
+  questionsNumber: number;
+}

@@ -1,0 +1,182 @@
+.profile-info {
+  @include flex(center, start);
+  gap: 30px;
+  padding: 15px 40px;
+
+  &__image-wrapper {
+    max-width: 10rem;
+    max-height: 100%;
+  }
+
+  &__image {
+    display: block;
+    border-radius: 5%;
+  }
+
+  &__text {
+    font-size: .9rem;
+    position: relative;
+
+    &__username {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    &__join-time {
+      font-size: .8rem;
+      margin-top: 5px;
+      font-style: italic;
+    }
+  }
+
+  &__edit-button {
+    @include flex(center, center);
+    color: $color-grey-3;
+    border: 2px solid $color-grey-3;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(calc(100% + 10px), -50%);
+
+    &:hover {
+      cursor: pointer;
+      color: $color-grey-4;
+    }
+
+    &__icon {
+      font-size: 1rem;
+    }
+  }
+
+  &__edit-modal {
+    width: auto;
+    min-width: 400px;
+  }
+
+  &__edit-form {
+    padding-top: 0;
+
+    &__label {
+      display: block;
+      padding-bottom: 5px;
+    }
+
+    &__label:not(:first-child) {
+      margin-top: 15px;
+    }
+
+    &__input {
+      max-width: 390px;
+    }
+
+    &__error {
+      display: block;
+      color: $color-dangerous;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding-top: 1.5px;
+      letter-spacing: 0.04rem;
+    }
+
+    &__edit-avatar-actions {
+      @include flex(center, left);
+      gap: 10px;
+      margin: 5px 0;
+    }
+
+    &__avatar-image-wrapper {
+      position: relative;
+    }
+
+    &__avatar-image {
+      display: block;
+      max-width: 200px;
+      max-height: 150px;
+      object-fit: contain;
+      margin: 0 auto;
+      margin-bottom: 3px;
+    }
+
+    &__avatar-delete-icon {
+      font-size: 1.3rem;
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(-50%, -50%);
+      background-color: $color-white;
+      border: 1px solid $color-grey-5;
+      color: $color-grey-5;
+      border-radius: 50%;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.profile-info-wrapper,
+.profile-charts-wrapper,{
+  margin-bottom: 10px;
+}
+
+.profile-charts {
+  @include flex(center, space-between);
+  gap: 10px;
+  padding: 10px;
+
+  @include tablet {
+    flex-wrap: wrap;
+  }
+
+  &__chart {
+    width: 50%;
+    height: auto;
+    padding: 20px 10px;
+    @include flex(center, center);
+    flex-direction: column;
+
+    @include tablet {
+      width: 100%;
+    }
+
+    &__title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    &__diagram-wrapper {
+      @include flex(center, space-between);
+      gap: 15px;
+    }
+
+    &__diagram {
+      max-width: 200px;
+    }
+  }
+}
+
+.profile-takes {
+  padding: 10px;
+
+  &__take + &__take {
+    margin-top: 10px;
+  }
+
+  &__summary {
+    @include flex(start, start);
+    flex-direction: column;
+
+    &__show-details {
+      text-decoration: underline;
+      cursor: pointer;
+      padding-left: 40px;
+      margin-bottom: 15px;
+    }
+  }
+}

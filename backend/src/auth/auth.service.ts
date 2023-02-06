@@ -1,17 +1,26 @@
 import bcrypt from 'bcrypt';
-import UserDto from '../user/dto/user.dto';
+import AWS from 'aws-sdk';
+import { getRepository } from 'typeorm';
+
 import { User } from '../user/user.entity';
 import { IDataInToken } from '../common/interfaces';
 import UserWithThatEmailExistException from '../exceptions/UserWithThatEmailExistException';
 import WrongCredentialsException from '../exceptions/WrongCredationalsException.exception';
+import UserLoginDto from '../user/dto/user-login.dto';
+import UserRegistrationDto from '../user/dto/user-registration.dto';
+
 import TokenService from '../token/token-service';
-import { getRepository } from 'typeorm';
+import AwsS3Service from '../file-upload/aws-s3.service';
 
 class AuthService {
   private userRepository = getRepository(User);
-  private tokenService = new TokenService();
 
-  public async register(userData: UserDto) {
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly awsFileService: AwsS3Service,
+  ) {}
+
+  public async register(userData: UserRegistrationDto) {
     const user = await this.userRepository.findOne({ email: userData.email });
 
     if (user) {
@@ -20,22 +29,33 @@ class AuthService {
 
     const hashedPassword = await bcrypt.hash(userData.password, 7);
 
-    const newUser = await this.userRepository.create({
+    let uploadingAvatarResult: AWS.S3.ManagedUpload.SendData | undefined;
+
+    if (userData?.avatar) {
+      uploadingAvatarResult = await this.awsFileService.uploadObject(userData.avatar);
+    }
+
+    const newUserInstance = await this.userRepository.create({
       ...userData,
       password: hashedPassword,
+      avatar: uploadingAvatarResult?.Location || null,
     });
 
-    await this.userRepository.save(newUser);
+    const createdUser = await this.userRepository.save(newUserInstance);
 
-    newUser.password = undefined;
+    createdUser.password = undefined;
 
-    const tokens = this.tokenService.generateTokens({ id: newUser.id, email: newUser.email });
-    await this.tokenService.saveToken(newUser.id, tokens.refreshToken);
+    const tokens = this.tokenService.generateTokens({
+      id: createdUser.id,
+      email: createdUser.email,
+    });
 
-    return { ...tokens, user: newUser };
+    await this.tokenService.saveToken(createdUser.id, tokens.refreshToken);
+
+    return { ...tokens, user: createdUser };
   }
 
-  public async login(userData: UserDto) {
+  public async login(userData: UserLoginDto) {
     const user = await this.userRepository.findOne({
       email: userData.email,
     });
@@ -49,7 +69,7 @@ class AuthService {
         const tokens = this.tokenService.generateTokens({ id: user.id, email: user.email });
 
         await this.tokenService.saveToken(user.id, tokens.refreshToken);
-        return { ...tokens, user: userData };
+        return { ...tokens, user };
       }
       throw new WrongCredentialsException();
     }
