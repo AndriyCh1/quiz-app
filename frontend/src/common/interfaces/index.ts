@@ -24,6 +24,6 @@ export type {
   ITakeStartResponse,
   ITakeStartResponseAnswer,
   ITakeStartResponseQuestion,
-  IFinishResponse,
-  IFinishRequest,
+  ITakeFinishResponse,
+  ITakeFinishRequest,
 } from './take';

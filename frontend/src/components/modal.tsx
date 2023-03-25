@@ -1,8 +1,6 @@
 import React from 'react';
-
-import { GrClose as CloseIcon } from 'react-icons/gr';
-
 import Button from './button';
+import { GrClose as CloseIcon } from 'react-icons/gr';
 
 interface IProps {
   show: boolean;
@@ -16,14 +14,14 @@ interface IProps {
 }
 
 const Modal: React.FC<IProps> = ({
+  className,
   show,
-  onClose,
   title,
   children,
-  className,
   buttonText,
-  onSubmit,
   footer = false,
+  onClose,
+  onSubmit,
 }) => {
   return (
     <div

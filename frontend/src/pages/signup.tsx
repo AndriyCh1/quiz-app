@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import useInput from '../hooks/useInput';
@@ -28,7 +28,7 @@ const SignUp = () => {
 
   const { isAuth, isLoading } = useAppSelector((state) => state.auth);
 
-  const [signupError, setSignupError] = useState('');
+  const [signupError, setSignupError] = useState<string | undefined>('');
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const [croppedImage, setCroppedImage] = useState<string | undefined>();
   const [cropper, setCropper] = useState<Cropper | undefined>();
@@ -57,9 +57,7 @@ const SignUp = () => {
       const imageErrorTimeout = setTimeout(() => setSelectedImageError(''), 2000);
       return () => clearTimeout(imageErrorTimeout);
     }
-  }, [selectedImageError]);
 
-  useEffect(() => {
     resetUploadedFile();
   }, [selectedImageError]);
 
@@ -71,7 +69,7 @@ const SignUp = () => {
     }
   };
 
-  const onCloseModal = (): void => {
+  const handleCloseModal = (): void => {
     resetUploadedFile();
     setShowCropImageModal(false);
   };
@@ -84,7 +82,7 @@ const SignUp = () => {
     setCroppedImage(undefined);
   };
 
-  const onSubmitModal = (): void => {
+  const handleSubmitModal = (): void => {
     if (cropper !== undefined) {
       setCroppedImage(getCropDataURL(cropper));
     }
@@ -94,8 +92,8 @@ const SignUp = () => {
 
   const getCropDataURL = (cropper: Cropper): string => cropper.getCroppedCanvas().toDataURL();
 
-  const handleSubmit = (evnt: React.FormEvent) => {
-    evnt.preventDefault();
+  const handleSubmitForm = (e: FormEvent) => {
+    e.preventDefault();
 
     const requiredUserData = {
       email: emailInput.value,
@@ -128,7 +126,7 @@ const SignUp = () => {
 
   return (
     <div className="auth-form-wrapper">
-      <form className="auth-form" onSubmit={handleSubmit}>
+      <form className="auth-form" onSubmit={handleSubmitForm}>
         <h2 className="auth-form__title">Register</h2>
         {signupError && <div className="auth-form__submit-error">{signupError}</div>}
         <div className="auth-form__fieldset">
@@ -143,7 +141,7 @@ const SignUp = () => {
             type="text"
             value={usernameInput.value}
             icon={<UserIcon />}
-            placeholder={AuthFormPlaceholder.username}
+            placeholder="Full name"
             onChange={usernameInput.onChange}
             onBlur={usernameInput.onBlur}
           />
@@ -246,15 +244,13 @@ const SignUp = () => {
         </p>
       </form>
 
-      {/* Crop image modal */}
-
       <Modal
         className="auth-form__modal"
         title="Crop avatar"
         show={showCropImageModal}
         footer={true}
-        onClose={onCloseModal}
-        onSubmit={onSubmitModal}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmitModal}
       >
         {selectedImage && (
           <ImageCropper image={selectedImage} onSave={(cropper) => setCropper(cropper)} />

@@ -37,7 +37,7 @@ class QuizService {
     const quiz = await this.quizRepository
       .createQueryBuilder('quiz')
       .leftJoin('quiz.user', 'user')
-      .addSelect('user.fullName')
+      .addSelect(['user.fullName', 'user.avatar'])
       .leftJoinAndSelect('quiz.questions', 'questions')
       .leftJoinAndSelect('questions.answers', 'answers')
       .where('(quiz.published = true OR user.id = :userId) AND quiz.id = :quizId', {
@@ -61,7 +61,7 @@ class QuizService {
       .createQueryBuilder('quiz')
       .where('quiz.published = true')
       .leftJoin('quiz.user', 'user')
-      .addSelect('user.fullName')
+      .addSelect(['user.fullName', 'user.avatar'])
       .leftJoinAndSelect('quiz.questions', 'questions')
       .leftJoinAndSelect('questions.answers', 'answers')
       .andWhere('quiz.id = :id', { id })

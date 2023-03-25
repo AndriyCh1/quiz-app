@@ -10,11 +10,10 @@ import SetQuizMeta from '../components/set-quiz-meta';
 import Button from '../components/button';
 
 import { UserRoutes } from '../common/enums';
-import { IDeepQuiz, IQuiz } from '../common/interfaces';
+import { IDeepQuiz, IQuiz, IQuestion } from '../common/interfaces';
 import { quizzesActions } from '../store/quizzes';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import SingleChoice from '../components/single-choice';
-import { IQuestion } from '../common/interfaces/quizzes';
 
 interface IMetaData {
   title: string;

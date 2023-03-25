@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ISendAnswerRequest } from '../../common/interfaces';
 import { TakeAction } from './common';
 import { takeService } from '../../services';
-import { IFinishRequest } from '../../common/interfaces/take';
+import { ITakeFinishRequest } from '../../common/interfaces/take';
 
 export const start = createAsyncThunk(
   TakeAction.START,
@@ -28,7 +28,7 @@ export const sendAnswer = createAsyncThunk(
 
 export const finish = createAsyncThunk(
   TakeAction.FINISH,
-  async (data: IFinishRequest, { rejectWithValue }) => {
+  async (data: ITakeFinishRequest, { rejectWithValue }) => {
     try {
       return await takeService.finish(data);
     } catch (e) {

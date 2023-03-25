@@ -11,10 +11,10 @@ class AwsS3Service {
   private readonly secretAccessKey: string;
 
   constructor(private readonly configService: ConfigService) {
-    this.bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
-    this.region = this.configService.get<string>('AWS_BUCKET_REGION');
-    this.accessKeyId = this.configService.get<string>('AWS_ACCESS_KEY');
-    this.secretAccessKey = this.configService.get<string>('AWS_SECRET_KEY');
+    this.bucketName = this.configService.get('AWS_BUCKET_NAME');
+    this.region = this.configService.get('AWS_BUCKET_REGION');
+    this.accessKeyId = this.configService.get('AWS_ACCESS_KEY');
+    this.secretAccessKey = this.configService.get('AWS_SECRET_KEY');
 
     this.storage = this.getS3Service();
   }

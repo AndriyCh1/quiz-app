@@ -36,8 +36,6 @@ const VisitorQuizPassing = () => {
 
   const [answeredQuestions, setAnsweredQuestions] = useState<IAnsweredQuestion[]>([]);
 
-  const handleOnBack = (res: { questionId: string }) => {};
-
   const handleOnClose = () => {
     navigate(`${VisitorRoutes.QuizInfo.replace(':id', params.id)}`);
   };
@@ -113,12 +111,8 @@ const VisitorQuizPassing = () => {
             quiz={mapQuizForPassing(quiz)}
             onClose={handleOnClose}
             onFinish={handleOnFinish}
-            onBack={handleOnBack}
             onAnswer={handleOnAnswer}
           />
-          <div>
-            score: {answeredQuestions.reduce((ac, cu) => (cu.correct ? ac + cu.score : ac), 0)}
-          </div>
         </Container>
       </Helmet>
     );

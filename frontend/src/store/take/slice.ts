@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { takeReducer } from './reducer';
 
 const initialState: ITakeState = {
-  // isStarted: false,
   take: null,
   isLoadingTake: false,
   failedToLoadTake: false,

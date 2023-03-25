@@ -127,22 +127,22 @@ const SingleChoiceQuestion: React.FC<IProps> = ({
             type="number"
             value={questionScore.toString()}
           />
-          <div
-            className="single-choice__question-actions__active"
-            onClick={() => handleChangeActive(!active)}
-          >
-            {active ? (
-              <>
-                <OpenedEyeIcon className="single-choice__question__active" />
-                <span>hide</span>
-              </>
-            ) : (
-              <>
-                <ClosedEyeIcon className="single-choice__question__active" />
-                <span>show</span>
-              </>
-            )}
-          </div>
+          {/*<div*/}
+          {/*  className="single-choice__question-actions__active"*/}
+          {/*  onClick={() => handleChangeActive(!active)}*/}
+          {/*>*/}
+          {/*  {active ? (*/}
+          {/*    <>*/}
+          {/*      <OpenedEyeIcon className="single-choice__question__active" />*/}
+          {/*      <span>hide</span>*/}
+          {/*    </>*/}
+          {/*  ) : (*/}
+          {/*    <>*/}
+          {/*      <ClosedEyeIcon className="single-choice__question__active" />*/}
+          {/*      <span>show</span>*/}
+          {/*    </>*/}
+          {/*  )}*/}
+          {/*</div>*/}
         </div>
         <div className="single-choice__question-actions__btns">
           <Button className="single-choice__question-action-remove" onClick={onRemove}>

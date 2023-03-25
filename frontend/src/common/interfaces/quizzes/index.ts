@@ -12,6 +12,7 @@ export interface IQuiz extends IBase {
   user?: {
     fullName: string;
     email: string;
+    avatar: string;
   };
 }
 

@@ -1,11 +1,11 @@
-import { IFinishResponse, ITakeStartResponse } from '../../common/interfaces';
+import { ITakeFinishResponse, ITakeStartResponse } from '../../common/interfaces';
 
 export interface ITakeState {
   isFinished: boolean;
   take: ITakeStartResponse | null;
   isLoadingTake: boolean;
   failedToLoadTake: boolean;
-  results: IFinishResponse | null;
+  results: ITakeFinishResponse | null;
   isLoadingResults: boolean;
   failedToLoadResults: boolean;
 }
