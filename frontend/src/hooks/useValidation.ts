@@ -25,6 +25,13 @@ const useValidation = (value: string, validations: IValidations): IUseValidation
               })
             : setMinLengthError({ value: false });
           break;
+        case 'isEmail':
+          const regularExpression =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          regularExpression.test(String(value).toLowerCase())
+            ? setEmailError({ value: false })
+            : setEmailError({ value: true, errorMessage: 'Email format is not valid' });
+          break;
         case 'maxLength':
           validations?.maxLength && value.length > validations.maxLength
             ? setMaxLengthError({
@@ -38,23 +45,14 @@ const useValidation = (value: string, validations: IValidations): IUseValidation
             ? setIsEmpty({ value: false })
             : setIsEmpty({ value: true, errorMessage: 'Cannot be empty' });
           break;
-        case 'isEmail':
-          const regularExpression =
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          regularExpression.test(String(value).toLowerCase())
-            ? setEmailError({ value: false })
-            : setEmailError({ value: true, errorMessage: 'Email format is not valid' });
-          break;
       }
     }
   }, [value]);
 
   useEffect(() => {
-    if (isEmpty.value || emailError.value || minLengthError.value || maxLengthError.value) {
+    if (isEmpty.value || emailError.value || minLengthError.value || maxLengthError.value)
       setIsValid(false);
-    } else {
-      setIsValid(true);
-    }
+    else setIsValid(true);
   }, [isEmpty, emailError, minLengthError, maxLengthError]);
 
   return {

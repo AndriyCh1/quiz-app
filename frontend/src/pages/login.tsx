@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-import { AuthFormPlaceholder } from './common/enums/auth';
-import useInput from '../hooks/useInput';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { authActions } from '../store/auth';
+
 import FormInput from '../components/form-input';
 import Button from '../components/button';
+
 import { MdAlternateEmail as EmailIcon } from 'react-icons/md';
 import { AiFillLock as LockIcon } from 'react-icons/ai';
 import { UserRoutes } from '../common/enums';
 
-const LogIn = () => {
+import useInput from '../hooks/useInput';
+
+const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
+
   const [loginError, setLoginError] = useState('');
+
+  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
 
   const emailInput = useInput('', { isEmpty: true, isEmail: true });
   const passwordInput = useInput('', {
@@ -24,15 +27,12 @@ const LogIn = () => {
     maxLength: 15,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
 
     dispatch(authActions.login({ email: emailInput.value, password: passwordInput.value }))
       .unwrap()
-      .catch((e) => {
-        // TODO: make error handling more predictable (change e.response.data.message)
-        setLoginError(e.response.data.message);
-      });
+      .catch((e) => setLoginError(e.response.data.message));
   };
 
   if (isLoading) {
@@ -45,7 +45,7 @@ const LogIn = () => {
 
   return (
     <div className="auth-form-wrapper">
-      <form className="auth-form" onSubmit={handleSubmit}>
+      <form className="auth-form" onSubmit={handleSubmitForm}>
         <h2 className="auth-form__title">Log In</h2>
         {loginError && <div className="auth-form__submit-error">{loginError}</div>}
         <div className="auth-form__fieldset">
@@ -58,7 +58,7 @@ const LogIn = () => {
             name="email"
             value={emailInput.value}
             icon={<EmailIcon />}
-            placeholder={AuthFormPlaceholder.email}
+            placeholder="example@gmail.com"
             onChange={emailInput.onChange}
             onBlur={emailInput.onBlur}
           />
@@ -70,8 +70,6 @@ const LogIn = () => {
             <span className="auth-form__error">{emailInput.emailError.errorMessage}</span>
           )}
 
-          {/* PASSWORD */}
-
           <label className="auth-form__label">
             Password<span className="required">*</span>
           </label>
@@ -80,7 +78,7 @@ const LogIn = () => {
             name="password"
             type="password"
             value={passwordInput.value}
-            placeholder={AuthFormPlaceholder.password}
+            placeholder="Password"
             icon={<LockIcon />}
             onChange={passwordInput.onChange}
             onBlur={passwordInput.onBlur}
@@ -118,4 +116,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default Login;

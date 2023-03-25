@@ -12,7 +12,6 @@ class AuthService {
   }
 
   public login = async (payload: ILoginUser): Promise<IAuthResponse> => {
-    // TODO: find out should I do here json.stringify(payload)
     return this.http.load<IAuthResponse>(`${this.path}/auth/login`, {
       method: HttpMethod.POST,
       payload,

@@ -24,13 +24,12 @@ interface IPassingQuizAnswer {
 
 interface IProps {
   quiz: IPassingQuiz;
-  onBack: (res: { questionId: string }) => void;
   onClose: () => void;
   onAnswer: (res: { questionId: string; answerId: string }) => void;
   onFinish: (res: { time: number }) => void;
 }
 
-const PassingCore: React.FC<IProps> = ({ quiz, onBack, onClose, onAnswer, onFinish }) => {
+const PassingCore: React.FC<IProps> = ({ quiz, onClose, onAnswer, onFinish }) => {
   const stopwatch = useStopwatch();
   const generateAlphabet = alphabetGenerator();
 
@@ -45,8 +44,6 @@ const PassingCore: React.FC<IProps> = ({ quiz, onBack, onClose, onAnswer, onFini
     if (currentQuestionIndex !== 0) {
       setCurrentQuestionIndex((state) => state - 1);
     }
-
-    onBack({ questionId: quiz.questions[currentQuestionIndex].id });
   };
 
   const handleOnAnswer = () => {
@@ -95,13 +92,17 @@ const PassingCore: React.FC<IProps> = ({ quiz, onBack, onClose, onAnswer, onFini
         </h3>
         <div className="active-quiz__content__answers">
           {quiz.questions[currentQuestionIndex].answers.map((item, index) => (
-            <QuizStartAnswer
-              key={index}
-              content={item.content}
-              sequenceMark={generateAlphabet.next().value}
-              isSelected={item.id === selectedAnswer?.id}
+            <div
+              className={`active-quiz__content__answers__item ${
+                item.id === selectedAnswer?.id ? 'active' : ''
+              }`}
               onClick={() => handleSelectAnswer(item)}
-            />
+            >
+              <div className="active-quiz__content__answers__item__sequence">
+                {generateAlphabet.next().value}
+              </div>
+              <div className="active-quiz__content__answers__item__answer">{item.content}</div>
+            </div>
           ))}
         </div>
       </div>
@@ -110,24 +111,3 @@ const PassingCore: React.FC<IProps> = ({ quiz, onBack, onClose, onAnswer, onFini
 };
 
 export default PassingCore;
-
-interface IQuizStartAnswerProps {
-  sequenceMark: string;
-  content: string;
-  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
-  isSelected?: boolean;
-}
-
-const QuizStartAnswer: React.FC<IQuizStartAnswerProps> = (props) => {
-  const { sequenceMark, content, onClick, isSelected = false } = props;
-
-  return (
-    <div
-      className={`active-quiz__content__answers__item ${isSelected ? 'active' : ''}`}
-      onClick={onClick}
-    >
-      <div className="active-quiz__content__answers__item__sequence">{sequenceMark}</div>
-      <div className="active-quiz__content__answers__item__answer">{content}</div>
-    </div>
-  );
-};

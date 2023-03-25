@@ -29,7 +29,7 @@ import TokenService from './token/token-service';
 
 validateEnv();
 
-(async () => {
+async function bootstrap() {
   try {
     await createConnection(config);
   } catch (error) {
@@ -51,4 +51,6 @@ validateEnv();
   ]);
 
   app.listen();
-})();
+}
+
+bootstrap();

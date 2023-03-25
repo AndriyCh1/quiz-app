@@ -9,7 +9,7 @@ import Wrapper from './wrapper';
 import { GrClose as CloseIcon } from 'react-icons/gr';
 
 interface IProps {
-  title: string;
+  title?: string;
   description?: string;
   totalQuestions: number;
   correctAnswers: number;

@@ -12,15 +12,12 @@ type IUseInput = {
 const useInput = (initialValue: string, validations: IValidations): IUseInput => {
   const [value, setValue] = useState(initialValue);
   const [isDirty, setIsDirty] = useState(false);
+
   const valid = useValidation(value, validations);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
 
-  const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsDirty(true);
-  };
+  const onBlur = () => setIsDirty(true);
 
   return {
     value,

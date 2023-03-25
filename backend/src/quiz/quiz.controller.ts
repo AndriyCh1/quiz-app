@@ -1,15 +1,13 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
 import { HttpCode, RoleType } from '../common/enums';
-import { IAuthRequest } from '../common/interfaces';
-import { IDeepQuiz } from '../common/interfaces';
+import { IAuthRequest, IController, IDeepQuiz, IDeepUpdateQuiz } from '../common/interfaces';
 
 import validatePermission from '../middlewares/validatePermission.middleware';
 
 import QuizService from './quiz.service';
-import { IDeepUpdateQuiz } from '../common/interfaces/quizzes.interface';
 
-class QuizController {
+class QuizController implements IController {
   public path = '/quizzes';
   public router = Router();
 
@@ -24,8 +22,6 @@ class QuizController {
     this.router.post(
       `${this.path}/`,
       validatePermission([RoleType.USER]),
-      // TODO: find out why validator throws an error on DeepQuizDto
-      // validationMiddleware(DeepQuizDto),
       this.createDeepQuiz.bind(this),
     );
     this.router.put(
@@ -39,6 +35,7 @@ class QuizController {
       this.deleteQuiz.bind(this),
     );
   }
+
   private async getQuizById(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
       const quizId: string = req.params.id;

@@ -11,7 +11,7 @@ import { authActions } from '../store/auth';
 
 const links: ILink[] = [
   { display: 'Quizzes', to: Routes.Quizzes },
-  { display: 'Creator', to: Routes.CreateQuiz },
+  { display: 'Creator', to: Routes.SingleChoiceCreator },
   { display: 'Profile', to: Routes.Profile },
 ];
 

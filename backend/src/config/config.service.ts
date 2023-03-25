@@ -1,8 +1,8 @@
 class ConfigService {
   private static instance: ConfigService;
 
-  public get<T>(value: string): T {
-    return process.env[value] as unknown as T;
+  public get(value: string): string {
+    return process.env[value];
   }
 
   public static getInstance(): ConfigService {

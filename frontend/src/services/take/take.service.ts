@@ -1,10 +1,10 @@
 import HttpService from '../http/http.service';
 import {
-  IFinishResponse,
+  ITakeFinishResponse,
   IQuizzesSummary,
   ISendAnswerRequest,
   ITakeStartResponse,
-  IFinishRequest,
+  ITakeFinishRequest,
 } from '../../common/interfaces';
 import { HttpMethod } from '../../common/enums';
 
@@ -31,10 +31,10 @@ class TakeService {
     });
   };
 
-  public finish = async (data: IFinishRequest): Promise<IFinishResponse> => {
+  public finish = async (data: ITakeFinishRequest): Promise<ITakeFinishResponse> => {
     const { takeId, spentTime } = data;
 
-    return await this.http.load<IFinishResponse>(`${this.path}/finish/${takeId}`, {
+    return await this.http.load<ITakeFinishResponse>(`${this.path}/finish/${takeId}`, {
       method: HttpMethod.PUT,
       payload: { spentTime },
     });

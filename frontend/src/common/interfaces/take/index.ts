@@ -29,12 +29,12 @@ export interface ITakeStartResponseAnswer {
   chosen: boolean;
 }
 
-export interface IFinishRequest {
+export interface ITakeFinishRequest {
   takeId: string;
   spentTime: number;
 }
 
-export interface IFinishResponse {
+export interface ITakeFinishResponse {
   questionsNumber: number;
   correctNumber: number;
   score: number;

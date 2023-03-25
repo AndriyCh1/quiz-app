@@ -28,7 +28,6 @@
 
   &__header {
     @include flex(center, space-between);
-    margin-bottom: 20px;
     background-color: $color-grey-1;
     padding: 10px;
 

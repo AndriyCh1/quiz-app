@@ -25,13 +25,11 @@ const UserQuizPassing: React.FC = () => {
     (state) => state.take,
   );
 
-  const handleOnBack = (res: { questionId: string }) => {};
-
-  const handleOnClose = () => {
+  const handleCloseQuiz = () => {
     navigate(`${UserRoutes.QuizInfo.replace(':id', params.id)}`);
   };
 
-  const handleOnAnswer = (res: { questionId: string; answerId: string }) => {
+  const handleAnswerQuestion = (res: { questionId: string; answerId: string }) => {
     const { answerId, questionId } = res;
 
     if (take) {
@@ -40,7 +38,7 @@ const UserQuizPassing: React.FC = () => {
     }
   };
 
-  const handleOnFinish = ({ time }: { time: number }) => {
+  const handleFinishQuiz = ({ time }: { time: number }) => {
     if (take) {
       dispatch(takeActions.finish({ takeId: take.id, spentTime: time }));
     }
@@ -72,10 +70,9 @@ const UserQuizPassing: React.FC = () => {
         <Container className="active-quiz">
           <PassingCore
             quiz={mapTakeForPassing(take)}
-            onClose={handleOnClose}
-            onFinish={handleOnFinish}
-            onBack={handleOnBack}
-            onAnswer={handleOnAnswer}
+            onClose={handleCloseQuiz}
+            onFinish={handleFinishQuiz}
+            onAnswer={handleAnswerQuestion}
           />
         </Container>
       </Helmet>
@@ -87,19 +84,18 @@ const UserQuizPassing: React.FC = () => {
   }
 
   if (isFinished && results) {
-    const { spentTime, score, totalScore, totalTime, questionsNumber, correctNumber } = results;
+    const { spentTime, score, totalScore, questionsNumber, correctNumber } = results;
 
     return (
       <Helmet title="Results">
         <Container className="active-quiz">
           <Result
-            title={`title`}
             totalQuestions={questionsNumber}
             correctAnswers={correctNumber}
             score={score}
             totalScore={totalScore}
             time={spentTime}
-            onClose={handleOnClose}
+            onClose={handleCloseQuiz}
           />
         </Container>
       </Helmet>

@@ -4,6 +4,7 @@ import { IController } from './common/interfaces';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import authMiddleware from './middlewares/authMiddleware';
+import path from 'path';
 
 class App {
   public app: express.Application;
@@ -11,6 +12,7 @@ class App {
   constructor(controllers: IController[]) {
     this.app = express();
 
+    this.initializeStaticFiles();
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
     this.initializeErrorHandling();
@@ -42,6 +44,10 @@ class App {
 
   private initializeErrorHandling() {
     this.app.use(errorHandlerMiddleware);
+  }
+
+  private initializeStaticFiles() {
+    this.app.use(express.static(path.join(__dirname, 'build')));
   }
 }
 
