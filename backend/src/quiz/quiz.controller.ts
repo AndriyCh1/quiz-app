@@ -39,16 +39,10 @@ class QuizController implements IController {
   private async getQuizById(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
       const quizId: string = req.params.id;
-      let quiz;
 
-      if (req.user) {
-        const userId: string = req.user.id;
-        quiz = await this.quizService.getDeepById(quizId, userId);
-      } else {
-        quiz = await this.quizService.getPublicDeepById(quizId);
-      }
-
-      res.status(HttpCode.OK).send(this.quizService.hideCorrectAnswers(quiz));
+      const userId: string = req.user?.id;
+      const quiz = await this.quizService.getDeepById(quizId, userId);
+      res.status(HttpCode.OK).send(quiz);
     } catch (e) {
       next(e);
     }
@@ -56,15 +50,8 @@ class QuizController implements IController {
 
   private async getAllQuizzes(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
-      let quizzes;
-
-      if (req.user) {
-        const userId: string = req.user.id;
-        quizzes = await this.quizService.getAll(userId);
-      } else {
-        quizzes = await this.quizService.getPublic();
-      }
-
+      const userId: string = req.user?.id;
+      const quizzes = await this.quizService.getAll(userId);
       res.status(HttpCode.OK).send(quizzes);
     } catch (e) {
       next(e);
@@ -75,7 +62,7 @@ class QuizController implements IController {
     try {
       const quizData: IDeepQuiz = req.body as unknown as IDeepQuiz;
       const newQuiz = await this.quizService.createDeep(req.user.id, quizData);
-      res.status(HttpCode.CREATED).send(this.quizService.hideCorrectAnswers(newQuiz));
+      res.status(HttpCode.CREATED).send(newQuiz);
     } catch (e) {
       next(e);
     }

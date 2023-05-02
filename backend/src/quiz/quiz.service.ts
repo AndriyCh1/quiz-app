@@ -33,66 +33,48 @@ class QuizService {
     return quiz;
   }
 
-  public async getDeepById(id: Quiz['id'], userId: User['id']): Promise<IDeepQuiz> {
-    const quiz = await this.quizRepository
+  public async getDeepById(id: string, userId: string | undefined): Promise<IDeepQuiz> {
+    let quiz;
+    const isAuthenticated = !!userId;
+
+    quiz = await this.quizRepository
       .createQueryBuilder('quiz')
       .leftJoin('quiz.user', 'user')
-      .addSelect(['user.fullName', 'user.avatar'])
-      .leftJoinAndSelect('quiz.questions', 'questions')
-      .leftJoinAndSelect('questions.answers', 'answers')
-      .where('(quiz.published = true OR user.id = :userId) AND quiz.id = :quizId', {
-        userId,
-        quizId: id,
-      })
-      .getOne();
-
-    if (!quiz) {
-      throw new HttpException(
-        HttpCode.NOT_FOUND,
-        'Quiz not found or you don`t have permission on that',
-      );
-    }
-
-    return quiz;
-  }
-
-  public async getPublicDeepById(id: Quiz['id']): Promise<IDeepQuiz> {
-    const quiz = await this.quizRepository
-      .createQueryBuilder('quiz')
-      .where('quiz.published = true')
-      .leftJoin('quiz.user', 'user')
-      .addSelect(['user.fullName', 'user.avatar'])
+      .addSelect(['user.id', 'user.fullName', 'user.avatar'])
       .leftJoinAndSelect('quiz.questions', 'questions')
       .leftJoinAndSelect('questions.answers', 'answers')
       .andWhere('quiz.id = :id', { id })
       .getOne();
 
     if (!quiz) {
-      throw new HttpException(
-        HttpCode.NOT_FOUND,
-        'Quiz not found or you don`t have permission on that',
-      );
+      throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
+    }
+
+    if (!isAuthenticated && quiz.published === false) {
+      throw new HttpException(HttpCode.NOT_FOUND, 'Quiz not found');
+    }
+
+    if (quiz.user.id !== userId) {
+      quiz = this.hideCorrectAnswers(quiz);
     }
 
     return quiz;
   }
 
-  public async getAll(userId: User['id']): Promise<Quiz[]> {
-    return await this.quizRepository
+  public async getAll(userId: string | undefined): Promise<Quiz[]> {
+    let queryBuilder = this.quizRepository
       .createQueryBuilder('quiz')
       .leftJoinAndSelect('quiz.questions', 'questions')
       .leftJoinAndSelect('quiz.user', 'user')
-      .where('quiz.published = true')
-      .orWhere('user.id = :id', { id: userId })
-      .getMany();
-  }
+      .where('quiz.published = true');
 
-  public async getPublic(): Promise<Quiz[]> {
-    return await this.quizRepository
-      .createQueryBuilder('quiz')
-      .leftJoinAndSelect('quiz.questions', 'questions')
-      .where('quiz.published = true')
-      .getMany();
+    if (userId) {
+      queryBuilder = queryBuilder.orWhere('user.id = :id', { id: userId });
+    }
+
+    const quizzes = await queryBuilder.getMany();
+
+    return quizzes;
   }
 
   public async create(userId: User['id'], quizData: QuizDto): Promise<Quiz> {
@@ -102,7 +84,7 @@ class QuizService {
     return await this.quizRepository.create({ ...quizData, user }).save();
   }
 
-  public async createDeep(userId: User['id'], quizData: IDeepQuiz): Promise<Quiz> {
+  public async createDeep(userId: User['id'], quizData: IDeepQuiz): Promise<IDeepQuiz> {
     const userRepository = getCustomRepository(UserRepository);
     const questionRepository = getCustomRepository(QuizQuestionRepository);
     const answerRepository = getCustomRepository(QuizAnswerRepository);
@@ -137,7 +119,7 @@ class QuizService {
       }
     }
 
-    const createdQuiz = await this.quizRepository
+    let createdQuiz: IDeepQuiz = await this.quizRepository
       .createQueryBuilder('quiz')
       .leftJoin('quiz.user', 'user')
       .addSelect('user.fullName')
@@ -150,6 +132,7 @@ class QuizService {
       throw new HttpException(HttpCode.INTERNAL_SERVER_ERROR, 'Cannot create quiz');
     }
 
+    createdQuiz = this.hideCorrectAnswers(createdQuiz);
     return createdQuiz;
   }
 
