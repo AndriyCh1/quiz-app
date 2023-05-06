@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import ExpandDown from './expand-down';
 import TakeSummary from './take-summary';
 import { formatDate } from '../utils/format-date';
@@ -49,6 +51,8 @@ const takeDataResponseMock = [
 ];
 
 const QuizSummary: React.FC<IProps> = (summary) => {
+  const { t } = useTranslation('', { keyPrefix: 'quizSummary' });
+
   const [showTakeDetailsModal, setShowTakeDetailsModal] = useState(false);
 
   const toggleTakeDetailsModal = () => setShowTakeDetailsModal((state) => !state);
@@ -62,13 +66,15 @@ const QuizSummary: React.FC<IProps> = (summary) => {
           key={summary.quizId}
           className="profile-takes__take"
           topic={summary.quizTitle}
-          extraInfo={`${summary.quizTakes.length} attempt(s)`}
+          extraInfo={`${summary.quizTakes.length} ${t('expandDownInfo')}`}
         >
           <div className="profile-takes__summary">
             {summary.quizTakes.map((takeSummary, index) => (
               <Fragment key={takeSummary.id}>
                 <TakeSummary
-                  title={`Attempt ${index + 1} (${formatDate(new Date(takeSummary.takeDate))})`}
+                  title={`${t('takeSummaryTitle')} ${index + 1} (${formatDate(
+                    new Date(takeSummary.takeDate),
+                  )})`}
                   correct={takeSummary.correctNumber}
                   incorrect={takeSummary.incorrectNumber}
                   notAnswered={takeSummary.notAnswered}
@@ -83,7 +89,7 @@ const QuizSummary: React.FC<IProps> = (summary) => {
                     getTakeDetails(takeSummary.id);
                   }}
                 >
-                  see details
+                  {t('viewDetails')}
                 </p>
               </Fragment>
             ))}
@@ -92,7 +98,13 @@ const QuizSummary: React.FC<IProps> = (summary) => {
       </div>
       <Modal title="Take info" onClose={toggleTakeDetailsModal} show={showTakeDetailsModal}>
         <TakeResultTable
-          titles={['Question', 'Status', 'Correct', 'Answer', 'Correct answer']}
+          titles={[
+            t('takeResultTableQuestionTitle'),
+            t('takeResultTableStatusTitle'),
+            t('takeResultTableCorrectTitle'),
+            t('takeResultTableAnswerTitle'),
+            t('takeResultTableCorrectAnswerTitle'),
+          ]}
           data={takeDataResponseMock}
         />
       </Modal>

@@ -1,0 +1,129 @@
+{
+  "userHeader": {
+    "quizzes": "Тести",
+    "creator": "Конструктор",
+    "profile": "Профіль",
+    "logOutButton": "Вийти"
+  },
+  "visitorHeader": {
+    "quizzes": "Тести",
+    "profile": "Профіль",
+    "logInButton": "Увійти",
+    "sinUpButton": "Зареєстр."
+  },
+  "login": {
+    "title": "Вхід",
+    "emailLabel": "Електронна адреса",
+    "passwordLabel": "Пароль",
+    "logInButton": "Увійти",
+    "noAccountCreated": "Немає аккаунту?",
+    "noAccountCreatedSignUp": "Зареєструватися"
+  },
+  "signUp": {
+    "title": "Реєстрація",
+    "fullNameLabel": "Повне ім'я",
+    "emailLabel": "Електронна пошта",
+    "passwordLabel": "Пароль",
+    "photoLabel": "Оберіть фото",
+    "choosePhotoButton": "Обрати фото",
+    "registerButton": "Зареєструватися",
+    "alreadyRegistered": "Уже зареєстровані?",
+    "alreadyRegisteredLogIn": "Увійти",
+    "cropPhoto": "Обрізати зображення"
+  },
+  "userHome": {
+    "searchButton": "Пошук",
+    "selectOptionAll": "Усі тести",
+    "selectOptionCreated": "Створені мною",
+    "selectOptionPublic": "Публічні"
+  },
+  "visitorHome": {
+    "searchButton": "Пошук"
+  },
+  "quizItem": {
+    "questions": "пит.",
+    "start": "Почати",
+    "delete": "Видалити",
+    "edit": "Змінити"
+  },
+  "quizDetails": {
+    "duration": "Тривалість",
+    "min": "хв",
+    "sec": "сек",
+    "totalScore": "Загальний бал",
+    "numberOfQuestions": "Кількість питань",
+    "updated": "Оновлено",
+    "start": "Почати"
+  },
+  "singleChoiceCreator": {
+    "quizCreateErrorMessage": "Щось пішло не так, ваш тест не був створений. Спробуйте ще раз.",
+    "addTitleValidationMessage": "Додайте заголовок!",
+    "addDescriptionValidationMessage": "Додайте опис!",
+    "createButton": "Створити",
+    "createAndPublishButton": "Створити та опублікувати"
+  },
+  "setQuizMeta": {
+    "titlePlaceholder": "Заголовок",
+    "descriptionPlaceholder": "Опис"
+  },
+  "singleChoice": {
+    "addQuestionButton": "Додати нове питання"
+  },
+  "singleChoiceQuestion": {
+    "emptyQuestionValidationMessage": "Текст деяких питань відсутній!",
+    "noAnswerValidationMessage": "Деякі питання не мають відповідей!",
+    "emptyScoreValidationMessage": "Бал деяких питань не вказано!",
+    "emptyAnswerValidationMessage": "Деякі відповіді відсутні!",
+    "questionPlaceholder": "Запитання",
+    "scorePlaceholder": "Бал",
+    "deleteAnswerButton": "Видалити",
+    "addAnswerButton": "Додати нову відповідь"
+  },
+  "profile": {
+    "noQuizzesPassed": "Не було пройдено жодного тесту"
+  },
+  "profileHeader": {
+    "quizzesPassed": "Тести пройдені",
+    "quizzesCreated": "Тести створені",
+    "joinDate": "Приєднався",
+    "photo": "Фото",
+    "cropPhoto": "Обрізати",
+    "cancelCroppingPhoto": "Скасувати",
+    "name": "Ім'я"
+  },
+  "profileCharts": {
+    "successChartTitle": "Діаграма успішності",
+    "correctAnswersChartLabel": "Вірно",
+    "incorrectAnswerChartLabel": "Неправильно",
+    "notAnswerChartLabel": "Без відповіді",
+    "correctAnswers": "Правильні відповіді",
+    "incorrectAnswers": "Неправильні відповіді",
+    "notAnswered": "Без відповіді",
+    "activityChartTitle": "Діаграма активності",
+    "publishedQuizzesChartLabel": "Опубліковано",
+    "privateQuizzesChartLabel": "Приватні",
+    "publishedQuizzes": "Опубліковані тести",
+    "privateQuizzes": "Приватні тести"
+  },
+  "quizSummary": {
+    "expandDownInfo": "спроб (-а)",
+    "takeSummaryTitle": "Спроба",
+    "takeInfoModal": "Інформація про спробу",
+    "viewDetails": "Детальніше",
+    "takeResultTableQuestionTitle": "Питання",
+    "takeResultTableStatusTitle": "Статус",
+    "takeResultTableCorrectTitle": "Вірно",
+    "takeResultTableAnswerTitle": "Відповідь",
+    "takeResultTableCorrectAnswerTitle": "Правильна відповідь"
+  },
+  "takeSummary": {
+    "correctAnswers": "Надано правильних відповідей",
+    "incorrectAnswers": "Надано неправильних відповідей",
+    "notAnswered": "Не надано відповіді",
+    "score": "Бали"
+  },
+  "quizPassingWrapper": {
+    "continue": "Відповісти",
+    "finish": "Завершити"
+  }
+}

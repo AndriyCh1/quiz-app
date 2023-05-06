@@ -1,4 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import Wrapper from './wrapper';
 import FormInput from './form-input';
 import { RiCloseFill as ClearInputIcon } from 'react-icons/ri';
@@ -21,6 +23,8 @@ const SetQuizMeta: React.FC<IProps> = ({
   className,
   onChange,
 }) => {
+  const { t } = useTranslation('', { keyPrefix: 'setQuizMeta' });
+
   const [titleValue, setTitleValue] = useState(defaultTitle || '');
   const [descriptionValue, setDescriptionValue] = useState(defaultDescription || '');
 
@@ -46,7 +50,7 @@ const SetQuizMeta: React.FC<IProps> = ({
           type="text"
           name="quiz-title"
           onChange={handleChangeTitle}
-          placeholder={'Title'}
+          placeholder={t('titlePlaceholder').toString()}
           value={titleValue}
         />
         <ClearInputIcon className="set-meta__clear-icon" onClick={handleClearTitle} />
@@ -57,7 +61,7 @@ const SetQuizMeta: React.FC<IProps> = ({
           type="text"
           name="quiz-description"
           onChange={handleChangeDescription}
-          placeholder={'Description'}
+          placeholder={t('descriptionPlaceholder').toString()}
           value={descriptionValue}
         />
         <ClearInputIcon className="set-meta__clear-icon" onClick={handleDescription} />

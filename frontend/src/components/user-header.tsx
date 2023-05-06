@@ -5,19 +5,22 @@ import Header from './header';
 import Button from './button';
 import { ILink } from '../common/interfaces/header';
 
-import { UserRoutes as Routes, VisitorRoutes } from '../common/enums';
+import { Locals, UserRoutes as Routes, VisitorRoutes } from '../common/enums';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { authActions } from '../store/auth';
+import LanguageSwitcher from './language-switcher';
+import { useTranslation } from 'react-i18next';
 
 const links: ILink[] = [
-  { display: 'Quizzes', to: Routes.Quizzes },
-  { display: 'Creator', to: Routes.SingleChoiceCreator },
-  { display: 'Profile', to: Routes.Profile },
+  { display: 'quizzes', to: Routes.Quizzes },
+  { display: 'creator', to: Routes.SingleChoiceCreator },
+  { display: 'profile', to: Routes.Profile },
 ];
 
 const UserHeader = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation('', { keyPrefix: 'userHeader' });
 
   const user = useAppSelector((state) => state.auth.user);
 
@@ -31,13 +34,14 @@ const UserHeader = () => {
       <Header.Links>
         {links.map((item, index) => (
           <Link key={index} className="header__nav__links__item" to={item.to}>
-            <li>{item.display}</li>
+            <li>{t(item.display)}</li>
           </Link>
         ))}
       </Header.Links>
       <Header.Buttons>
+        <LanguageSwitcher initial={Locals.EN} />
         <Button className="header__nav__btns__item" onClick={handleLogout}>
-          Log out
+          {t('logOutButton')}
         </Button>
       </Header.Buttons>
       {user?.avatar && <img src={user.avatar} alt="avatar" className="header__avatar" />}

@@ -49,6 +49,10 @@
 .home-search-user {
   @include flex(center, space-between);
   gap: 5px;
+
+  & > select {
+    width: fit-content;
+  }
 }
 
 .home-result-wrapper {

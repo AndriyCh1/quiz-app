@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
+import { useTranslation } from 'react-i18next';
 
 import Helmet from '../components/helmet';
 import Container from '../components/container';
@@ -14,6 +15,8 @@ import QuizSummary from '../components/quiz-summary';
 import userAvatarHolder from '../assets/images/user-avatar-holder.png';
 
 const Profile = () => {
+  const { t } = useTranslation();
+
   const dispatch = useAppDispatch();
   const profileData = useAppSelector((state) => state.profile);
 
@@ -76,7 +79,8 @@ const Profile = () => {
                     }
                   />
                 ))}
-                {profileData.userQuizzesSummaryData.length === 0 && 'No quizzes passed'}
+                {profileData.userQuizzesSummaryData.length === 0 &&
+                  `${t('profile.noQuizzesPassed')}`}
               </div>
             </>
           ) : (

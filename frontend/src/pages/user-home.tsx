@@ -12,6 +12,7 @@ import Select, { Option } from '../components/select';
 import { IQuiz } from '../common/interfaces';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { quizzesActions } from '../store/quizzes';
+import { useTranslation } from 'react-i18next';
 
 enum SelectOptions {
   ALL = 'all',
@@ -26,6 +27,7 @@ interface IFilter {
 
 const UserHome = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const user = useAppSelector((state) => state.auth.user);
   const allQuizzes = useAppSelector((state) => state.quizzes.quizzes);
@@ -94,16 +96,16 @@ const UserHome = () => {
       <Container className="home">
         <div className="home-search-user">
           <Select value={filter.select} onChange={handleSelectChange}>
-            <Option value={SelectOptions.ALL}>All</Option>
-            <Option value={SelectOptions.PUBLIC}>Public</Option>
-            <Option value={SelectOptions.CREATED}>Created</Option>
+            <Option value={SelectOptions.ALL}>{t('userHome.selectOptionAll')}</Option>
+            <Option value={SelectOptions.PUBLIC}>{t('userHome.selectOptionCreated')}</Option>
+            <Option value={SelectOptions.CREATED}>{t('userHome.selectOptionPublic')}</Option>
           </Select>
           <div className="home-search">
             <div className="home-search__input">
               <SearchIcon className="home-search__input__icon" />
               <input type="text" value={filter.searchValue} onChange={handleChangeInput} />
               <Button className="home-search__input__button" onClick={handleSearchClick}>
-                Search
+                {t('userHome.searchButton')}
               </Button>
             </div>
           </div>

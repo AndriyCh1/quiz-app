@@ -1,6 +1,6 @@
 import React from 'react';
 import Wrapper from './wrapper';
-import { MdSportsScore as ScoreIcon } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 import { GrClose as CloseIcon } from 'react-icons/gr';
 import { AiOutlineLeft as BackIcon } from 'react-icons/ai';
 
@@ -19,6 +19,8 @@ interface IProps {
 }
 
 const QuizPassingWrapper: React.FC<IProps> = (props) => {
+  const { t } = useTranslation('', { keyPrefix: 'quizPassingWrapper' });
+
   const {
     children,
     title,
@@ -74,7 +76,7 @@ const QuizPassingWrapper: React.FC<IProps> = (props) => {
             onClick={onAnswer}
             disabled={!isSelectedAnswer}
           >
-            Continue
+            {t('continue')}
           </Button>
         ) : (
           <Button
@@ -82,7 +84,7 @@ const QuizPassingWrapper: React.FC<IProps> = (props) => {
             onClick={onFinish}
             disabled={!isSelectedAnswer}
           >
-            Finish
+            {t('finish')}
           </Button>
         )}
       </div>

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { AiFillEye as OpenedEyeIcon, AiFillEyeInvisible as ClosedEyeIcon } from 'react-icons/ai';
 import { RiCloseFill as RemoveIcon } from 'react-icons/ri';
 import { BsPlusLg as AddIcon } from 'react-icons/bs';
 
@@ -28,6 +28,8 @@ const SingleChoiceQuestion: React.FC<IProps> = ({
   onRemove,
   onError,
 }) => {
+  const { t } = useTranslation('', { keyPrefix: 'singleChoiceQuestion' });
+
   const [questionValue, setQuestionValue] = useState(content || '');
   const [isActive, setIsActive] = useState(active);
   const [questionScore, setQuestionScore] = useState(score || '');
@@ -86,11 +88,11 @@ const SingleChoiceQuestion: React.FC<IProps> = ({
   };
 
   const checkQuestionValidation = (): string => {
-    if (!questionValue.trim()) return 'Some question`s text is empty';
-    if (!answers.length) return 'Some question does not have answers!';
-    if (questionScore === '') return 'Some question`s score isn`t set!';
+    if (!questionValue.trim()) return `${t('emptyQuestionValidationMessage')}`;
+    if (!answers.length) return `${t('noAnswerValidationMessage')}`;
+    if (questionScore === '') return `${t('emptyScoreValidationMessage')}`;
     const hasEmptyAnswer = answers.find((item) => item.content !== '');
-    if (!hasEmptyAnswer) return 'Some answer is empty!';
+    if (!hasEmptyAnswer) return `${t('emptyAnswerValidationMessage')}`;
     return '';
   };
 
@@ -112,7 +114,7 @@ const SingleChoiceQuestion: React.FC<IProps> = ({
         <MultilineInput
           name="quiz-question"
           className="single-choice__question__input"
-          placeholder="Type your question here"
+          placeholder={t('questionPlaceholder').toString()}
           onChange={handleChangeQuestion}
           value={questionValue}
         />
@@ -122,7 +124,7 @@ const SingleChoiceQuestion: React.FC<IProps> = ({
           <FormInput
             name="quiz-answer"
             className="single-choice__question-actions__score"
-            placeholder="score"
+            placeholder={t('scorePlaceholder').toString()}
             onChange={handleChangeScore}
             type="number"
             value={questionScore.toString()}
@@ -146,10 +148,12 @@ const SingleChoiceQuestion: React.FC<IProps> = ({
         </div>
         <div className="single-choice__question-actions__btns">
           <Button className="single-choice__question-action-remove" onClick={onRemove}>
-            <RemoveIcon className="single-choice__question-action-remove__icon " /> Remove
+            <RemoveIcon className="single-choice__question-action-remove__icon " />
+            {t('deleteAnswerButton')}
           </Button>
           <Button className="single-choice__question-action-add" onClick={handleAddAnswer}>
-            <AddIcon className="single-choice__question-action-add__icon" /> Add new answer
+            <AddIcon className="single-choice__question-action-add__icon" />
+            {t('addAnswerButton')}
           </Button>
         </div>
       </div>

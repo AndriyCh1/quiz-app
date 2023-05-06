@@ -18,12 +18,14 @@ import { RiCloseFill as RemoveIcon } from 'react-icons/ri';
 import Modal from '../components/modal';
 import ImageCropper from '../components/image-cropper';
 import FileInput from '../components/file-input';
+import { useTranslation } from 'react-i18next';
 
 let imageObjectUrl: string | null = null;
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { isAuth, isLoading } = useAppSelector((state) => state.auth);
@@ -44,7 +46,7 @@ const SignUp = () => {
   });
 
   useEffect(() => {
-    // free memory when ever this component is unmounted
+    // free memory whenever this component is unmounted
     return () => {
       if (imageObjectUrl !== null) {
         URL.revokeObjectURL(imageObjectUrl);
@@ -127,13 +129,14 @@ const SignUp = () => {
   return (
     <div className="auth-form-wrapper">
       <form className="auth-form" onSubmit={handleSubmitForm}>
-        <h2 className="auth-form__title">Register</h2>
+        <h2 className="auth-form__title">{t('signUp.title')}</h2>
         {signupError && <div className="auth-form__submit-error">{signupError}</div>}
         <div className="auth-form__fieldset">
           {/* Entering username */}
 
           <label className="auth-form__label">
-            Full name<span className="required">*</span>
+            {t('signUp.fullNameLabel')}
+            <span className="required">*</span>
           </label>
           <FormInput
             className={usernameInput.isDirty && !usernameInput.isValid ? 'error-input' : ''}
@@ -159,7 +162,8 @@ const SignUp = () => {
           {/* Entering email */}
 
           <label className="auth-form__label">
-            Email<span className="required">*</span>
+            {t('signUp.emailLabel')}
+            <span className="required">*</span>
           </label>
           <FormInput
             className={emailInput.isDirty && !emailInput.isValid ? 'error-input' : ''}
@@ -182,7 +186,8 @@ const SignUp = () => {
           {/* Entering password */}
 
           <label className="auth-form__label">
-            Password<span className="required">*</span>
+            {t('signUp.passwordLabel')}
+            <span className="required">*</span>
           </label>
           <FormInput
             className={passwordInput.isDirty && !passwordInput.isValid ? 'error-input' : ''}
@@ -212,7 +217,7 @@ const SignUp = () => {
 
           {/* Uploading user`s avatar */}
 
-          <label className="auth-form__label">Photo</label>
+          <label className="auth-form__label"> {t('signUp.photoLabel')}</label>
           {croppedImage && (
             <div className="auth-form__avatar__image-wrapper">
               <img className="auth-form__avatar__image" src={croppedImage} alt="image" />
@@ -237,16 +242,17 @@ const SignUp = () => {
           type="submit"
           disabled={!usernameInput.isValid || !emailInput.isValid || !passwordInput.isValid}
         >
-          Register
+          {t('signUp.registerButton')}
         </Button>
         <p className="auth-form__text">
-          Already registered? <Link to={'/login'}>Log in</Link>
+          {t('signUp.alreadyRegistered')}
+          <Link to={'/login'}>{t('signUp.alreadyRegisteredLogIn')}</Link>
         </p>
       </form>
 
       <Modal
         className="auth-form__modal"
-        title="Crop avatar"
+        title={t('signUp.cropPhoto')}
         show={showCropImageModal}
         footer={true}
         onClose={handleCloseModal}

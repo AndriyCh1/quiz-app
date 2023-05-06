@@ -1,0 +1,128 @@
+{
+  "userHeader": {
+    "quizzes": "Quizzes",
+    "creator": "Creator",
+    "profile": "Profile",
+    "logOutButton": "Log out"
+  },
+  "visitorHeader": {
+    "quizzes": "Quizzes",
+    "logInButton": "Log in",
+    "sinUpButton": "Sign up"
+  },
+  "login": {
+    "title": "Log in",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "logInButton": "Log in",
+    "noAccountCreated": "Don`t have an account?",
+    "noAccountCreatedSignUp": "Sign up"
+  },
+  "signUp": {
+    "title": "Sign up",
+    "fullNameLabel": "Full name",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "photoLabel": "Choose photo",
+    "choosePhotoButton": "Choose photo",
+    "registerButton": "Register",
+    "alreadyRegistered": "Already registered?",
+    "alreadyRegisteredLogIn": "Log in",
+    "cropPhoto": "Crop avatar"
+  },
+  "userHome": {
+    "searchButton": "Search",
+    "selectOptionAll": "All quizzes",
+    "selectOptionCreated": "Created by me",
+    "selectOptionPublic": "Public quizzes"
+  },
+  "visitorHome": {
+    "searchButton": "Search"
+  },
+  "quizItem": {
+    "questions": "qs",
+    "start": "Start",
+    "delete": "Delete",
+    "edit": "Edit"
+  },
+  "quizDetails": {
+    "duration": "Duration",
+    "min": "min",
+    "sec": "sec",
+    "totalScore": "Total score",
+    "numberOfQuestions": "Number of questions",
+    "updated": "Updated",
+    "start": "Start"
+  },
+  "singleChoiceCreator": {
+    "quizCreateErrorMessage": "Something went wrong, your quiz wasn`t created. Try one more time.",
+    "addTitleValidationMessage": "Add title!",
+    "addDescriptionValidationMessage": "Add a description!",
+    "createButton": "Create",
+    "createAndPublishButton": "Create and publish"
+  },
+  "setQuizMeta": {
+    "titlePlaceholder": "Title",
+    "descriptionPlaceholder": "Description"
+  },
+  "singleChoice": {
+    "addQuestionButton": "Add new question"
+  },
+  "singleChoiceQuestion": {
+    "emptyQuestionValidationMessage": "Some question`s text is empty",
+    "noAnswerValidationMessage": "Some question does not have answers!",
+    "emptyScoreValidationMessage": "Some question`s score isn`t set!",
+    "emptyAnswerValidationMessage": "Some answer is empty!",
+    "questionPlaceholder": "Type your question here",
+    "scorePlaceholder": "Score",
+    "deleteAnswerButton": "Remove",
+    "addAnswerButton": "Add new answer"
+  },
+  "profile": {
+    "noQuizzesPassed": "No quizzes passed"
+  },
+  "profileHeader": {
+    "quizzesPassed": "Quizzes passed",
+    "quizzesCreated": "Quizzes created",
+    "joinDate": "Joined",
+    "photo": "Photo",
+    "cropPhoto": "Crop",
+    "cancelCroppingPhoto": "Cancel",
+    "name": "Name"
+  },
+  "profileCharts": {
+    "successChartTitle": "Success chart",
+    "correctAnswersChartLabel": "Correct",
+    "incorrectAnswerChartLabel": "Incorrect",
+    "notAnswerChartLabel": "Not answered",
+    "correctAnswers": "Correct answers",
+    "incorrectAnswers": "Incorrect answers",
+    "notAnswered": "Not answered",
+    "activityChartTitle": "Activity chart",
+    "publishedQuizzesChartLabel": "Published",
+    "privateQuizzesChartLabel": "Private",
+    "publishedQuizzes": "Published quizzes",
+    "privateQuizzes": "Private quizzes"
+  },
+  "quizSummary": {
+    "expandDownInfo": "attempt(s)",
+    "takeSummaryTitle": "Attempt",
+    "viewDetails": "View details",
+    "takeInfoModal": "Attempt info",
+    "takeResultTableQuestionTitle": "Question",
+    "takeResultTableStatusTitle": "Status",
+    "takeResultTableCorrectTitle": "Correct",
+    "takeResultTableAnswerTitle": "Answer",
+    "takeResultTableCorrectAnswerTitle": "Correct answer"
+  },
+  "takeSummary": {
+    "correctAnswers": "correct answers",
+    "incorrectAnswers": "incorrect answers",
+    "notAnswered": "not answered",
+    "score": "score"
+  },
+  "quizPassingWrapper": {
+    "continue": "Continue",
+    "finish": "Finish"
+  }
+}

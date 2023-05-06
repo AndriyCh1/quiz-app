@@ -14,6 +14,7 @@ import { IDeepQuiz, IQuiz, IQuestion } from '../common/interfaces';
 import { quizzesActions } from '../store/quizzes';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import SingleChoice from '../components/single-choice';
+import { useTranslation } from 'react-i18next';
 
 interface IMetaData {
   title: string;
@@ -27,8 +28,8 @@ const SingleChoiceCreator = () => {
   // TODO: use SET for questions and answers arrays
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [quizCreateErrorMessage, setQuizCreateErrorMessage] = useState('');
-
   const [quizInfo, setQuizInfo] = useState<IMetaData>({ description: '', title: '' });
 
   const defaultQuestion = {
@@ -76,14 +77,13 @@ const SingleChoiceCreator = () => {
       .then((res: IQuiz) => {
         navigate(`${UserRoutes.QuizInfo.replace(':id', res.id)}`);
       })
-      .catch(() =>
-        setQuizCreateErrorMessage('Oops, something went wrong, your quiz wasn`t created'),
-      );
+      .catch(() => setQuizCreateErrorMessage(`${t('singleChoiceCreator.quizCreateErrorMessage')}`));
   };
 
   const checkQuizValidation = (): string => {
-    if (!quizInfo.title.trim()) return 'Add a title!';
-    if (!quizInfo.description.trim()) return 'Add a description!';
+    if (!quizInfo.title.trim()) return t('singleChoiceCreator.addTitleValidationMessage');
+    if (!quizInfo.description.trim())
+      return t('singleChoiceCreator.addDescriptionValidationMessage');
     if (questionErrorMessage) return questionErrorMessage;
     return '';
   };
@@ -106,7 +106,7 @@ const SingleChoiceCreator = () => {
         <Container className="single-choice-creator">
           <Wrapper>
             <div style={{ textAlign: 'center', padding: '20px' }}>
-              <span>{quizCreateErrorMessage}. Try one more time.</span>
+              <span>{quizCreateErrorMessage}</span>
             </div>
           </Wrapper>
         </Container>
@@ -133,7 +133,8 @@ const SingleChoiceCreator = () => {
             disabled={!!notValidFieldError}
             tooltip={notValidFieldError || ''}
           >
-            <SaveIcon className="single-choice-creator__save-quiz-btn__icon" /> Create
+            <SaveIcon className="single-choice-creator__save-quiz-btn__icon" />
+            {t('singleChoiceCreator.createButton')}
           </Button>
           <Button
             className="single-choice-creator__save-quiz-btn"
@@ -141,7 +142,8 @@ const SingleChoiceCreator = () => {
             disabled={!!notValidFieldError}
             tooltip={notValidFieldError || ''}
           >
-            <SaveIcon className="single-choice-creator__save-quiz-btn__icon" /> Create and publish
+            <SaveIcon className="single-choice-creator__save-quiz-btn__icon" />
+            {t('singleChoiceCreator.createAndPublishButton')}
           </Button>
         </div>
       </Container>

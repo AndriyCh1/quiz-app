@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Helmet from '../components/helmet';
 import Container from '../components/container';
@@ -13,6 +14,7 @@ import { quizzesActions } from '../store/quizzes';
 
 const VisitorHome = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation('', { keyPrefix: 'visitorHome' });
 
   const allQuizzes = useAppSelector((state) => state.quizzes.quizzes);
 
@@ -47,7 +49,7 @@ const VisitorHome = () => {
             <SearchIcon className="home-search__input__icon" />
             <input type="text" onChange={handleChangeInput} value={inputValue} />
             <Button className="home-search__input__button" onClick={handleSearchClick}>
-              Search
+              {t('searchButton')}
             </Button>
           </div>
         </div>

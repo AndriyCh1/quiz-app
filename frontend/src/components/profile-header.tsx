@@ -1,4 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import useInput from '../hooks/useInput';
 import { formatDate } from '../utils/format-date';
 import { MdOutlineModeEditOutline as EditIcon } from 'react-icons/md';
@@ -21,6 +23,8 @@ interface IProps {
 let imageObjectUrl: string | null = null;
 
 const ProfileHeader: React.FC<IProps> = (props) => {
+  const { t } = useTranslation('', { keyPrefix: 'profileHeader' });
+
   const { fullName, avatar, joinedTime, quizzesPassed, quizzesCreated } = props;
 
   const usernameInput = useInput(fullName, { isEmpty: true, minLength: 2 });
@@ -93,9 +97,15 @@ const ProfileHeader: React.FC<IProps> = (props) => {
         </div>
         <div className="profile-info__text">
           <p className="profile-info__text__username">{fullName}</p>
-          <p className="profile-info__text__tests-passed">Quizzes passed: {quizzesPassed}</p>
-          <p className="profile-info__text__tests-created">Quizzes created: {quizzesCreated}</p>
-          <p className="profile-info__text__join-time">Joined {formatDate(new Date(joinedTime))}</p>
+          <p className="profile-info__text__tests-passed">{`${t(
+            'quizzesPassed',
+          )}: ${quizzesPassed}`}</p>
+          <p className="profile-info__text__tests-created">{`${t(
+            'quizzesCreated',
+          )}: ${quizzesCreated}`}</p>
+          <p className="profile-info__text__join-time">{`${t('joinDate')} ${formatDate(
+            new Date(joinedTime),
+          )}`}</p>
           <div className="profile-info__edit-button" onClick={toggleEditProfileModal}>
             <EditIcon className="profile-info__edit-button__icon" />
           </div>
@@ -113,7 +123,7 @@ const ProfileHeader: React.FC<IProps> = (props) => {
           {/* Changing photo */}
 
           <div className="profile-info__edit-form__edit-avatar-wrapper">
-            <label className="profile-info__edit-form__label">Photo</label>
+            <label className="profile-info__edit-form__label">{t('photo')}</label>
 
             {/* If image is cropped, user can preview it */}
 
@@ -137,8 +147,8 @@ const ProfileHeader: React.FC<IProps> = (props) => {
               <>
                 <ImageCropper image={selectedImage} onSave={(cropper) => setCropper(cropper)} />
                 <div className="profile-info__edit-form__edit-avatar-actions">
-                  <Button onClick={handleSaveCrop}>Crop</Button>
-                  <Button onClick={handleCancelCrop}>Cancel</Button>
+                  <Button onClick={handleSaveCrop}>{t('cropPhoto')}</Button>
+                  <Button onClick={handleCancelCrop}>{t('cancelCroppingPhoto')}</Button>
                 </div>
               </>
             )}
@@ -161,7 +171,7 @@ const ProfileHeader: React.FC<IProps> = (props) => {
 
           {/* Entering new name */}
 
-          <label className="profile-info__edit-form__label">Name</label>
+          <label className="profile-info__edit-form__label">{t('name')}</label>
           <FormInput
             className="profile-info__edit-form__input"
             name="username"

@@ -1,0 +1,12 @@
+.language-switcher {
+  &__select {
+    padding: 4px;
+    border: none;
+    background-color: transparent;
+
+    &:focus {
+      outline: none;
+      background-color: transparent;
+    }
+  }
+}

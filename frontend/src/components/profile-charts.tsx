@@ -1,5 +1,7 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
+
 import { getPercents } from '../utils/get-percents';
 
 interface IProps {
@@ -38,6 +40,8 @@ const getPieChartNoDataConfig = () => {
 };
 
 const ProfileCharts: React.FC<IProps> = (props) => {
+  const { t } = useTranslation('', { keyPrefix: 'profileCharts' });
+
   const {
     notAnswered,
     totalAnswers,
@@ -50,14 +54,18 @@ const ProfileCharts: React.FC<IProps> = (props) => {
   return (
     <div className="profile-charts">
       <div className="profile-charts__chart">
-        <h3 className="profile-charts__chart__title">Success chart</h3>
+        <h3 className="profile-charts__chart__title">{t('successChartTitle')}</h3>
         <div className="profile-charts__chart__diagram-wrapper">
           <div>
             {!(correctNumber === 0 && incorrectNumber === 0 && notAnswered === 0) ? (
               <Pie
                 className="profile-charts__chart__diagram"
                 data={getPieChartConfig(
-                  ['Correct answers', 'Incorrect answers', 'Not answered'],
+                  [
+                    t('correctAnswersChartLabel'),
+                    t('incorrectAnswerChartLabel'),
+                    t('notAnswerChartLabel'),
+                  ],
                   [correctNumber, incorrectNumber, notAnswered],
                 )}
               />
@@ -67,27 +75,32 @@ const ProfileCharts: React.FC<IProps> = (props) => {
           </div>
           <div className="profile-charts__chart__diagram__legend">
             <div className="profile-charts__chart__diagram__legend__item">
-              Correct answers: {totalAnswers !== 0 ? getPercents(correctNumber, totalAnswers) : 0}%
+              {`${t('correctAnswers')}: ${
+                totalAnswers !== 0 ? getPercents(correctNumber, totalAnswers) : 0
+              }%`}
             </div>
             <div className="profile-charts__chart__diagram__legend__item">
-              Incorrect answers{' '}
-              {totalAnswers !== 0 ? getPercents(incorrectNumber, totalAnswers) : 0}%
+              {`${t('incorrectAnswers')}: ${
+                totalAnswers !== 0 ? getPercents(incorrectNumber, totalAnswers) : 0
+              }%`}
             </div>
             <div className="profile-charts__chart__diagram__legend__item">
-              Not answered: {totalAnswers !== 0 ? getPercents(notAnswered, totalAnswers) : 0}%
+              {`${t('notAnswered')}: ${
+                totalAnswers !== 0 ? getPercents(notAnswered, totalAnswers) : 0
+              }%`}
             </div>
           </div>
         </div>
       </div>
       <div className="profile-charts__chart">
-        <h3 className="profile-charts__chart__title">Activity chart</h3>
+        <h3 className="profile-charts__chart__title">{t('activityChartTitle')}</h3>
         <div className="profile-charts__chart__diagram-wrapper">
           <div>
             {!(quizzesPublished === 0 && quizzesCreated === 0) ? (
               <Pie
                 className="profile-charts__chart__diagram"
                 data={getPieChartConfig(
-                  ['Published quizzes', 'Not published quizzes'],
+                  [t('publishedQuizzesChartLabel'), t('privateQuizzesChartLabel')],
                   [quizzesPublished, quizzesCreated - quizzesPublished],
                 )}
               />
@@ -97,10 +110,10 @@ const ProfileCharts: React.FC<IProps> = (props) => {
           </div>
           <div className="profile-charts__chart__diagram__legend">
             <div className="profile-charts__chart__diagram__legend__item">
-              Published quizzes: {quizzesPublished}
+              {`${t('publishedQuizzes')}: ${quizzesPublished}`}
             </div>
             <div className="profile-charts__chart__diagram__legend__item">
-              Not published: {quizzesCreated - quizzesPublished}
+              {`${t('privateQuizzes')}: ${quizzesCreated - quizzesPublished}`}
             </div>
           </div>
         </div>

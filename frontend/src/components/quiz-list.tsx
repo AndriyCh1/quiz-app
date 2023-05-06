@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import QuizItem from './quiz-item';
@@ -12,7 +12,7 @@ interface IProps {
   quizzes: IQuiz[];
 }
 
-const QuizList: React.FC<IProps> = ({ quizzes }) => {
+const QuizList: React.FC<IProps> = memo(({ quizzes }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -71,6 +71,6 @@ const QuizList: React.FC<IProps> = ({ quizzes }) => {
       </Modal>
     </div>
   );
-};
+});
 
 export default QuizList;

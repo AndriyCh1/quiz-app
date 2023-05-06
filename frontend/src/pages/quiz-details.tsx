@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import NotFound from './not-found';
 
@@ -24,6 +25,7 @@ interface IProps {
 const QuizDetails: React.FC<IProps> = React.memo(({ quizId }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { isAuth, isLoading } = useAppSelector((state) => state.auth);
   const { chosenQuiz: quiz, isLoadingChosenQuiz: isLoadingQuiz } = useAppSelector(
@@ -56,20 +58,26 @@ const QuizDetails: React.FC<IProps> = React.memo(({ quizId }) => {
               <div className="quiz-details__other__item">
                 <DurationIcon className="quiz-details__other__item__icon" />
                 <p>
-                  Duration:
-                  <span> {min ? `${min} min` : sec ? `${sec} sec` : '-'}</span>
+                  {t('quizDetails.duration')}:{' '}
+                  <span>
+                    {min
+                      ? `${min} ${t('quizDetails.min')}`
+                      : sec
+                      ? `${sec} ${t('quizDetails.sec')}`
+                      : '-'}
+                  </span>
                 </p>
               </div>
               <div className="quiz-details__other__item">
                 <ScoreIcon className="quiz-details__other__item__icon" />
                 <p>
-                  Total score: <span>{score}</span>
+                  {t('quizDetails.totalScore')}: <span>{score}</span>
                 </p>
               </div>
               <div className="quiz-details__other__item">
                 <QuestionIcon className="quiz-details__other__item__icon" />
                 <p>
-                  Number of questions: <span>{questionsCount}</span>
+                  {t('quizDetails.numberOfQuestions')}: <span>{questionsCount}</span>
                 </p>
               </div>
             </div>
@@ -83,7 +91,8 @@ const QuizDetails: React.FC<IProps> = React.memo(({ quizId }) => {
             <div className="quiz-details__user__info">
               <p className="quiz-details__user__info__name">{user?.fullName || 'Unknown User'}</p>
               <p className="quiz-details__user__info__created">
-                Updated: {updatedAt ? formatDate(new Date(updatedAt)) : 'unknown'}
+                {t('quizDetails.updated')}:{' '}
+                {updatedAt ? formatDate(new Date(updatedAt)) : 'unknown'}
               </p>
             </div>
           </div>
@@ -92,7 +101,7 @@ const QuizDetails: React.FC<IProps> = React.memo(({ quizId }) => {
               className="quiz-details__actions__btn"
               onClick={() => navigate(`/quiz/${id}/start`)}
             >
-              Start
+              {t('quizDetails.start')}
             </Button>
             {/*<Button className="quiz-details__actions__btn">Print</Button>*/}
           </div>

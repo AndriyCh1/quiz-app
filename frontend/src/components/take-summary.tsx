@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   title: string;
@@ -19,26 +20,29 @@ const TakeSummary: React.FC<IProps> = ({
   totalScore,
   score,
 }) => {
+  const { t } = useTranslation('', { keyPrefix: 'takeSummary' });
+
   return (
     <div className="take-summary">
       <div className="take-summary-left">
         <h4 className="take-summary__title">{title}</h4>
         <div className="take-summary__info">
           <p className="take-summary__info__item">
-            correct answers: <em>{correct}</em>
+            {t('correctAnswers')}: <em>{correct}</em>
           </p>
           <p className="take-summary__info__item">
-            incorrect answers: <em>{incorrect}</em>
+            {t('incorrectAnswers')}: <em>{incorrect}</em>
           </p>
           <p className="take-summary__info__item">
-            not answered: <em>{notAnswered}</em>
+            {t('notAnswered')}: <em>{notAnswered}</em>
           </p>
           <p className="take-summary__info__item">
-            score: <em>{score}</em>/<em>{totalScore}</em>
+            {t('score')}: <em>{score}</em>/<em>{totalScore}</em>
           </p>
         </div>
       </div>
       <div className="take-summary-right">
+        {/* TODO: create a separate component for this*/}
         <div className="take-summary__answers-scale">
           {correct ? (
             <div

@@ -6,6 +6,7 @@ import SingleChoiceQuestion from '../components/single-choice-question';
 
 import { generateUniqueId } from '../utils/generate-unique-id';
 import { IQuestion } from '../common/interfaces';
+import { useTranslation } from 'react-i18next';
 
 const QUIZ_TYPE = 'single-choice';
 const TEMP_QUIZ_TIME = 100;
@@ -17,6 +18,8 @@ interface IProps {
 }
 
 const SingleChoice: React.FC<IProps> = ({ data, onError, onChange }) => {
+  const { t } = useTranslation('', { keyPrefix: 'singleChoice' });
+
   const [questions, setQuestions] = useState<IQuestion[]>(data);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -106,7 +109,8 @@ const SingleChoice: React.FC<IProps> = ({ data, onError, onChange }) => {
       })}
       <div className="single-choice__add-question-wrapper">
         <Button className="single-choice__add-question-btn" onClick={handleAddQuestion}>
-          <AddIcon className="single-choice__add-question-btn__icon" /> Add new question
+          <AddIcon className="single-choice__add-question-btn__icon" />
+          {t('addQuestionButton')}
         </Button>
       </div>
     </>

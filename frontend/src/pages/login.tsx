@@ -11,10 +11,12 @@ import { AiFillLock as LockIcon } from 'react-icons/ai';
 import { UserRoutes } from '../common/enums';
 
 import useInput from '../hooks/useInput';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [loginError, setLoginError] = useState('');
 
@@ -46,11 +48,12 @@ const Login = () => {
   return (
     <div className="auth-form-wrapper">
       <form className="auth-form" onSubmit={handleSubmitForm}>
-        <h2 className="auth-form__title">Log In</h2>
+        <h2 className="auth-form__title">{t('login.title')}</h2>
         {loginError && <div className="auth-form__submit-error">{loginError}</div>}
         <div className="auth-form__fieldset">
           <label className="auth-form__label">
-            Email<span className="required">*</span>
+            {t('login.emailLabel')}
+            <span className="required">*</span>
           </label>
           <FormInput
             className={emailInput.isDirty && !emailInput.isValid ? 'error-input' : ''}
@@ -71,7 +74,8 @@ const Login = () => {
           )}
 
           <label className="auth-form__label">
-            Password<span className="required">*</span>
+            {t('login.passwordLabel')}
+            <span className="required">*</span>
           </label>
           <FormInput
             className={passwordInput.isDirty && !passwordInput.isValid ? 'error-input' : ''}
@@ -106,10 +110,11 @@ const Login = () => {
           type="submit"
           disabled={!emailInput.isValid || !passwordInput.isValid}
         >
-          Log in
+          {t('login.logInButton')}
         </Button>
         <p className="auth-form__text">
-          Don`t have an account? <Link to={'/signup'}>Sign up</Link>
+          {t('login.noAccountCreated')}{' '}
+          <Link to={'/signup'}>{t('login.noAccountCreatedSignUp')}</Link>
         </p>
       </form>
     </div>
