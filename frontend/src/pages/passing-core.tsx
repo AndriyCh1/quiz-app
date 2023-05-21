@@ -93,6 +93,7 @@ const PassingCore: React.FC<IProps> = ({ quiz, onClose, onAnswer, onFinish }) =>
         <div className="active-quiz__content__answers">
           {quiz.questions[currentQuestionIndex].answers.map((item, index) => (
             <div
+              key={item.id}
               className={`active-quiz__content__answers__item ${
                 item.id === selectedAnswer?.id ? 'active' : ''
               }`}
